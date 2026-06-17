@@ -1,0 +1,414 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Handled — Planning Tool</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{--ink:#0E1A24;--paper:#FBFAF7;--panel:#fff;--line:#E5E2DA;--blue:#2E6FE0;--blue-dk:#1B4FB0;--amber:#E0890B;--amber-bg:#FDF3E0;--green:#1C8A4E;--green-bg:#E6F4EC;--red:#C5453B;--mute:#6E7681;--inkblue:#11203A}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,system-ui,sans-serif;font-size:14px;line-height:1.5}
+header{background:var(--inkblue);color:#fff;padding:0 28px;height:58px;display:flex;align-items:center;gap:16px}
+.logo{font-weight:800;font-size:20px}.logo b{color:#6EA8FF}header .tag{font-size:12px;opacity:.65;border-left:1px solid rgba(255,255,255,.2);padding-left:16px}
+.stepper{display:flex;background:var(--panel);border-bottom:1px solid var(--line);padding:0 28px;overflow-x:auto}
+.step{padding:15px 20px;font-size:13px;font-weight:600;color:var(--mute);border-bottom:3px solid transparent;cursor:pointer;display:flex;gap:8px;align-items:center;white-space:nowrap}
+.step .n{width:21px;height:21px;border-radius:50%;background:#EAE7DF;color:var(--mute);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.step.active{color:var(--ink);border-bottom-color:var(--blue)}.step.active .n{background:var(--blue);color:#fff}.step.done .n{background:var(--green);color:#fff}
+.wrap{max-width:1060px;margin:0 auto;padding:28px 28px 80px}h1{font-size:23px;letter-spacing:-.5px;margin:0 0 4px}.sub{color:var(--mute);margin-bottom:24px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:18px}.panel h2{font-size:15px;margin:0 0 4px}.panel .ph{font-size:12.5px;color:var(--mute);margin-bottom:14px}
+.uploadrow{display:grid;grid-template-columns:1fr 1fr;gap:14px}.ulabel{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--mute);margin-bottom:6px}
+.drop{border:2px dashed #CFD8E3;border-radius:12px;padding:22px;text-align:center;background:#FAFCFF;cursor:pointer}.drop:hover{border-color:var(--blue);background:#F2F7FF}.drop .big{font-weight:600;color:var(--inkblue)}.drop .small{font-size:12px;color:var(--mute);margin-top:3px}
+select{font-family:inherit;font-size:13px;padding:7px 10px;border:1px solid #CBD3DE;border-radius:8px;margin-bottom:8px}
+.filechip{display:inline-flex;gap:6px;background:var(--green-bg);color:var(--green);border:1px solid #BCE3CC;border-radius:8px;padding:6px 11px;font-size:12px;font-weight:600;margin:8px 6px 0 0}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}th,td{padding:9px 11px;text-align:right;border-bottom:1px solid var(--line)}th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--mute);font-weight:700;background:#FAF9F6}th:first-child,td:first-child{text-align:left}tr:last-child td{border-bottom:none}
+.flag{background:var(--amber-bg);color:#8A5A0B;border:1px solid #F0D8A8;border-radius:20px;padding:2px 9px;font-size:11px;font-weight:700}.ok-pill{background:var(--green-bg);color:var(--green);border-radius:20px;padding:2px 9px;font-size:11px;font-weight:700}
+.decision{border:1px solid var(--line);border-radius:12px;padding:15px 17px;margin-bottom:12px;background:#fff}.decision .dt{font-weight:700}.decision .dwhy{font-size:12px;color:var(--mute);margin-bottom:11px}
+.suggestbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#F4F8FF;border:1px solid #D5E3FB;border-radius:10px;padding:11px 13px}.suggestbar .sv{font-size:21px;font-weight:800;color:var(--blue-dk)}.suggestbar .sl{font-size:12px;color:var(--mute);flex:1;min-width:150px}
+.btn{font-family:inherit;font-size:13px;font-weight:600;border:none;border-radius:8px;padding:9px 15px;cursor:pointer}.btn-accept{background:var(--green);color:#fff}.btn-manual{background:#fff;color:var(--inkblue);border:1px solid #CBD3DE}.btn-primary{background:var(--blue);color:#fff;font-size:14px;padding:11px 22px}.btn-primary:hover{background:var(--blue-dk)}
+.manualbox{margin-top:11px;display:flex;align-items:center;gap:9px}.manualbox input{font-family:inherit;font-size:14px;padding:8px 11px;border:1px solid #CBD3DE;border-radius:8px;width:130px;font-weight:700;color:var(--inkblue)}
+.chosen{font-size:12.5px;color:var(--green);font-weight:700;margin-top:9px}.chosen.manual{color:var(--amber)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:20px}.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px}.kpi .v{font-size:25px;font-weight:800;letter-spacing:-1px;color:var(--inkblue)}.kpi .l{font-size:12px;color:var(--mute);margin-top:2px}
+.buy{color:var(--amber);font-weight:800}.trace{font-size:11px;color:var(--mute);font-family:ui-monospace,Menlo,monospace;background:#FAF9F6;border-left:3px solid var(--blue);padding:3px 8px;border-radius:0 4px 4px 0}
+.navrow{display:flex;justify-content:space-between;margin-top:22px}.hidden{display:none}.note{font-size:12px;color:var(--mute);background:#FBF7EF;border:1px solid #EFE3CC;border-radius:8px;padding:10px 13px;margin-top:13px}
+.src-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 7px;border-radius:5px}.src-input{background:#E8F0FE;color:var(--blue-dk)}.src-manual{background:var(--amber-bg);color:#8A5A0B}.src-calc{background:var(--green-bg);color:var(--green)}
+/* transparency layer */
+.explain{border:1px solid #D5E3FB;background:#F4F8FF;border-radius:10px;padding:0;margin:0 0 16px}.explain>summary{cursor:pointer;list-style:none;padding:11px 14px;font-size:12.5px;font-weight:700;color:var(--blue-dk);display:flex;align-items:center;gap:8px}.explain>summary::-webkit-details-marker{display:none}.explain>summary::before{content:"▸";font-size:11px}.explain[open]>summary::before{content:"▾"}.explain .body{padding:0 14px 13px;font-size:12.5px;color:var(--ink);line-height:1.65}.explain .body code{background:#fff;border:1px solid #D5E3FB;border-radius:4px;padding:1px 5px;font-size:11.5px}
+.num{cursor:pointer;border-bottom:1px dotted #9DB6E8;white-space:nowrap}.num:hover{color:var(--blue-dk)}.num .ic{font-size:9px;color:#9DB6E8;vertical-align:super;margin-left:1px}
+tr.trarow td{background:#FAF9F6;border-bottom:1px solid var(--line);padding-top:0}tr.traorow.hidden{display:none}
+.how{margin-left:auto;display:flex;gap:10px}.how button{font-family:inherit;font-size:12px;font-weight:600;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:7px 13px;cursor:pointer}.how button:hover{background:rgba(255,255,255,.22)}
+#howModal{position:fixed;inset:0;background:rgba(14,26,36,.55);display:none;align-items:flex-start;justify-content:center;z-index:50;overflow:auto;padding:40px 16px}#howModal.show{display:flex}.howcard{background:var(--panel);border-radius:14px;max-width:760px;width:100%;padding:26px 28px;box-shadow:0 18px 50px rgba(0,0,0,.3)}.howcard h2{font-size:19px;margin:0 0 4px}.howcard h3{font-size:13px;text-transform:uppercase;letter-spacing:.4px;color:var(--blue-dk);margin:20px 0 6px}.howcard p,.howcard li{font-size:13px;line-height:1.6}.howcard ul{margin:6px 0;padding-left:20px}.howcard .formula{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#F4F8FF;border:1px solid #D5E3FB;border-radius:6px;padding:8px 11px;margin:5px 0;display:block}.howcard .close{float:right}
+.reason{font-size:11.5px;color:var(--mute);margin-top:3px;font-style:italic}
+</style></head><body>
+<header><div class="logo">handled<b>.</b></div><div class="tag">Planning Tool — upload inputs, get your plan</div><div class="how"><button onclick="showHow()">📖 How this works</button></div></header>
+<div id="howModal" onclick="if(event.target===this)hideHow()"><div class="howcard" id="howCard"></div></div>
+<div class="stepper" id="stepper">
+<div class="step active" data-s="0"><span class="n">1</span> Upload</div>
+<div class="step" data-s="1"><span class="n">2</span> Normalized inventory</div>
+<div class="step" data-s="2"><span class="n">3</span> Decisions</div>
+<div class="step" data-s="3"><span class="n">4</span> Plan &amp; buy-list</div>
+</div>
+<div class="wrap">
+<section id="s0"><h1>Upload this month's inputs</h1><div class="sub">Drop all four co-man inventory files together — we normalize each format and <b>combine</b> them into one on-hand picture, then plan once. (Per-co-man planning double-counts.)</div>
+<div class="panel"><div class="ulabel">Co-man raw-material inventory — all four</div><div class="uploadrow">
+<div><div class="drop" onclick="document.getElementById('f_elmers').click()"><div class="big">Elmers</div><div class="small">spatial grid · find-by-code</div></div>
+<input type="file" id="f_elmers" class="hidden" accept=".xlsx,.xls,.csv"><div id="chip_elmers"></div></div>
+<div><div class="drop" onclick="document.getElementById('f_bazzini').click()"><div class="big">Bazzini</div><div class="small">lot list · SUMIF by code</div></div>
+<input type="file" id="f_bazzini" class="hidden" accept=".xlsx,.xls,.csv"><div id="chip_bazzini"></div></div>
+<div><div class="drop" onclick="document.getElementById('f_palmer').click()"><div class="big">Palmer</div><div class="small">code-in-file · strip units</div></div>
+<input type="file" id="f_palmer" class="hidden" accept=".xlsx,.xls,.csv"><div id="chip_palmer"></div></div>
+<div><div class="drop" onclick="document.getElementById('f_spg').click()"><div class="big">SPG (Superior Pack Group)</div><div class="small">item-type table · default qty</div></div>
+<input type="file" id="f_spg" class="hidden" accept=".xlsx,.xls,.csv"><div id="chip_spg"></div></div>
+</div></div>
+<div class="panel"><div class="ulabel">3PL finished goods (FST / Green Rabbit)</div>
+<div class="drop" onclick="document.getElementById('f_3pl').click()"><div class="big">Drop 3PL inventory</div><div class="small">opening finished-goods on hand (seeds the supply plan — kept separate from co-man raw inventory)</div></div>
+<input type="file" id="f_3pl" class="hidden" accept=".xlsx,.xls,.csv"><div id="chip_3pl"></div>
+<div class="note">3PL opening inventory — demo uses the <b>Total Inventory OH</b> stand-in (live FST / Green Rabbit portal integration is future). The real FST/GR data lives in web portals, not files.</div></div>
+<div class="panel"><div class="note"><b>No files handy?</b> Preloaded with the real four-co-man snapshot — press Continue to combine them and walk the whole flow.</div></div>
+<div class="navrow"><span></span><button class="btn btn-primary" onclick="go(1)">Continue →</button></div></section>
+
+<section id="s1" class="hidden"><h1>Combined inventory — all co-mans</h1><div class="sub">Every co-man normalized by its own parser, then <b>merged by ingredient code</b> into one on-hand picture. This is the holistic view — needs net against this combined total, never one co-man at a time. Unmatched codes are flagged, never dropped.</div>
+<div id="normNote"></div>
+<div class="panel"><h2 id="normTitle">Combined on-hand (BOM Inv) <span class="src-tag src-input">from 4 co-mans</span></h2><div class="ph" id="normPh"></div><div class="ph">Click any number (<span class="num">value<span class="ic">ⓘ</span></span>) to see its derivation.</div><table id="normTbl"></table><div class="note hidden" id="flagNote"></div></div>
+<div class="navrow"><button class="btn btn-manual" onclick="go(0)">← Back</button><button class="btn btn-primary" onclick="go(2)">Continue →</button></div></section>
+
+<section id="s2" class="hidden"><h1>Confirm the planning decisions</h1><div class="sub">We suggest a value with the reasoning shown. Accept it, or enter your own.</div><div id="decisions"></div>
+<div class="navrow"><button class="btn btn-manual" onclick="go(1)">← Back</button><button class="btn btn-primary" onclick="runPlan();go(3)">Run the plan →</button></div></section>
+
+<section id="s3" class="hidden"><h1>Your plan &amp; buy-list</h1><div class="sub">Every number traces to your inputs. Export it, or adjust a decision and re-run.</div>
+<div class="kpis" id="kpis"></div>
+<div id="prodNote"></div>
+<div class="panel"><h2>Production <span class="src-tag src-calc">computed</span></h2><div class="ph">Click any number to expand its math.</div><table id="prodTbl"></table></div>
+<div id="buyExplain"></div>
+<div class="panel"><h2>Ingredient buy-list <span class="src-tag src-calc">computed</span> <span class="src-tag src-manual">+ your buys</span></h2><div class="ph">Click any number to expand its math. Each buy shows whether it was suggested or manual, and why.</div><table id="buyTbl"></table><div class="note" id="buyNote"></div></div>
+<div class="navrow"><button class="btn btn-manual" onclick="go(2)">← Adjust decisions</button><button class="btn btn-primary" onclick="exportXlsx()">⬇ Export to Excel</button></div></section>
+</div>
+<script>
+const SEED = {"elmers_map":[{"hcode":"IN-MC301v2","desc":"Stockton Compound (Milk Choc)","supcode":"90248B"},{"hcode":"IN-CH302v2","desc":"Idaho Compound (Dark Choc)","supcode":"90249B"},{"hcode":"IN-PB303v2","desc":"Camogie Compound (PB)","supcode":"90251"},{"hcode":"RM0130","desc":"Plain Milk Crisp","supcode":"90672"},{"hcode":"RM0131","desc":"Cocoa Whey Crisp","supcode":"90671"},{"hcode":"RM0137","desc":"Encapsulated Salt","supcode":"90824"},{"hcode":"RM0163","desc":"Vanilla Extract","supcode":"90588"}],"recipes":{"BCM3001":[{"ingredient":"Stockton Compound","loc":"Elmers","pct":0.88,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Elmers","pct":0.12,"scrap":0.1},{"ingredient":"Stockton Compound","loc":"Bazzini","pct":0.88,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Bazzini","pct":0.12,"scrap":0.1}],"BSF3002":[{"ingredient":"Idaho Compound","loc":"Elmers","pct":0.875,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Elmers","pct":0.117,"scrap":0.1},{"ingredient":"Encapsulated Salt","loc":"Elmers","pct":0.008,"scrap":0.1},{"ingredient":"Idaho Compound","loc":"Bazzini","pct":0.875,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Bazzini","pct":0.117,"scrap":0.1},{"ingredient":"Encapsulated Salt","loc":"Bazzini","pct":0.008,"scrap":0.1}],"BPB3003":[{"ingredient":"Camogie Compound","loc":"Elmers","pct":0.85,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Elmers","pct":0.092,"scrap":0.1},{"ingredient":"Cocoa Whey Crisp","loc":"Elmers","pct":0.05,"scrap":0.1},{"ingredient":"Encapsulated Salt","loc":"Elmers","pct":0.008,"scrap":0.1},{"ingredient":"Camogie Compound","loc":"Bazzini","pct":0.85,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Bazzini","pct":0.092,"scrap":0.1},{"ingredient":"Cocoa Whey Crisp","loc":"Bazzini","pct":0.05,"scrap":0.1},{"ingredient":"Encapsulated Salt","loc":"Bazzini","pct":0.008,"scrap":0.1}],"BCM5001":[{"ingredient":"Stockton Compound","loc":"Elmers","pct":0.88,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Elmers","pct":0.12,"scrap":0.1},{"ingredient":"Stockton Compound","loc":"Bazzini","pct":0.88,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Bazzini","pct":0.12,"scrap":0.1}],"BSF5002":[{"ingredient":"Idaho Compound","loc":"Elmers","pct":0.875,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Elmers","pct":0.117,"scrap":0.1},{"ingredient":"Encapsulated Salt","loc":"Elmers","pct":0.008,"scrap":0.1},{"ingredient":"Idaho Compound","loc":"Bazzini","pct":0.875,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Bazzini","pct":0.117,"scrap":0.1},{"ingredient":"Encapsulated Salt","loc":"Bazzini","pct":0.008,"scrap":0.1}],"BPB5003":[{"ingredient":"Camogie Compound","loc":"Elmers","pct":0.85,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Elmers","pct":0.092,"scrap":0.1},{"ingredient":"Cocoa Whey Crisp","loc":"Elmers","pct":0.05,"scrap":0.1},{"ingredient":"Encapsulated Salt","loc":"Elmers","pct":0.008,"scrap":0.1},{"ingredient":"Camogie Compound","loc":"Bazzini","pct":0.85,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Bazzini","pct":0.092,"scrap":0.1},{"ingredient":"Cocoa Whey Crisp","loc":"Bazzini","pct":0.05,"scrap":0.1},{"ingredient":"Encapsulated Salt","loc":"Bazzini","pct":0.008,"scrap":0.1}],"MCM1001-WIP":[{"ingredient":"Stockton Compound","loc":"Elmers","pct":0.9,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Elmers","pct":0.1,"scrap":0.1},{"ingredient":"Stockton Compound","loc":"Palmer","pct":0.9,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Palmer","pct":0.1,"scrap":0.1}],"MSF1002-WIP":[{"ingredient":"Idaho Compound","loc":"Elmers","pct":0.875,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Elmers","pct":0.117,"scrap":0.1},{"ingredient":"Encapsulated Salt","loc":"Elmers","pct":0.008,"scrap":0.1},{"ingredient":"Idaho Compound","loc":"Palmer","pct":0.875,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Palmer","pct":0.117,"scrap":0.1},{"ingredient":"Encapsulated Salt","loc":"Palmer","pct":0.008,"scrap":0.1}],"MPB1003-WIP":[{"ingredient":"Camogie Compound","loc":"Elmers","pct":0.85,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Elmers","pct":0.092,"scrap":0.1},{"ingredient":"Cocoa Whey Crisp","loc":"Elmers","pct":0.05,"scrap":0.1},{"ingredient":"Encapsulated Salt","loc":"Elmers","pct":0.008,"scrap":0.1},{"ingredient":"Camogie Compound","loc":"Palmer","pct":0.85,"scrap":0.1},{"ingredient":"Plain Milk Crisp","loc":"Palmer","pct":0.092,"scrap":0.1},{"ingredient":"Cocoa Whey Crisp","loc":"Palmer","pct":0.05,"scrap":0.1},{"ingredient":"Encapsulated Salt","loc":"Palmer","pct":0.008,"scrap":0.1}],"LSN1001-WIP":[{"ingredient":"Stockton Compound","loc":"Bazzini","pct":0.4,"scrap":0.1},{"ingredient":"Polydextrose- Liquid","loc":"Bazzini","pct":0.0416,"scrap":0.1},{"ingredient":"Milk Protein Isolate","loc":"Bazzini","pct":0.05268,"scrap":0.1},{"ingredient":"Soluble Corn Fiber- Liquid","loc":"Bazzini","pct":0.07798,"scrap":0.1},{"ingredient":"Allulose","loc":"Bazzini","pct":0.1335,"scrap":0.1},{"ingredient":"Glycerin","loc":"Bazzini","pct":0.02627,"scrap":0.1},{"ingredient":"Sodium Caseinate","loc":"Bazzini","pct":0.02089,"scrap":0.1},{"ingredient":"Palm Oil","loc":"Bazzini","pct":0.02473,"scrap":0.1},{"ingredient":"Egg White Powder","loc":"Bazzini","pct":0.00851,"scrap":0.1},{"ingredient":"Peanut Flour","loc":"Bazzini","pct":0.00854,"scrap":0.1},{"ingredient":"Salt","loc":"Bazzini","pct":0.00585,"scrap":0.1},{"ingredient":"Nat Flavor Peanut OS","loc":"Bazzini","pct":0.00372,"scrap":0.1},{"ingredient":"TastePrint","loc":"Bazzini","pct":0.00101,"scrap":0.1},{"ingredient":"Peanut Oil w/Extract","loc":"Bazzini","pct":0.0007,"scrap":0.1},{"ingredient":"Allulose","loc":"Bazzini","pct":0,"scrap":0.1},{"ingredient":"Soluble Corn Fiber- Liquid","loc":"Bazzini","pct":0,"scrap":0.1},{"ingredient":"Anhydrous Milkfat","loc":"Bazzini","pct":0.02121,"scrap":0.1},{"ingredient":"Milk Protein Isolate","loc":"Bazzini","pct":0,"scrap":0.1},{"ingredient":"Salt","loc":"Bazzini","pct":0,"scrap":0.1},{"ingredient":"Dehydrated Sweet Cream Powder","loc":"Bazzini","pct":0.0226,"scrap":0.1},{"ingredient":"Vanilla Extract","loc":"Bazzini","pct":0.00015,"scrap":0.1},{"ingredient":"Roasted Peanut Splits","loc":"Bazzini","pct":0.15,"scrap":0.1}]},"refprod":{"BCM2001":{"size":"33g","per_case":72,"cases_pallet":168,"minis_pallet":12096},"BSF2002":{"size":"33g","per_case":72,"cases_pallet":168,"minis_pallet":12096},"BPB2003":{"size":"33g","per_case":72,"cases_pallet":168,"minis_pallet":12096},"BCC2004":{"size":"33g","per_case":72,"cases_pallet":168,"minis_pallet":12096},"BCM3001":{"size":"33g","per_case":72,"cases_pallet":224,"minis_pallet":16128},"BSF3002":{"size":"33g","per_case":72,"cases_pallet":224,"minis_pallet":16128},"BPB3003":{"size":"33g","per_case":72,"cases_pallet":224,"minis_pallet":16128},"MBMC4001":{"size":"3.3oz","per_case":6,"cases_pallet":100,"minis_pallet":600},"MBSF4002":{"size":"3.3oz","per_case":6,"cases_pallet":100,"minis_pallet":600},"MBPB4003":{"size":"3.3oz","per_case":6,"cases_pallet":100,"minis_pallet":600},"MBPN4000":{"size":"3.1oz","per_case":6,"cases_pallet":100,"minis_pallet":600},"MBFC4004":{"size":"10.15oz","per_case":18,"cases_pallet":360,"minis_pallet":6480},"MBMC4001-WIP":{"size":"8g","per_case":850,"cases_pallet":36,"minis_pallet":30600},"MBSF4002-WIP":{"size":"8g","per_case":850,"cases_pallet":36,"minis_pallet":30600},"MBPB4003-WIP":{"size":"7.5g","per_case":900,"cases_pallet":36,"minis_pallet":32400},"MBPN4000-WIP":{"size":"15g","per_case":400,"cases_pallet":36,"minis_pallet":14400},"BMC5001":{"size":"33g","per_case":72,"cases_pallet":224,"minis_pallet":16128},"BSF5002":{"size":"33g","per_case":72,"cases_pallet":224,"minis_pallet":16128},"BPB5003":{"size":"33g","per_case":72,"cases_pallet":224,"minis_pallet":16128},"BVAR3000":{"size":"33g","per_case":9,"cases_pallet":224,"minis_pallet":16128},"MBVAR4006-MC3":{"size":null,"per_case":null,"cases_pallet":null,"minis_pallet":null},"MBVAR4004-MC5":{"size":null,"per_case":null,"cases_pallet":null,"minis_pallet":null}},"bom":[{"finished":"MBMC4001","wip":"MBMC4001-WIP","minis":11},{"finished":"MBSF4002","wip":"MBSF4002-WIP","minis":11},{"finished":"MBPB4003","wip":"MBPB4003-WIP","minis":12},{"finished":"MBPN4000","wip":"MBPN4000-WIP","minis":6},{"finished":"MBFC4004","wip":"MBMC4001-WIP","minis":18},{"finished":"MBFC4004","wip":"MBSF4002-WIP","minis":18},{"finished":"MBVAR4006-MC3","wip":"MBMC4001-WIP","minis":1},{"finished":"MBVAR4006-MC3","wip":"MBSF4002-WIP","minis":1},{"finished":"MBVAR4006-MC3","wip":"MBPB4003-WIP","minis":1},{"finished":"MBVAR4004-MC5","wip":"MBMC4001-WIP","minis":1},{"finished":"MBVAR4004-MC5","wip":"MBSF4002-WIP","minis":1},{"finished":"MBVAR4004-MC5","wip":"MBPB4003-WIP","minis":1},{"finished":"MBVAR4004-MC5","wip":"MBPN4000-WIP","minis":2},{"finished":"MBVAR4005-MC4","wip":"MBMC4001-WIP","minis":1},{"finished":"MBVAR4005-MC4","wip":"MBSF4002-WIP","minis":1},{"finished":"MBVAR4005-MC4","wip":"MBPB4003-WIP","minis":1},{"finished":"MBVAR4005-MC4","wip":"MBPN4000-WIP","minis":1}],"opening_inv":[{"sku":"BCM2001","desc":"Milk Crunch Bar","qty":144},{"sku":"BSF2002","desc":"Salted Fudge Crunch Bar","qty":936},{"sku":"BPB2003","desc":"Peanut Butter Crunch Bar","qty":19704},{"sku":"BCC2004","desc":"Cookies & Creme Bar","qty":0},{"sku":"BCM3001","desc":"Milk Chocolate Crunch Bar","qty":271596},{"sku":"BSF3002","desc":"Salted Fudge Crunch Bar","qty":237996},{"sku":"BPB3003","desc":"Peanut Butter Crunch Bar","qty":58188},{"sku":"BVAR3000","desc":"Variety 9-Pack Sampler - Bar (CM,PB,SF)","qty":3944},{"sku":"BMC5001","desc":"Milk Chocolate Crunch  - Bar","qty":221400},{"sku":"BSF5002","desc":"Salted Fudge Crunch - Bar","qty":445176},{"sku":"BPB5003","desc":"Peanut Butter Crunch - Bar","qty":62064},{"sku":"MBPN4000","desc":"Peanut Caramel Nougat Mini, Bag","qty":6996},{"sku":"MBMC4001","desc":"Milk Chocolate - Mini Bar","qty":24627},{"sku":"MBSF4002","desc":"Salted Fudge - Mini Bar ","qty":36842},{"sku":"MBPB4003","desc":"Peanut Butter - Mini Bar ","qty":3988},{"sku":"MBFC4004","desc":"SF and MC Mini bars - 10oz/ 18ct tray","qty":227},{"sku":"MBMC4001-WIP","desc":"WIP - Milk Chocolate Mini Bar, 15lb box","qty":214200},{"sku":"MBSF4002-WIP","desc":"WIP - Salted Fudge Mini Bar, 15lb box","qty":5950},{"sku":"MBPB4003-WIP","desc":"WIP - Peanut Butter Mini Bar, 15lb box","qty":0}],"raw_samples":{"elmers":[["Salted Fudge",null,null,null,null,null,"Classic Milk",null,null,null,null,null,"Item","HC SKU","RSC Cases","Units","Bars",null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,10010,"PK-MC","Horizontal ",8597,618984,null,null,null,null,null,null,null,null,null,null,null],["Item","HC SKU","Horizontal","Units","Bars",null,"Item","HC SKU","Horizontal","Units","Bars",null,10019,"PK-MC03","Vertical",12943,931896,null,null,null,null,null,null,null,null,null,null,null],["50029B","PK-WPSF04","Film",110000,110000,null,"50032B","PK-WPMC04","Film",192600,192600,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[20470,"PK-CTSFV2","Folding Carton",18161,217932,null,"20473B","PK-CTMCV2","Folding Carton",2829,33948,null,10022,"PK-MC04-WIP","Mini Bulk Gen",9044,null,null,null,null,null,null,null,null,null,null,null,null],["Item","HC SKU","Vertical","Units","Bars",null,"Item","HC SKU","Vertical","Units","Bars",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[50033,"PK-WPSF05","Film",497350,497350,null,50034,"PK-WPMC05","Film",798200,798200,null,"Item",null,"Salt","lbs","Bars",null,null,null,null,32,null,"G","Per Case","lb per case",null,null],[20474,"PK-VCDSF03","Folding Carton",76301,915612,null,20475,"PK-VCDMC03","Folding Carton",58872,706464,null,90824,"RM0137",null,1189,null,null,null,null,null,"crisp",0.117,3.744,269.568,0.5950728477,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,"com",0.874,27.968,2013.696,4.445245033,0.008890490066,null],["Item","HC SKU","SF Mini Film  8 g ","Units","Bars",null,"Item","HC SKU","Milk Mini Film  8 g ","Units","Bars",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[50026,"PK-WPMSF","Film",1795400,1795400,null,50021,"PK-WPMMC","Film",929000,929000,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,"lbs",null,null,null,null,null,"lbs",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["90249B","IN-CH302v2","Dark Choc Comp",90669,1173515.914,null,"90248B","IN-MC301v2","Milk Choc Comp",75920,982621.7143,null,null,null,null,null,null,null,null,null,null,"salt",0.009,0.288,20.736,0.04577483444,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1,32,2304,5.086092715,null,null],["Peanut Butter",null,null,null,null,null,null,null,null,null,null,null,"Milk Crisps",null,null,null,null,null,null,null,null,null,0.002,0.064,null,null,null,null],["Item","HC SKU","Horizontal","Units","Bars",null,null,null,null,null,null,null,"Item","HC SKU","Crisps","lbs",null,null,null,null,null,null,null,null,null,null,null,null],[50036,"PK-WPPB04","Film",310300,310300,null,null,null,null,null,null,null,90672,"RM0130",null,14704,null,null,null,null,null,null,null,null,null,null,null,null],[20476,"PK-CTPBV2","Folding Carton",36677,440124,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["Item","HC SKU","Vertical","Units","Bars",null,null,null,null,null,null,null,"Coco Crisps",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[50035,"PK-WPPB05","Film",118500,118500,null,null,null,null,null,null,null,"Item","HC SKU","Crisps","lbs",null,null,null,null,null,null,null,null,null,null,null,null],[20471,"PK-VCDPB03","Folding Carton",21028,252336,null,null,null,null,null,null,null,90671,"RM0131",null,728,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null,null,null,"Vanilla Flavor",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["Item","HC SKU","Pnt But Mini 7.5g","Units","Bars",null,null,null,null,null,null,null,"Item","HC SKU",null,"lbs",null,null,null,null,null,null,null,null,null,null,null,null],[50031,"PK-WPMPB01","Film",505000,505000,null,null,null,null,null,null,null,90588,"RM0163",null,261,null,null,null,null,null,null,null,null,null,null,null,null],["Pnt Butter Com",null,null,"lbs",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[90251,"IN-PB303v2","PNT But Com",16600,0,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]],"bazzini":[["Item Number","Hormbles #","Item Description","Location Code","Bin","Lot Number","Qty","UOM"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","SD-WH-MAIN","49-09","55448-1",375,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","SD-WH-MAIN","49-09","58548-1-1",8640,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","SD-WH-MAIN","49-09","59019-1-1",4800,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","SD-WH-MAIN","49-09","58845-1-1",9600,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","SD-WH-MAIN","49-10","55448-1",45,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","SD-WH-MAIN","49-10","55448-1",802,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","SD-WH-MAIN","49-10","55448-1",4800,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","SD-WH-MAIN","49-10","55448-1",1200,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","SD-WH-MAIN","49-10","58548-1-1",4800,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","SD-WH-MAIN","49-10","59019-1-1",3360,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","SD-WH-MAIN","49-10","56295-1",220,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","SD-WH-MAIN","49-10","56295-1",7160,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","AT-WH-MAIN","90 FLOOR","58548-1-1",300,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","AT-WH-MAIN","90 FLOOR","58548-1-1",960,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","AT-WH-MAIN","92-00-05","58548-1-1",960,"EA"],["A92006","PK-MC02","HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)","AT-WH-MAIN","92-00-05","58548-1-1",960,"EA"],["A92018","PK-MC","HOCR W/LOGO MSTR CTN 6PK #PK-MC (11.75 W X 5.625 D X 7.25 H)","SD-WH-MAIN","31-09-01","13759-1 PO. POHOCR10",1035,"EA"],["A92018","PK-MC","HOCR W/LOGO MSTR CTN 6PK #PK-MC (11.75 W X 5.625 D X 7.25 H)","SD-WH-MAIN","49-09",10225,1100,"EA"],["A92018","PK-MC","HOCR W/LOGO MSTR CTN 6PK #PK-MC (11.75 W X 5.625 D X 7.25 H)","SD-WH-MAIN","49-09",10225,1100,"EA"],["A92018","PK-MC","HOCR W/LOGO MSTR CTN 6PK #PK-MC (11.75 W X 5.625 D X 7.25 H)","SD-WH-MAIN","49-10",13759,1000,"EA"],["A92018","PK-MC","HOCR W/LOGO MSTR CTN 6PK #PK-MC (11.75 W X 5.625 D X 7.25 H)","SD-WH-MAIN","49-10",13759,1200,"EA"],["A92018","PK-MC","HOCR W/LOGO MSTR CTN 6PK #PK-MC (11.75 W X 5.625 D X 7.25 H)","AT-WH-MAIN","92-13-03",10194,950,"EA"],["B92001-BOX","PK-CTSF","HOCR SLT'D FUDGE 12PK BX (#PK-CTSF)","SD-WH-MAIN","32-11-03",10050,4640,"EA"],["B92003-BOX","PK-CTCC","HOCR COOKIE & CREME 12PK BX (#PK-CTCC)","SD-WH-MAIN","32-11-03",10050,1600,"EA"],["B92004-BOX","PK-CTPBV2","HOCR PB CRUNCH 12PK BX (#PK-CTPBV2)","SD-WH-MAIN","31-06-01",10128,9600,"EA"],["B92004-BOX","PK-CTPBV2","HOCR PB CRUNCH 12PK BX (#PK-CTPBV2)","SD-WH-MAIN","31-11-01","10078  PO.0037476",979,"EA"],["B92004-BOX","PK-CTPBV2","HOCR PB CRUNCH 12PK BX (#PK-CTPBV2)","SD-WH-MAIN","62-08-03",10128,500,"EA"],["B92004-BOX","PK-CTPBV2","HOCR PB CRUNCH 12PK BX (#PK-CTPBV2)","SD-WH-MAIN","62-08-03",10128,4600,"EA"],["B92004-BOX","PK-CTPBV2","HOCR PB CRUNCH 12PK BX (#PK-CTPBV2)","SD-WH-MAIN","62-13-01",10128,500,"EA"],["B92008-BOX","PK-VCDPBV2","HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPBV2)","AT-WH-MAIN","96-13-03",10195,10800,"EA"],["B92008-BOX","PK-VCDPBV2","HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPBV2)","AT-WH-MAIN","96-18-03",10195,5700,"EA"],["B92018-BOX","PK-CTPBV2","HOCR PB CRUNCH 12PK HORIZONTAL BX (#PK-CTPBV3)","SD-WH-MAIN","62-39-01",10128,9600,"EA"],["B92018-BOX","PK-CTPBV2","HOCR PB CRUNCH 12PK HORIZONTAL BX (#PK-CTPBV3)","AT-WH-MAIN","91-12-03",10128,3350,"EA"],["B92019-BOX","PK-VCDPB","HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPB)","SD-WH-MAIN","32-28-01",10139,3531,"EA"],["B92019-BOX","PK-VCDPB","HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPB)","SD-WH-MAIN","32-28-01",10139,3069,"EA"],["B92019-BOX","PK-VCDPB","HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPB)","SD-WH-MAIN","32-28-01",10223,4420,"EA"],["B92019-BOX","PK-VCDPB","HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPB)","AT-WH-MAIN","91-01-02",10139,30,"EA"],["B92022-BOX","PK-VCDPBV3","HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPBV3)","SD-WH-MAIN","49-09","10195V3",7850,"EA"],["D92006-BAG","PK-SPMPCN","HOCR PNUT CRML NOUGAT POUCH 3.39OZ (#PK-SPMPCN) (1000/CS)","SD-WH-MAIN","49-09",10181,13000,"EA"],["D92006-BAG","PK-SPMPCN","HOCR PNUT CRML NOUGAT POUCH 3.39OZ (#PK-SPMPCN) (1000/CS)","SD-WH-MAIN","49-09",10209,96000,"EA"],["D92006-BAG","PK-SPMPCN","HOCR PNUT CRML NOUGAT POUCH 3.39OZ (#PK-SPMPCN) (1000/CS)","AT-WH-MAIN","96-10-02",10209,39150,"EA"],["D92006-BAG","PK-SPMPCN","HOCR PNUT CRML NOUGAT POUCH 3.39OZ (#PK-SPMPCN) (1000/CS)","AT-WH-MAIN","96-11-01",10209,48000,"EA"],["D92006-BAG","PK-SPMPCN","HOCR PNUT CRML NOUGAT POUCH 3.39OZ (#PK-SPMPCN) (1000/CS)","AT-WH-MAIN","96-11-03",10209,34075,"EA"],["D92006-BAG","PK-SPMPCN","HOCR PNUT CRML NOUGAT POUCH 3.39OZ (#PK-SPMPCN) (1000/CS)","AT-WH-MAIN","96-25-03",10209,42000,"EA"],["G92001-UPC","PK-CTSF","HOCR SLT'D FUDGE UPC COVER UP LBL (PK-CTSF)","AT-WH-MAIN","79-25-01",10044,17450,"EA"],["G92002-UPC","PK-CTMC","HOCR MC CRUNCH UPC COVER UP LBL (PK-CTMC)","AT-WH-MAIN","79-25-01",10044,21000,"EA"],["G92003-UPC","PK-CTCC","HOCR COOKIE & CREME UPC COVER UP LBL (PK-CTCC)","AT-WH-MAIN","79-25-01",10044,16300,"EA"],["H92004-CFW","PK-WPPB02","HOCR PB CRUNCH 30G FLM (#PK-WPPB02)","AT-WH-MAIN","95-02-03","491533 PO. POHOCR101",17000,"IMP"],["H92004-CFW","PK-WPPB02","HOCR PB CRUNCH 30G FLM (#PK-WPPB02)","AT-WH-MAIN","95-02-03","PO-10101",34000,"IMP"],["H92004-CFW","PK-WPPB02","HOCR PB CRUNCH 30G FLM (#PK-WPPB02)","AT-WH-MAIN","95-02-03","491533 PO. POHOCR101",8500,"IMP"],["H92004-CFW","PK-WPPB02","HOCR PB CRUNCH 30G FLM (#PK-WPPB02)","AT-WH-MAIN","95-02-03","491533 PO. POHOCR101",108500,"IMP"],["H92004-CFW","PK-WPPB02","HOCR PB CRUNCH 30G FLM (#PK-WPPB02)","AT-WH-MAIN","95-02-03","491533 PO. POHOCR101",6000,"IMP"],["H92006-CFW","PK-WPMN01","HOCR PNUT CRML NOUGAT 16G FLM (#PK-WPMN01)","SD-WH-MAIN","49-09",497810,1932500,"IMP"],["H92006-CFW","PK-WPMN01","HOCR PNUT CRML NOUGAT 16G FLM (#PK-WPMN01)","SD-WH-MAIN","49-10",496510,424000,"IMP"],["H92006-CFW","PK-WPMN01","HOCR PNUT CRML NOUGAT 16G FLM (#PK-WPMN01)","AT-WH-MAIN","95-09-02",10175,185000,"IMP"],["H92006-CFW","PK-WPMN01","HOCR PNUT CRML NOUGAT 16G FLM (#PK-WPMN01)","AT-WH-MAIN","96-01-02",10136,156000,"IMP"],["H92018-CFW","PK-WPPB04","HOCR PB CRUNCH HORIZONTAL 30G FLM (#PK-WPPB04)","AT-WH-MAIN","95-18-04",494497,374000,"IMP"],["H92019-CFW","PK-WPPB05","HOCR PB CRUNCH VETICAL 30G FLM (#PK-WPPB05)","AT-WH-MAIN","95-00-03",496037,193000,"IMP"],["I82001-CER","RM0130","HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)","AT-WH-MAIN","91-20-03",534641,240,"Lbs"],["I82001-CER","RM0130","HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)","AT-WH-MAIN","91-20-03",528851,70,"Lbs"],["I82001-CER","RM0130","HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)","AT-WH-MAIN","STAGING",528851,10,"Lbs"],["I82001-CER","RM0130","HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)","AT-WH-MAIN","STAGING",528851,640,"Lbs"],["I82001-CER","RM0130","HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)","AT-WH-MAIN","STAGING",528851,160,"Lbs"],["I82001-CER","RM0130","HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)","NW-WH-MAIN","ZONE 5",532952,520,"Lbs"],["I82001-CER","RM0130","HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)","NW-WH-MAIN","ZONE 5",528851,10,"Lbs"],["I82001-CER","RM0130","HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)","NW-WH-MAIN","ZONE 5",528851,40,"Lbs"],["I82001-CER","RM0130","HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)","NW-WH-MAIN","ZONE 5",528851,290,"Lbs"],["I82001-CER","RM0130","HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)","NW-WH-MAIN","ZONE 5",528851,40,"Lbs"],["I82001-CER","RM0130","HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)","NW-WH-MAIN","ZONE 5",528851,420,"Lbs"],["I82002-CBK","IN-MC301v2","HOCR NSA HIGH PROTEIN MC CONF COATING (25-025A/IN-MC301v2)","NW-WH-MAIN","113-112-03","260379-D",1800,"Lbs"],["I82002-CBK","IN-MC301v2","HOCR NSA HIGH PROTEIN MC CONF COATING (25-025A/IN-MC301v2)","NW-WH-MAIN","113-112-03","260379-D",300,"Lbs"],["I82002-CBK","IN-MC301v2","HOCR NSA HIGH PROTEIN MC CONF COATING (25-025A/IN-MC301v2)","NW-WH-MAIN","113-114-03","260379-D",900,"Lbs"],["I82002-CBK","IN-MC301v2","HOCR NSA HIGH PROTEIN MC CONF COATING (25-025A/IN-MC301v2)","AT-WH-MAIN","75-45-01","26008-D",2000,"Lbs"],["I82003-CBK",null,"HOCR HIGH PROTEIN DC CONF COATING (25-025B)","AT-WH-MAIN","75-25-01",96,840,"Lbs"],["I82004-SLT","RM0137","HOCR FLVSHURE 630 ENCAPSULATED PRETZ SEA SLT 80% (F4630013-K50/RM0137)","AT-WH-MAIN","73-08-01","BN20000010229",65,"Lbs"],["I82004-SLT","RM0137","HOCR FLVSHURE 630 ENCAPSULATED PRETZ SEA SLT 80% (F4630013-K50/RM0137)","AT-WH-MAIN","73-08-01","BN20000010229",50,"Lbs"],["I82004-SLT","RM0137","HOCR FLVSHURE 630 ENCAPSULATED PRETZ SEA SLT 80% (F4630013-K50/RM0137)","AT-WH-MAIN","STAGING","BN20000010229",14.66,"Lbs"],["I82006-CBK","IN-WC304","HOCR ROSALIE HIGH PROTEIN WHT CONF COATING 25# (IN-WC304)","NW-WH-MAIN","113-112-04","250130-D",775,"Lbs"],["I82006-CBK","IN-WC304","HOCR ROSALIE HIGH PROTEIN WHT CONF COATING 25# (IN-WC304)","AT-WH-MAIN","77-35-04","250147-D",750,"Lbs"],["I82008-CBK","IN-MC301v2","HOCR STOCKTON NSA HP MC COATING (GRAC25020901NWFC25/IN-MC301v2)","AT-WH-MAIN","DROP ZONE","260008-D",50,"Lbs"],["I82010-PWD","RM0167","HOCR DEHYDRATED SWT CRM PWD 50# (BDF0011B/RM0167)","NW-WH-MAIN","113-098-03",6012,1700,"Lbs"],["I82010-PWD","RM0167","HOCR DEHYDRATED SWT CRM PWD 50# (BDF0011B/RM0167)","NW-WH-MAIN","DOCK","6005-17",500,"Lbs"],["I82010-PWD","RM0167","HOCR DEHYDRATED SWT CRM PWD 50# (BDF0011B/RM0167)","AT-WH-MAIN","STAGING",6033,0.1,"Lbs"],["I82010-PWD","RM0167","HOCR DEHYDRATED SWT CRM PWD 50# (BDF0011B/RM0167)","AT-WH-MAIN","STAGING",6033,487.1,"Lbs"],["I82011-DAI","RM0158","HOCR DFA ANHYROUS MILK FAT 55.115# (107732/RM0158)","NW-WH-MAIN","113-070-03","WT10761756",1653.45,"Lbs"],["I82011-DAI","RM0158","HOCR DFA ANHYROUS MILK FAT 55.115# (107732/RM0158)","AT-WH-MAIN","STAGING","WT10733619",226.72,"Lbs"],["I82011-DAI","RM0158","HOCR DFA ANHYROUS MILK FAT 55.115# (107732/RM0158)","AT-WH-MAIN","STAGING","WT10733619",159.08,"Lbs"],["I82011-DAI","RM0158","HOCR DFA ANHYROUS MILK FAT 55.115# (107732/RM0158)","AT-WH-MAIN","STAGING","WT10733619",502.47,"Lbs"],["I82011-DAI","RM0158","HOCR DFA ANHYROUS MILK FAT 55.115# (107732/RM0158)","NW-WH-MAIN","ZONE 5","WT10716559",55.12,"Lbs"],["I82012","RM0154","HOCR ADM GLYCERIN 50# (RM0154)","NW-WH-MAIN","114-033-03",2608310,1200,"Lbs"],["I82012","RM0154","HOCR ADM GLYCERIN 50# (RM0154)","NW-WH-MAIN","114-057-01",2608310,1200,"Lbs"],["I82012","RM0154","HOCR ADM GLYCERIN 50# (RM0154)","AT-WH-MAIN","STAGING",2600710,70,"Lbs"],["I82012","RM0154","HOCR ADM GLYCERIN 50# (RM0154)","AT-WH-MAIN","STAGING",2600710,70,"Lbs"],["I82013-PWD","RM0151","HOCR EGG WHT PWD 50# (RM0151)","AT-WH-MAIN","DROP ZONE","WD0206-001",60,"Lbs"],["I82013-PWD","RM0151","HOCR EGG WHT PWD 50# (RM0151)","AT-WH-MAIN","STAGING","WD0213-001",110,"Lbs"],["I82013-PWD","RM0151","HOCR EGG WHT PWD 50# (RM0151)","AT-WH-MAIN","STAGING","WD0225-001",10,"Lbs"],["I82013-PWD","RM0151","HOCR EGG WHT PWD 50# (RM0151)","AT-WH-MAIN","STAGING","WD0225-001",60,"Lbs"],["I82013-PWD","RM0151","HOCR EGG WHT PWD 50# (RM0151)","AT-WH-MAIN","STAGING","WD0225-001",5,"Lbs"],["I82014-DAI","RM0125","HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)","NW-WH-MAIN","113-100-03","07263G1",1763.6,"Lbs"],["I82014-DAI","RM0125","HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)","NW-WH-MAIN","113-102-03","07263G1",1763.6,"Lbs"],["I82014-DAI","RM0125","HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)","NW-WH-MAIN","113-104-03","07263G1",1763.6,"Lbs"],["I82014-DAI","RM0125","HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)","NW-WH-MAIN","113-106-03","07263G1",1763.6,"Lbs"],["I82014-DAI","RM0125","HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)","NW-WH-MAIN","113-108-03","07263G1",1190.43,"Lbs"],["I82014-DAI","RM0125","HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)","NW-WH-HOLD","113-114-02","MS6425315",768,"Lbs"],["I82014-DAI","RM0125","HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)","AT-WH-MAIN","74-21-02","18853G1",950,"Lbs"],["I82014-DAI","RM0125","HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)","AT-WH-MAIN","75-02-03","07263G1",1012,"Lbs"],["I82014-DAI","RM0125","HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)","AT-WH-MAIN","STAGING","30443G1",600,"Lbs"],["I82014-DAI","RM0125","HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)","AT-WH-MAIN","STAGING","MS6425315",35,"Lbs"],["I82015-FTOL","RM0168","HOCR CONFAO PALM VEG OIL 400#/DR (8333-D400-PN/RM0168)","NW-WH-MAIN","ZONE 10","26D30820",2000,"Lbs"],["I82016-SLT","RM0136","HOCR MORTON SALT (TOP FLO) 50# (RM0136)","NW-WH-MAIN","111-025-02",60520020,400,"Lbs"],["I82016-SLT","RM0136","HOCR MORTON SALT (TOP FLO) 50# (RM0136)","AT-WH-MAIN","74-01-03",53919459,91,"Lbs"],["I82016-SLT","RM0136","HOCR MORTON SALT (TOP FLO) 50# (RM0136)","AT-WH-MAIN","74-01-03",53919459,9,"Lbs"],["I82016-SLT","RM0136","HOCR MORTON SALT (TOP FLO) 50# (RM0136)","AT-WH-MAIN","74-01-03",53919459,2150,"Lbs"],["I82016-SLT","RM0136","HOCR MORTON SALT (TOP FLO) 50# (RM0136)","NW-WH-MAIN","ZONE 5",60141980,300,"Lbs"],["I82016-SLT","RM0136","HOCR MORTON SALT (TOP FLO) 50# (RM0136)","NW-WH-MAIN","ZONE 5",59808749,50,"Lbs"],["I82017-ADD","RM0152","HOCR SF POLYDEXTROSE SYRUP 55.115# (RM0152)","AT-WH-MAIN","73-12-01","AIOSBD31301-3",15,"Lbs"],["I82017-ADD","RM0152","HOCR SF POLYDEXTROSE SYRUP 55.115# (RM0152)","AT-WH-MAIN","92-16-02","AIOSBE17601-3",275,"Lbs"],["I82017-ADD","RM0152","HOCR SF POLYDEXTROSE SYRUP 55.115# (RM0152)","AT-WH-MAIN","92-16-02","AIOSBE17601-3",440,"Lbs"],["I82017-ADD","RM0152","HOCR SF POLYDEXTROSE SYRUP 55.115# (RM0152)","NW-WH-MAIN","ZONE 6","AIOSBE33101-3",3000,"Lbs"],["I82018-PWD","RM0123","HOCR ALLULOSE CRYSTALINE PWD 55.115# (RM0123)","NW-WH-MAIN","114-069-01","AIASBE07502-J",330.69,"Lbs"],["I82018-PWD","RM0123","HOCR ALLULOSE CRYSTALINE PWD 55.115# (RM0123)","AT-WH-MAIN","75-02-02","AIASBE28502-J",990,"Lbs"],["I82018-PWD","RM0123","HOCR ALLULOSE CRYSTALINE PWD 55.115# (RM0123)","AT-WH-MAIN","STAGING","AIASBE28502-J",195.43,"Lbs"],["I82019-LIQ","RM0153","HOCR FIBERSMART CS90 LIQUID 70% 55.115# (RM0153)","AT-WH-MAIN","77 FLOOR","AIFSBE021801-9",493.02,"Lbs"],["I82019-LIQ","RM0153","HOCR FIBERSMART CS90 LIQUID 70% 55.115# (RM0153)","AT-WH-MAIN","92-07-03","AIFSBE21801-9",880,"Lbs"],["I82019-LIQ","RM0153","HOCR FIBERSMART CS90 LIQUID 70% 55.115# (RM0153)","NW-WH-MAIN","ZONE 6","AIFSBE22001-9",3200,"Lbs"],["I82019-LIQ","RM0153","HOCR FIBERSMART CS90 LIQUID 70% 55.115# (RM0153)","NW-WH-MAIN","ZONE 6","AIFSBE22001-9",3200,"Lbs"],["I82020-FTOL","RM0133","HOCR PREMIUN OIL W/NAT PNUT FLV 38# (504508/RM0133)","AT-WH-MAIN","STAGING","1260A35124",37,"Lbs"],["I82020-FTOL","RM0133","HOCR PREMIUN OIL W/NAT PNUT FLV 38# (504508/RM0133)","AT-WH-MAIN","STAGING","125OA18224",2,"Lbs"],["I82020-FTOL","RM0133","HOCR PREMIUN OIL W/NAT PNUT FLV 38# (504508/RM0133)","NW-WH-MAIN","ZONE 7","1250A35124",80.6,"Lbs"],["I82021-FLR","RM0169","HOCR PNUT FLR MED RST 12% FAT 50# (521264/RM0169)","AT-WH-MAIN","STAGING","126FA03324",152,"Lbs"],["I82021-FLR","RM0169","HOCR PNUT FLR MED RST 12% FAT 50# (521264/RM0169)","AT-WH-MAIN","STAGING","126FA03324",30,"Lbs"],["I82021-FLR","RM0169","HOCR PNUT FLR MED RST 12% FAT 50# (521264/RM0169)","AT-WH-MAIN","STAGING","12SFA23424",12,"Lbs"],["I82021-FLR","RM0169","HOCR PNUT FLR MED RST 12% FAT 50# (521264/RM0169)","AT-WH-MAIN","STAGING","12SFA23424",118,"Lbs"],["I82021-FLR","RM0169","HOCR PNUT FLR MED RST 12% FAT 50# (521264/RM0169)","NW-WH-MAIN","ZONE 7","126FA03324",450,"Lbs"],["I82021-FLR","RM0169","HOCR PNUT FLR MED RST 12% FAT 50# (521264/RM0169)","NW-WH-MAIN","ZONE 7","126FB05924",150,"Lbs"],["I82022-FLV","RM0160","HOCR NAT PNUT FLV OS 37.9# (RM0160)","AT-WH-MAIN","STAGING","2025-65543",11.1,"Lbs"],["I82022-FLV","RM0160","HOCR NAT PNUT FLV OS 37.9# (RM0160)","AT-WH-MAIN","STAGING","2025-65543",14,"Lbs"],["I82022-FLV","RM0160","HOCR NAT PNUT FLV OS 37.9# (RM0160)","AT-WH-MAIN","STAGING","2026-71115",37.9,"Lbs"],["I82022-FLV","RM0160","HOCR NAT PNUT FLV OS 37.9# (RM0160)","AT-WH-MAIN","STAGING","2026-71115",0.1,"Lbs"],["I82022-FLV","RM0160","HOCR NAT PNUT FLV OS 37.9# (RM0160)","AT-WH-MAIN","STAGING","2026-71115",37.9,"Lbs"],["I82022-FLV","RM0160","HOCR NAT PNUT FLV OS 37.9# (RM0160)","NW-WH-MAIN","ZONE 7","2026-73111",303.2,"Lbs"],["I82023-FLV","RM0163","HOCR CONCENTRATED VANILLA EXTRACT (RM0163)","AT-WH-MAIN","73-18-01",250942555,4.6,"Lbs"],["I82023-FLV","RM0163","HOCR CONCENTRATED VANILLA EXTRACT (RM0163)","AT-WH-MAIN","73-18-01",250942555,30.4,"Lbs"],["I82023-FLV","RM0163","HOCR CONCENTRATED VANILLA EXTRACT (RM0163)","AT-WH-MAIN","STAGING",250942555,39.6,"Lbs"],["I82023-FLV","RM0163","HOCR CONCENTRATED VANILLA EXTRACT (RM0163)","AT-WH-MAIN","STAGING",250942555,12.4,"Lbs"],["I82023-FLV","RM0163","HOCR CONCENTRATED VANILLA EXTRACT (RM0163)","NW-WH-MAIN","ZONE 10",1009199845,88.04,"Lbs"],["I82024-PWDFLV","RM0129","HOCR TASTE PRINT FLV PWD 50# (10592961/RM0129)","AT-WH-MAIN","STAGING",1009221697,355,"Lbs"],["I82025-DAI","RM0165","HOCR SODIUM CASEINATE 44.0925# (1004880/RM0165)","NW-WH-MAIN","113-096-03","NF26055B1",1499.12,"Lbs"],["I82025-DAI","RM0165","HOCR SODIUM CASEINATE 44.0925# (1004880/RM0165)","AT-WH-MAIN","STAGING","NF26044B2-012",44.4,"Lbs"],["I82025-DAI","RM0165","HOCR SODIUM CASEINATE 44.0925# (1004880/RM0165)","AT-WH-MAIN","STAGING","NF26044B2-012",44.09,"Lbs"],["I82025-DAI","RM0165","HOCR SODIUM CASEINATE 44.0925# (1004880/RM0165)","AT-WH-MAIN","STAGING","NF26044B2-012",397.5,"Lbs"],["I82026-PWD",null,"HOCR CREAM OF TARTAR 24OZ","AT-WH-MAIN","STAGING",420407,1.5,"Lbs"],["I82026-PWD",null,"HOCR CREAM OF TARTAR 24OZ","AT-WH-MAIN","STAGING",1125120,4.5,"Lbs"]],"palmer":[[null,"RMP item #","Hormbles item #","Description","On Hand "],["Pouch",9062505,"PK-WPMMC","MCF Mini pouch ","226 lbs"],[null,9062605,"PK-WPMPB","PB Mini pouch ",0],[null,9063005,"PK-WPMSF","Salted Fudge Mini pouch ","291 lbs"],["Pre-made bags ",9062705,"SPMMC","MCF pre-made bags ","24,000 ea"],[null,9062805,"SPMPB","PB pre-made bags ","35,000 ea"],[null,9062905,"SPMSF","Salted Fudge pre-made bags ","43,700 ea"],["Cartons",9062701,"MC02","Unprinted RSC 6pk ","42,418 ea"],[null,9062501,"Bulk Carton","Unprinted Bulk carton","1,455 ea"],["Ingredient","942107/ 9848","RM0130","Milke Protein Crisp 40# case","19,200 lbs"],[null,"942207/ 9849","RM0131","Cocoa Protein Crisp 40# case","314 lbs"],[null,"942307/ 9847","RM0137","Pretzel Salt 50# case","500 lbs"],["As of 5/8",null,null,null,null]],"spg":[["Item code","Item description","Item type","Expiry date","Lot code","Default quantity","Default unit of measure","Full Pallet quantity","Inventory status"],["PK-TRC01","10g PROTEIN CANDY COSTCO TRAY","Secondary Packaging",null,null,867,"ea",2.312,"Good"],["PK-SUPC01","10.15oz. (288g) Milk Choco./Salted Fudge PREMADE STAND UP BAG","Primary Packaging",null,"10131",84000,"ea",2.9166666666666665,"Good"],["PK-SUPC01","10.15oz. (288g) Milk Choco./Salted Fudge PREMADE STAND UP BAG","Primary Packaging",null,"10180",21400,"ea",0.7430555555555556,"Good"],["PK-SS10","PALLET TOP COVER - LID FOR HORMBLES CHROMBLES MBFC4004","Secondary Packaging",null,null,206,"ea",0.824,"Good"],["MBFC4004","Milk Chocolate & Salted Fudge Mini Tablet SUP/10oz, Costco 18ct. Tray","Finished Good","01/21/2027","FFB26084 J",11,"tr",0.55,"Good"],["CHEP-HORM","BLUE BLOCK CHEP PALLETS for Hormbles Chormbles","Consumable Inv",null,null,0.45,"ea",0.45,"Good"],["90630","PK-WPMSF / HC Salted Fudge Mini Bar 8g Bulk","Raw Material","02/04/2027","ECC26035",7,"cs",0.19444444444444445,"Good"]]},"bazzini_map":[{"hcode":"IN-MC301v2","desc":"Stockton Compound (Milk Choc)"},{"hcode":"IN-CH302v2","desc":"Idaho Compound (Dark Choc)"},{"hcode":"IN-PB303v2","desc":"Camogie Compound (PB)"},{"hcode":"RM0130","desc":"Plain Milk Crisp"},{"hcode":"RM0131","desc":"Cocoa Whey Crisp"},{"hcode":"RM0137","desc":"Encapsulated Salt"},{"hcode":"RM0152","desc":"Polydextrose- Liquid"},{"hcode":"RM0125","desc":"Milk Protein Isolate"},{"hcode":"RM0153","desc":"Soluble Corn Fiber- Liquid"},{"hcode":"RM0123","desc":"Allulose"},{"hcode":"RM0154","desc":"Glycerin"},{"hcode":"RM0165","desc":"Sodium Caseinate"},{"hcode":"RM0168","desc":"Palm Oil"},{"hcode":"RM0151","desc":"Egg White Powder"},{"hcode":"RM0134","desc":"Peanut Flour"},{"hcode":"RM0136","desc":"Salt"},{"hcode":"RM0160","desc":"Nat Flavor Peanut OS"}],"ingredient_map":{"IN-MC301v2":"Stockton Compound","IN-CH302v2":"Idaho Compound","IN-PB303v2":"Camogie Compound","RM0130":"Plain Milk Crisp","RM0131":"Cocoa Whey Crisp","RM0137":"Encapsulated Salt","RM0163":"Vanilla Extract","RM0125":"Milk Protein Isolate","RM0152":"Polydextrose- Liquid","RM0153":"Soluble Corn Fiber- Liquid","RM0123":"Allulose","RM0154":"Glycerin","RM0165":"Sodium Caseinate","RM0168":"Palm Oil","RM0151":"Egg White Powder","RM0134":"Peanut Flour","RM0136":"Salt","RM0160":"Nat Flavor Peanut OS"}};
+
+/* ===== parsers (synced from lib/parsers.js — match on CODE, never description) ===== */
+function findCell(grid, value){const v=String(value).trim();
+ for(let r=0;r<grid.length;r++)for(let c=0;c<(grid[r]||[]).length;c++){const cell=grid[r][c];if(cell!=null&&String(cell).trim()===v)return [r,c];}return null;}
+function num(x){if(x==null)return null;if(typeof x==="number")return x;const s=String(x).trim();if(s===""||s==="-")return 0;
+ const cleaned=s.replace(/lbs|ea|cs|kg|,|\s/gi,"");const n=parseFloat(cleaned);return isNaN(n)?null:n;}
+function categoryFor(code){return /^(RM|IN-)/i.test(String(code).trim())?"ingredient":"packaging";}
+
+function parseElmers(grid,codeMap){const rows=[],flags=[];
+ for(const {hcode,desc,supcode} of codeMap){const pos=(supcode?findCell(grid,supcode):null)||findCell(grid,hcode);
+  if(!pos){rows.push({ingredient:desc,code:hcode,qty:0,category:categoryFor(hcode),status:"not_found"});flags.push(desc+" (code "+(supcode||hcode)+") not found in file");continue;}
+  const [r,c]=pos;const qty=elmersBlockQty(grid,r,c);
+  rows.push({ingredient:desc,code:hcode,qty:qty??0,category:categoryFor(hcode),status:qty==null?"no_qty":"matched"});
+  if(qty==null)flags.push(desc+": found code "+(supcode||hcode)+" but no quantity beside it");}
+ return {rows,flags};}
+function elmersBlockQty(grid,r,c){
+ for(let hr=r;hr>=0&&r-hr<12;hr--){const head=grid[hr]||[];
+  if(String(head[c]??"").trim().toLowerCase()==="item"){
+   for(let cc=c;cc<head.length;cc++){const h=String(head[cc]??"").trim().toLowerCase();
+    if(h==="units"||h==="lbs"){const q=num(grid[r]?.[cc]);if(q!=null)return q;}}break;}}
+ for(let cc=c+1;cc<(grid[r]||[]).length;cc++){const n=num(grid[r][cc]);if(n!=null)return n;}return null;}
+
+function parseBazzini(grid,codeMap=[]){const descByCode={};for(const {hcode,desc} of codeMap)descByCode[hcode]=desc;
+ const agg={};for(let r=1;r<grid.length;r++){const row=grid[r]||[];const code=row[1]==null?"":String(row[1]).trim();
+  if(!/^RM/i.test(code))continue;const q=num(row[6]);if(q!=null)agg[code]=(agg[code]||0)+q;}
+ const rows=[],flags=[];for(const code of Object.keys(agg)){
+  if(!descByCode[code])flags.push("Bazzini code "+code+" has on-hand "+agg[code]+" but no description in map");
+  rows.push({ingredient:descByCode[code]||code,code,qty:Math.round(agg[code]*100)/100,category:"ingredient",status:"matched"});}
+ if(!rows.length)flags.push("Bazzini: no RM ingredient rows found");return {rows,flags};}
+
+function parsePalmer(grid,codeMap=[]){const descByCode={};for(const {hcode,desc} of codeMap)descByCode[hcode]=desc;
+ const rows=[],flags=[];for(let r=1;r<grid.length;r++){const row=grid[r]||[];const code=row[2]==null?"":String(row[2]).trim();
+  if(!code)continue;const qty=num(row[4]);const category=categoryFor(code);
+  rows.push({ingredient:descByCode[code]||(row[3]!=null?String(row[3]).trim():code),code,qty:qty??0,category,status:qty==null?"no_qty":"matched"});
+  if(qty==null)flags.push("Palmer "+code+": On Hand \""+row[4]+"\" not parseable");}
+ if(!rows.length)flags.push("Palmer: no coded rows found");return {rows,flags};}
+
+function parseSPG(grid,codeMap=[]){const descByCode={};for(const {hcode,desc} of codeMap)descByCode[hcode]=desc;
+ const rows=[],flags=[];let ingredientHits=0;
+ for(let r=1;r<grid.length;r++){const row=grid[r]||[];if(String(row[2]??"").trim()!=="Raw Material")continue;
+  const code=row[0]==null?"":String(row[0]).trim();if(!code)continue;const qty=num(row[5]);const category=categoryFor(code);
+  if(category==="ingredient")ingredientHits++;
+  rows.push({ingredient:descByCode[code]||(row[1]!=null?String(row[1]).trim():code),code,qty:qty??0,category,status:"matched"});}
+ if(ingredientHits===0)flags.push("SPG: no ingredient-grade raw materials on sheet (SPG carries packaging + finished goods)");
+ return {rows,flags};}
+
+function parse3PL(grid,{codeCol=1,qtyCol=3,startRow=1}={}){const rows=[],flags=[];
+ for(let r=startRow;r<grid.length;r++){const code=grid[r]?.[codeCol];const qty=num(grid[r]?.[qtyCol]);
+  if(code!=null&&String(code).trim()!=="")rows.push({sku:String(code).trim(),qty:qty??0,status:qty==null?"no_qty":"matched"});}
+ return {rows,flags};}
+
+/* ===== engine (synced from lib/engine.js) ===== */
+const GRAMS_TO_LBS=453.59237;
+function combineInventories(normalizedByComan){const combined={},flags=[];
+ for(const coman in normalizedByComan){const res=normalizedByComan[coman];if(!res||!res.rows)continue;
+  for(const f of res.flags||[])flags.push("["+coman+"] "+f);
+  for(const row of res.rows){const code=row.code==null?"":String(row.code).trim();if(!code)continue;const qty=row.qty||0;
+   if(!combined[code])combined[code]={code,ingredient:row.ingredient||code,category:row.category||(/^(RM|IN-)/i.test(code)?"ingredient":"packaging"),qty:0,sources:[]};
+   combined[code].qty=round(combined[code].qty+qty);combined[code].sources.push({coman,qty});}}
+ return {combined,flags};}
+function combinedOnhandByName(combined,ingredientMap={}){const byName={};
+ for(const code in combined){const entry=combined[code];if(entry.category!=="ingredient")continue;
+  const name=ingredientMap[code];if(!name)continue;byName[name]=round((byName[name]||0)+entry.qty);}return byName;}
+
+function productionLbs({palletsByWip,refprod,barsLbs={}}){const prodLbs={...barsLbs};
+ for(const wip in palletsByWip){const pallets=palletsByWip[wip]||0;const rp=refprod[wip];if(!rp)continue;
+  const units=pallets*(rp.minis_pallet||0);const grams=rp.size_g||rp.grams||8;
+  prodLbs[wip]=units*grams/GRAMS_TO_LBS;prodLbs[wip+"__units"]=units;}return prodLbs;}
+function ingredientNeeds({prodLbs,recipes,location}){const needs={};
+ for(const sku in recipes){const lbs=prodLbs[sku];if(!lbs)continue;
+  for(const line of recipes[sku]){if(location&&line.loc&&line.loc!==location)continue;
+   const add=lbs*line.pct*(1+(line.scrap||0));needs[line.ingredient]=(needs[line.ingredient]||0)+add;}}return needs;}
+function buyList({needs,onhand,actuals={},buyDecisions={}}){const out=[];
+ for(const ingr in needs){const need=needs[ingr];const have=(onhand[ingr]||0)+(actuals[ingr]||0);
+  const shortfall=Math.max(0,need-have);const decided=buyDecisions[ingr];const buy=decided!=null?decided:0;
+  out.push({ingredient:ingr,need:round(need),onhand:have,shortfall:round(shortfall),buy,remaining:round(have-need+buy)});}return out;}
+function suggestPallets({wip,demandPouches,minisPerPouch=11,startInv=0,refprod,targetMonths=1.5}){const rp=refprod[wip];
+ const minisPerPallet=rp?.minis_pallet||30600;const minisNeeded=demandPouches*minisPerPouch*targetMonths-startInv;
+ const pallets=Math.max(1,Math.ceil(minisNeeded/minisPerPallet));
+ return {value:pallets,why:"Target "+targetMonths+"mo: ("+fmt(demandPouches)+" pouches × "+minisPerPouch+" × "+targetMonths+" − "+fmt(startInv)+" on-hand) ÷ "+fmt(minisPerPallet)+"/pallet ≈ "+pallets};}
+function suggestOtherVolume({lastMonth=0}){return {value:lastMonth,why:lastMonth?"Carry-forward: same as last month ("+fmt(lastMonth)+"). No live sample source yet.":"Default 0 — no samples logged."};}
+function suggestBuy({ingredient,need,have,roundTo=100}){const short=Math.max(0,need-have);
+ if(short<=0)return {value:0,why:"On-hand "+fmt(have)+" ≥ need "+fmt(Math.round(need))+" — nothing to buy."};
+ const value=Math.ceil(short/roundTo)*roundTo;
+ return {value,why:"Short "+fmt(Math.round(short))+" (need "+fmt(Math.round(need))+" − combined on-hand "+fmt(have)+") → round up to "+fmt(value)+". Buffer/MOQ rule TBD."};}
+function suggestActuals(){return {value:0,why:"Default 0. Suggested automatically once in-transit tracking is connected."};}
+/* ===== explain/trace helpers (synced from lib/engine.js) — same math as the result, can't drift ===== */
+function explainProduction({pallets,minisPerPallet,grams}){const units=pallets*minisPerPallet;const lbs=units*grams/GRAMS_TO_LBS;
+ return {units,lbs,unitsTrace:fmt(pallets)+" pallets × "+fmt(minisPerPallet)+" minis/pallet = "+fmt(units)+" units",
+  lbsTrace:fmt(units)+" units × "+grams+"g ÷ "+GRAMS_TO_LBS+" = "+fmt(round(lbs))+" lbs"};}
+function explainCombined(entry,labels={}){const parts=(entry.sources||[]).filter(s=>s.qty);
+ const sumStr=parts.length?parts.map(s=>(labels[s.coman]||s.coman)+" "+fmt(s.qty)).join(" + "):"0";
+ return {value:entry.qty,trace:sumStr+" = "+fmt(entry.qty)};}
+function explainNeed({ingredient,prodLbs,recipes,location}){const parts=[];let total=0;
+ for(const sku in recipes){const lbs=prodLbs[sku];if(!lbs)continue;
+  for(const line of recipes[sku]){if(line.ingredient!==ingredient)continue;if(location&&line.loc&&line.loc!==location)continue;
+   const contribution=lbs*line.pct*(1+(line.scrap||0));parts.push({sku,lbs,pct:line.pct,scrap:line.scrap||0,contribution});total+=contribution;}}
+ const partStr=parts.map(p=>p.sku+": "+fmt(round(p.lbs))+" lbs × "+pct(p.pct)+" × (1 + "+pct(p.scrap)+" scrap) = "+fmt(round(p.contribution))).join("  +  ");
+ const trace=!parts.length?("No producing SKU uses "+ingredient+(location?" at "+location:"")+"."):(parts.length>1?partStr+"  =  "+fmt(round(total)):partStr);
+ return {value:total,trace,parts};}
+function explainBuyRow(row){const net=round(row.need-row.onhand);
+ const buyTrace=row.shortfall>0?"need "+fmt(row.need)+" − combined on-hand "+fmt(row.onhand)+" = "+fmt(net)+" short → buy "+fmt(row.buy)
+  :"need "+fmt(row.need)+" − combined on-hand "+fmt(row.onhand)+" = "+fmt(net)+" → covered → buy 0";
+ const remainingTrace="on-hand "+fmt(row.onhand)+" − need "+fmt(row.need)+" + buy "+fmt(row.buy)+" = "+fmt(row.remaining);
+ return {buyTrace,remainingTrace};}
+function round(n){return Math.round(n*100)/100;}
+function fmt(n){return (n??0).toLocaleString();}
+function pct(n){return (+((n||0)*100).toFixed(3))+"%";}
+
+/* ===== app state ===== */
+const COMANS=['elmers','bazzini','palmer','spg'];
+const COMAN_LABEL={elmers:'Elmers',bazzini:'Bazzini',palmer:'Palmer',spg:'SPG'};
+let uploads={};           // coman -> uploaded grid (overrides demo sample)
+let normByComan=null;     // coman -> {rows,flags}
+let combined=null;        // code -> {code,ingredient,category,qty,sources}
+let combineFlags=[];
+let onhand={};            // recipe ingredient name -> combined qty
+let decisions={pallets:{},otherVol:null,buy:{},actuals:{}};
+let plan=null;
+
+/* demo bars (from co-man schedule) + planning context */
+const BARS={'BPB3003':5291.0943,'BPB5003':9866.3035};
+const CTX={mcDemandPouches:21000,otherLast:11050};
+// Known SKU-code bridges (recipe-side WIP -> supply-side codes used by 3PL opening inventory).
+const WIP_BRIDGE={'MCM1001-WIP':'MBMC4001-WIP','MSF1002-WIP':'MBSF4002-WIP'};       // work-in-progress
+const FINISHED_BRIDGE={'MCM1001-WIP':'MBMC4001','MSF1002-WIP':'MBSF4002'};          // finished sellable
+function openingQty(recipeWip,bridge){const sku=bridge[recipeWip]||recipeWip;
+ const row=(SEED.opening_inv||[]).find(o=>o.sku===sku);return row?row.qty:0;}
+function openingMinis(recipeWip){return openingQty(recipeWip,WIP_BRIDGE);}        // WIP on hand (informational)
+// Starting inventory for the months-of-supply pallet suggestion = FINISHED sellable stock on hand.
+// (WIP is the production itself, so it must NOT offset the production target — using it collapsed the
+//  suggestion to 1 pallet and silently produced tiny numbers.)
+function openingFinished(recipeWip){return openingQty(recipeWip,FINISHED_BRIDGE);}
+
+function go(s){for(let i=0;i<4;i++)document.getElementById('s'+i).classList.toggle('hidden',i!==s);
+ document.querySelectorAll('.step').forEach(el=>{const n=+el.dataset.s;el.classList.toggle('active',n===s);el.classList.toggle('done',n<s)});
+ if(s===1)renderCombined();if(s===2)renderDecisions();window.scrollTo(0,0);}
+document.querySelectorAll('.step').forEach(el=>el.onclick=()=>go(+el.dataset.s));
+
+/* ===== file upload (one zone per co-man) + real parse ===== */
+function readGrid(file,cb){const rd=new FileReader();rd.onload=e=>{const wb=XLSX.read(e.target.result,{type:'array'});
+ const ws=wb.Sheets[wb.SheetNames[0]];cb(XLSX.utils.sheet_to_json(ws,{header:1}));};rd.readAsArrayBuffer(file);}
+COMANS.forEach(c=>{const el=document.getElementById('f_'+c);if(!el)return;el.onchange=e=>{const f=e.target.files[0];if(!f)return;
+ document.getElementById('chip_'+c).innerHTML='<span class="filechip">✓ '+f.name+'</span>';
+ readGrid(f,grid=>{uploads[c]=grid;normByComan=null;});};});
+document.getElementById('f_3pl').onchange=e=>{const f=e.target.files[0];if(f)document.getElementById('chip_3pl').innerHTML='<span class="filechip">✓ '+f.name+'</span>';};
+
+/* ===== normalize ALL co-mans, then combine into one on-hand picture ===== */
+function gridFor(c){return uploads[c]||SEED.raw_samples[c];}
+function normalizeAll(){
+ normByComan={
+  elmers:parseElmers(gridFor('elmers'),SEED.elmers_map),
+  bazzini:parseBazzini(gridFor('bazzini'),SEED.bazzini_map),
+  palmer:parsePalmer(gridFor('palmer'),[]),
+  spg:parseSPG(gridFor('spg'),[]),
+ };
+ const r=combineInventories(normByComan);combined=r.combined;combineFlags=r.flags;
+ onhand=combinedOnhandByName(combined,SEED.ingredient_map);}
+
+/* ===== transparency UI helpers (click-to-expand traces + step notes) ===== */
+let _traceN=0;
+function toggleTrace(id){const el=document.getElementById(id);if(el)el.classList.toggle('hidden');}
+function numCell(disp,id){return '<span class="num" onclick="toggleTrace(\''+id+'\')">'+disp+'<span class="ic">ⓘ</span></span>';}
+function stepNote(title,bodyHtml){return '<details class="explain"><summary>'+title+'</summary><div class="body">'+bodyHtml+'</div></details>';}
+function nameToCode(name){for(const c in SEED.ingredient_map)if(SEED.ingredient_map[c]===name)return c;return null;}
+function combinedEntryForName(name){const c=nameToCode(name);return (c&&combined)?combined[c]:null;}
+
+/* ===== "How this works" — the canonical method, stated once (run-independent) ===== */
+function showHow(){document.getElementById('howCard').innerHTML=
+ '<button class="btn btn-manual close" onclick="hideHow()">✕ Close</button>'+
+ '<h2>How this tool works</h2><p>The same method Hormbles runs by hand — stated once. Every number in the app is also click-to-expand, so you can trace it to these rules with this run\'s real inputs.</p>'+
+ '<h3>The 5 sources &amp; what each feeds</h3><ul>'+
+ '<li><b>Elmers, Bazzini, Palmer, SPG</b> (co-man raw-material inventory) → the <b>ingredient buy-list</b> (what to buy).</li>'+
+ '<li><b>FST / Green Rabbit</b> (3PL finished-goods, demo uses the Total Inventory OH stand-in) → the <b>supply plan\'s starting inventory</b> (how much to make). Kept separate from raw inventory.</li></ul>'+
+ '<h3>Normalization — one method per co-man (match on CODE, never description)</h3><ul>'+
+ '<li><b>Elmers</b>: spatial grid — find each code, read the quantity under its Units/lbs column.</li>'+
+ '<li><b>Bazzini</b>: transactional lot list — sum the Qty column across all lot rows per code (SUMIF), RM codes only.</li>'+
+ '<li><b>Palmer</b>: code in the file — strip the unit text ("19,200 lbs" → 19200).</li>'+
+ '<li><b>SPG</b>: item-type table — default-quantity for rows marked "Raw Material".</li>'+
+ '<li>Unmatched codes are always <b>flagged</b>, never silently dropped.</li></ul>'+
+ '<h3>Combine</h3><p>Merge all co-mans into one on-hand picture, <b>summing by ingredient code</b>. Ingredient rows (RM…, IN-…) feed needs; packaging (PK-*, etc.) is kept but excluded from needs.</p>'+
+ '<h3>The formulas</h3>'+
+ '<span class="formula">Production units = pallets × minis-per-pallet</span>'+
+ '<span class="formula">Production lbs = units × grams ÷ 453.59237</span>'+
+ '<span class="formula">Ingredient need = production lbs × recipe % × (1 + scrap %)  — summed over every producing SKU</span>'+
+ '<span class="formula">Qty Remaining = combined on-hand + actuals − needed + purchase</span>'+
+ '<h3>The 4 human decisions (suggested-with-reasoning, manually overridable)</h3><ul>'+
+ '<li><b>Pallets to run</b> — months-of-supply target. Never silently defaults to 1.</li>'+
+ '<li><b>Other Volume</b> — carry-forward last month.</li>'+
+ '<li><b>Qty to Purchase</b> — shortfall rounded up (buffer/MOQ rule TBD).</li>'+
+ '<li><b>Actuals</b> — default 0 until in-transit tracking is connected.</li></ul>'+
+ '<h3>Which numbers are what</h3><p><span class="src-tag src-input">sourced</span> from a co-man/3PL file · <span class="src-tag src-calc">computed</span> by the formulas above · <span class="src-tag src-manual">human-entered</span> (the 4 decisions).</p>';
+ document.getElementById('howModal').classList.add('show');}
+function hideHow(){document.getElementById('howModal').classList.remove('show');}
+
+/* ===== step 2: combined inventory table with per-co-man breakdown ===== */
+function renderCombined(){normalizeAll();
+ const entries=Object.values(combined).sort((a,b)=>{
+  if(a.category!==b.category)return a.category==="ingredient"?-1:1;
+  return b.qty-a.qty;});
+ document.getElementById('normPh').textContent='4 raw grids → normalized by code → summed across co-mans. Ingredient on-hand nets against total below, not per-co-man.';
+ // --- per-step notes (Normalize + Combine) with this run's real numbers ---
+ const bazRaw=gridFor('bazzini')||[];let bazLots=0;for(let i=1;i<bazRaw.length;i++){const cd=(bazRaw[i]||[])[1];if(cd&&/^RM/i.test(String(cd).trim()))bazLots++;}
+ const ingCount=entries.filter(e=>e.category==='ingredient').length;
+ const ex=combined['RM0130']||entries.find(e=>e.category==='ingredient'&&e.sources.filter(s=>s.qty).length>1)||entries[0];
+ const exName=(ex.category==='ingredient'&&SEED.ingredient_map[ex.code])?SEED.ingredient_map[ex.code]:ex.ingredient;
+ document.getElementById('normNote').innerHTML=
+  stepNote('What\'s happening here — <b>Normalize</b>','Each co-man sends inventory in its own format; we match every ingredient by its <b>code</b> (never the description) and pull the quantity.<br>• <b>Elmers</b>: spatial grid — quantity read from the Units/lbs column.<br>• <b>Bazzini</b>: summed across <b>'+bazLots+'</b> lot rows (SUMIF by Hormbles code).<br>• <b>Palmer</b>: stripped unit text (e.g. "19,200 lbs" → 19200).<br>• <b>SPG</b>: default-quantity for "Raw Material" rows.<br>Flagged <b>'+combineFlags.length+'</b> row(s) we could not match — shown below, never dropped.')+
+  stepNote('What\'s happening here — <b>Combine</b>','We merge all co-mans into one on-hand picture, <b>summing by ingredient code</b> ('+ingCount+' ingredients across the four). Example from this run: <b>'+exName+'</b> = <code>'+explainCombined(ex,COMAN_LABEL).trace+'</code>. Needs net against this combined total, so we never buy what is already sitting at another co-man.');
+ // --- table with click-to-expand on every on-hand number ---
+ _traceN=0;let rows='';
+ for(const e of entries){
+  const name=(e.category==="ingredient"&&SEED.ingredient_map[e.code])?SEED.ingredient_map[e.code]:e.ingredient;
+  const brk=e.sources.filter(s=>s.qty).map(s=>COMAN_LABEL[s.coman]+' '+s.qty.toLocaleString()).join(' · ')||'—';
+  const catpill=e.category==="ingredient"?'<span class="ok-pill">ingredient</span>':'<span class="src-tag src-input">packaging</span>';
+  const id='tc'+(_traceN++);
+  rows+='<tr><td>'+name+'</td><td>'+e.code+'</td><td>'+catpill+'</td><td>'+numCell(e.qty.toLocaleString(),id)+'</td><td style="text-align:left;font-size:12px;color:var(--mute)">'+brk+'</td></tr>';
+  rows+='<tr class="trarow hidden" id="'+id+'"><td colspan="5" style="text-align:left"><span class="trace">Combined on-hand = '+explainCombined(e,COMAN_LABEL).trace+'</span></td></tr>';}
+ document.getElementById('normTbl').innerHTML='<tr><th>Ingredient</th><th>Code</th><th>Type</th><th>Combined on-hand</th><th>Contributing co-mans</th></tr>'+rows;
+ const fn=document.getElementById('flagNote');
+ if(combineFlags.length){fn.classList.remove('hidden');fn.innerHTML='<b>⚠ '+combineFlags.length+' flagged (never dropped):</b> '+combineFlags.join(' · ');}
+ else fn.classList.add('hidden');}
+
+/* ===== step 3: decisions (run once on combined inventory) ===== */
+function computeNeeds(pallets){const refprod={'MCM1001-WIP':{minis_pallet:30600,grams:8},'MSF1002-WIP':{minis_pallet:30600,grams:8}};
+ const prodLbs=productionLbs({palletsByWip:{'MCM1001-WIP':pallets,'MSF1002-WIP':pallets},refprod,barsLbs:BARS});
+ return ingredientNeeds({prodLbs,recipes:SEED.recipes,location:'Elmers'});}
+function suggestedPallets(){return suggestPallets({wip:'MCM1001-WIP',demandPouches:CTX.mcDemandPouches,startInv:openingFinished('MCM1001-WIP'),refprod:{'MCM1001-WIP':{minis_pallet:30600}}});}
+// Effective pallets for a WIP: the manual/accepted decision, else the suggestion as a pre-filled default,
+// else null. NEVER a hard 1 — a null means "ask the planner", not "produce one pallet".
+function effectivePallets(wip,sug){const d=decisions.pallets[wip];
+ if(d&&Number.isFinite(d.value)&&d.value>0)return {value:d.value,source:d.mode};
+ if(sug&&Number.isFinite(sug.value)&&sug.value>0)return {value:sug.value,source:'suggested-default'};
+ return {value:null,source:'none'};}
+function card(key,sub,title,why,sug,unit){const id=sub?key+'_'+sub:key;const cur=sub?(decisions[key][sub]||{}):(decisions[key]||{});
+ const chosen=cur.mode?'<div class="chosen '+(cur.mode==='manual'?'manual':'')+'">✓ Using '+cur.value.toLocaleString()+' '+unit+' — '+(cur.mode==='manual'?'manual':'suggested')+'</div>':'';
+ return '<div class="decision"><div class="dt">'+title+'</div><div class="dwhy">'+why+'</div>'+
+  '<div class="suggestbar"><span class="sv">'+sug.value.toLocaleString()+'</span><span class="sl">'+sug.why+'</span>'+
+  '<button class="btn btn-accept" onclick="acc(\''+key+'\',\''+(sub||'')+'\','+sug.value+')">Accept</button>'+
+  '<button class="btn btn-manual" onclick="tg(\''+id+'\')">Enter manually</button></div>'+
+  '<div class="manualbox hidden" id="man_'+id+'"><input type="number" id="inp_'+id+'" placeholder="'+sug.value+'" value="'+(cur.mode==='manual'?cur.value:'')+'">'+
+  '<button class="btn btn-accept" onclick="sm(\''+key+'\',\''+(sub||'')+'\')">Use this</button><span class="sl">'+unit+'</span></div>'+chosen+'</div>';}
+function renderDecisions(){const sp=suggestedPallets();const so=suggestOtherVolume({lastMonth:CTX.otherLast});
+ const finished=openingFinished('MCM1001-WIP');const wip=openingMinis('MCM1001-WIP');
+ const eff=effectivePallets('MCM1001-WIP',sp);
+ let h='<div class="panel"><div class="note">3PL opening inventory (demo: Total Inventory OH stand-in) seeds the supply plan: <b>'+finished.toLocaleString()+' finished MC minis on hand</b> (bridge MCM1001-WIP→MBMC4001) offsets the production target; '+wip.toLocaleString()+' in WIP is tracked separately. Live FST/Green Rabbit portal integration is future.</div></div>';
+ const palletState=eff.value==null
+  ?'<div class="chosen manual">⚠ Set pallets to plan production for this SKU — no decision and no usable suggestion. Production will be 0 until set.</div>'
+  :(decisions.pallets['MCM1001-WIP']?'':'<div class="chosen">✓ Default: using suggested '+eff.value.toLocaleString()+' pallets (accept to confirm, or enter your own).</div>');
+ h+='<div class="panel"><h2>1 · Pallets — Milk Crunch mini <span class="src-tag src-manual">your call</span></h2><div class="ph">How much new production to schedule. The suggested value is pre-filled as the default — production never silently runs at 1 pallet.</div>'+
+  card('pallets','MCM1001-WIP','Pallets (MC mini @ Elmers)','Drives minis produced this month.',sp,'pallets')+palletState+'</div>';
+ h+='<div class="panel"><h2>2 · Other Volume <span class="src-tag src-manual">your call</span></h2><div class="ph">Extra minis for samples/gifting.</div>'+
+  card('otherVol','','Other Volume','Manual sample allowance.',so,'minis')+'</div>';
+ const needs=eff.value==null?{}:computeNeeds(eff.value);
+ h+='<div class="panel"><h2>3 · Purchases — where you are short <span class="src-tag src-manual">your call</span></h2><div class="ph">Shortfall computed against <b>combined</b> on-hand (all co-mans), so we never buy what is already sitting at another co-man.</div>';
+ let any=false;for(const ingr in needs){const have=onhand[ingr]||0,need=needs[ingr];if(need-have>0.5){any=true;
+  const sb=suggestBuy({ingredient:ingr,need,have});h+=card('buy',ingr,'Buy — '+ingr,'Need '+Math.round(need).toLocaleString()+' · combined on-hand '+have.toLocaleString()+'.',sb,'lbs');}}
+ if(!any)h+='<div class="decision"><div class="dwhy">No shortages — combined on-hand across all co-mans covers every ingredient at this pallet plan.</div></div>';h+='</div>';
+ h+='<div class="panel"><h2>4 · Actuals <span class="src-tag src-manual">optional</span></h2><div class="ph">Corrections for in-transit stock the files missed. Default 0.</div><div class="decision"><div class="dwhy">No corrections — auto-suggested once in-transit tracking is connected.</div></div></div>';
+ document.getElementById('decisions').innerHTML=h;}
+function acc(k,s,v){if(s)decisions[k][s]={mode:'suggest',value:v};else decisions[k]={mode:'suggest',value:v};renderDecisions();}
+function tg(id){document.getElementById('man_'+id).classList.toggle('hidden');}
+function sm(k,s){const id=s?k+'_'+s:k;const v=parseFloat(document.getElementById('inp_'+id).value);if(isNaN(v))return;
+ if(s)decisions[k][s]={mode:'manual',value:v};else decisions[k]={mode:'manual',value:v};renderDecisions();}
+
+/* ===== step 4: run + results (once, on combined inventory) ===== */
+function runPlan(){if(!combined)normalizeAll();
+ const eff=effectivePallets('MCM1001-WIP',suggestedPallets());
+ const refprod={'MCM1001-WIP':{minis_pallet:30600,grams:8},'MSF1002-WIP':{minis_pallet:30600,grams:8}};
+ // No usable pallet decision/suggestion -> do NOT run this WIP (production 0). Never compute from a hard 1.
+ const palletsByWip=eff.value==null?{}:{'MCM1001-WIP':eff.value,'MSF1002-WIP':eff.value};
+ const prodLbs=productionLbs({palletsByWip,refprod,barsLbs:BARS});
+ const needs=ingredientNeeds({prodLbs,recipes:SEED.recipes,location:'Elmers'});
+ // Build buy decisions AND persist the reasoning (suggested vs manual + why) for every needed ingredient.
+ const buyDec={},buyMeta={};
+ for(const ingr in needs){const have=onhand[ingr]||0,need=needs[ingr];const sb=suggestBuy({ingredient:ingr,need,have});const d=decisions.buy[ingr];
+  if(d&&d.mode==='manual'){if(need-have>0.5)buyDec[ingr]=d.value;buyMeta[ingr]={mode:'manual',why:'Manual override — planner entered '+fmt(d.value)+' lbs.'};}
+  else{if(need-have>0.5)buyDec[ingr]=sb.value;buyMeta[ingr]={mode:'suggested',why:sb.why};}}
+ const bl=buyList({needs,onhand,buyDecisions:buyDec});
+ plan={pallets:eff.value,palletSource:eff.source,units:prodLbs['MCM1001-WIP__units']||0,lbs:prodLbs['MCM1001-WIP']||0,buyList:bl,needs,prodLbs,buyMeta,palletWhy:suggestedPallets().why};renderResults();}
+function renderResults(){const buys=plan.buyList.filter(b=>b.buy>0);const tot=buys.reduce((a,b)=>a+b.buy,0);
+ const noPallets=plan.pallets==null;
+ document.getElementById('kpis').innerHTML=
+  '<div class="kpi"><div class="v">'+plan.units.toLocaleString()+'</div><div class="l">MC minis to produce (units)</div></div>'+
+  '<div class="kpi"><div class="v">'+Math.round(plan.lbs).toLocaleString()+' lbs</div><div class="l">MC mini production</div></div>'+
+  '<div class="kpi"><div class="v">'+buys.length+'</div><div class="l">to buy ('+Math.round(tot).toLocaleString()+' lbs)</div></div>';
+ _traceN=0;
+ // --- Produce note (real numbers via the same engine helper that feeds the table) ---
+ const ep=plan.pallets!=null?explainProduction({pallets:plan.pallets,minisPerPallet:30600,grams:8}):null;
+ document.getElementById('prodNote').innerHTML=noPallets
+  ?stepNote('What\'s happening here — <b>Produce</b>','No usable pallet count, so production is <b>0</b>. Set pallets on the Decisions step — we never silently assume 1 pallet.')
+  :stepNote('What\'s happening here — <b>Produce</b>','New production = pallets × minis-per-pallet, then converted to pounds. This run ('+plan.palletSource.replace('-default',' (default)')+'): <code>'+ep.unitsTrace+'</code> → <code>'+ep.lbsTrace+'</code>.');
+ // --- Production table with click-to-expand on Units and Lbs ---
+ let prodRows;
+ if(noPallets){prodRows='<tr><td>MC mini (MBMC4001-WIP)</td><td>0</td><td>0.00</td><td><span class="flag">⚠ set pallets to plan production for this SKU</span></td></tr>';}
+ else{const uid='tpu',lid='tpl';
+  prodRows='<tr><td>MC mini (MBMC4001-WIP)</td><td>'+numCell(plan.units.toLocaleString(),uid)+'</td><td>'+numCell(plan.lbs.toFixed(2),lid)+'</td><td><span class="src-tag src-manual">'+(plan.palletSource==='manual'?'manual':'suggested')+'</span></td></tr>'+
+   '<tr class="trarow hidden" id="'+uid+'"><td colspan="4" style="text-align:left"><span class="trace">Units: '+ep.unitsTrace+'</span></td></tr>'+
+   '<tr class="trarow hidden" id="'+lid+'"><td colspan="4" style="text-align:left"><span class="trace">Lbs: '+ep.lbsTrace+'</span></td></tr>';}
+ document.getElementById('prodTbl').innerHTML='<tr><th>SKU</th><th>Units</th><th>Lbs</th><th>Source</th></tr>'+prodRows;
+ // --- Buy-list note ---
+ const shortN=plan.buyList.filter(b=>b.shortfall>0.5).length,coveredN=plan.buyList.length-shortN;
+ document.getElementById('buyExplain').innerHTML=stepNote('What\'s happening here — <b>Buy-list</b>',
+  'For each ingredient: <b>needed − combined on-hand</b>. If short, we suggest a buy (round up; you can override). This run: <b>'+coveredN+'</b> of '+plan.buyList.length+' ingredients are fully covered by combined stock → those buys = 0'+(shortN?('; <b>'+shortN+'</b> short → a buy is suggested.'):'.')+' Each buy below keeps its reasoning so you can audit the basis later.');
+ // --- Buy-list table: every number click-to-expands; reasoning persists in the row ---
+ const order=['Camogie Compound','Idaho Compound','Plain Milk Crisp','Cocoa Whey Crisp','Encapsulated Salt','Stockton Compound'];
+ const seen={};let rows='';
+ const ordered=[...order.filter(o=>plan.buyList.find(x=>x.ingredient===o)),...plan.buyList.map(b=>b.ingredient).filter(i=>!order.includes(i))];
+ ordered.forEach(ingr=>{if(seen[ingr])return;seen[ingr]=1;const b=plan.buyList.find(x=>x.ingredient===ingr);if(!b)return;
+  const meta=plan.buyMeta[ingr]||{mode:'suggested',why:''};
+  const eb=explainBuyRow(b);const en=explainNeed({ingredient:ingr,prodLbs:plan.prodLbs,recipes:SEED.recipes,location:'Elmers'});
+  const ent=combinedEntryForName(ingr);const onhTrace=ent?('Combined on-hand = '+explainCombined(ent,COMAN_LABEL).trace):('Combined on-hand = '+fmt(b.onhand));
+  const i=_traceN++;const nid='bn'+i,oid='bo'+i,uid='bb'+i,rid='br'+i;
+  const tag='<span class="src-tag '+(meta.mode==='manual'?'src-manual':'src-calc')+'">'+meta.mode+'</span>';
+  rows+='<tr><td>'+ingr+'<div class="reason">'+tag+' '+meta.why+'</div></td><td>'+numCell(b.need.toFixed(1),nid)+'</td><td>'+numCell(b.onhand.toLocaleString(),oid)+'</td><td class="'+(b.buy>0?'buy':'')+'">'+(b.buy>0?numCell(b.buy.toLocaleString(),uid)+' '+tag:numCell('—',uid))+'</td><td>'+numCell(b.remaining.toFixed(1),rid)+'</td></tr>';
+  rows+='<tr class="trarow hidden" id="'+nid+'"><td colspan="5" style="text-align:left"><span class="trace">Needed: '+en.trace+'</span></td></tr>';
+  rows+='<tr class="trarow hidden" id="'+oid+'"><td colspan="5" style="text-align:left"><span class="trace">'+onhTrace+'</span></td></tr>';
+  rows+='<tr class="trarow hidden" id="'+uid+'"><td colspan="5" style="text-align:left"><span class="trace">To buy: '+eb.buyTrace+' — '+meta.mode+': '+meta.why+'</span></td></tr>';
+  rows+='<tr class="trarow hidden" id="'+rid+'"><td colspan="5" style="text-align:left"><span class="trace">Remaining: '+eb.remainingTrace+'</span></td></tr>';});
+ document.getElementById('buyTbl').innerHTML='<tr><th>Ingredient</th><th>Needed</th><th>Combined on-hand</th><th>To buy</th><th>Remaining</th></tr>'+rows;
+ document.getElementById('buyNote').innerHTML='<b>On-hand = combined across Elmers + Bazzini + Palmer + SPG.</b> Remaining = on-hand − needed + bought. Click any number for its derivation; each buy shows suggested/manual + why. Adjust a decision and re-run to see it change.';}
+function exportXlsx(){const wb=XLSX.utils.book_new();
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([['SKU','Units','Lbs'],['MC mini',plan.units,+plan.lbs.toFixed(2)]]),'Production');
+ const buy=[['Ingredient','Needed','Combined on-hand','To buy','Remaining']];plan.buyList.forEach(b=>buy.push([b.ingredient,b.need,b.onhand,b.buy,b.remaining]));
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(buy),'Buy list');
+ const inv=[['Ingredient','Code','Type','Combined on-hand','Sources']];
+ if(combined)Object.values(combined).forEach(e=>inv.push([(e.category==="ingredient"&&SEED.ingredient_map[e.code])?SEED.ingredient_map[e.code]:e.ingredient,e.code,e.category,e.qty,e.sources.filter(s=>s.qty).map(s=>COMAN_LABEL[s.coman]+' '+s.qty).join('; ')]));
+ XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(inv),'Combined inventory');
+ XLSX.writeFile(wb,'handled_plan.xlsx');}
+
+</script></body></html>

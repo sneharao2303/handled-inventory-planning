@@ -1,0 +1,3434 @@
+{
+  "elmers_map": [
+    {
+      "hcode": "IN-MC301v2",
+      "desc": "Stockton Compound (Milk Choc)",
+      "supcode": "90248B"
+    },
+    {
+      "hcode": "IN-CH302v2",
+      "desc": "Idaho Compound (Dark Choc)",
+      "supcode": "90249B"
+    },
+    {
+      "hcode": "IN-PB303v2",
+      "desc": "Camogie Compound (PB)",
+      "supcode": "90251"
+    },
+    {
+      "hcode": "RM0130",
+      "desc": "Plain Milk Crisp",
+      "supcode": "90672"
+    },
+    {
+      "hcode": "RM0131",
+      "desc": "Cocoa Whey Crisp",
+      "supcode": "90671"
+    },
+    {
+      "hcode": "RM0137",
+      "desc": "Encapsulated Salt",
+      "supcode": "90824"
+    },
+    {
+      "hcode": "RM0163",
+      "desc": "Vanilla Extract",
+      "supcode": "90588"
+    }
+  ],
+  "recipes": {
+    "BCM3001": [
+      {
+        "ingredient": "Stockton Compound",
+        "loc": "Elmers",
+        "pct": 0.88,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Elmers",
+        "pct": 0.12,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Stockton Compound",
+        "loc": "Bazzini",
+        "pct": 0.88,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Bazzini",
+        "pct": 0.12,
+        "scrap": 0.1
+      }
+    ],
+    "BSF3002": [
+      {
+        "ingredient": "Idaho Compound",
+        "loc": "Elmers",
+        "pct": 0.875,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Elmers",
+        "pct": 0.117,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Encapsulated Salt",
+        "loc": "Elmers",
+        "pct": 0.008,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Idaho Compound",
+        "loc": "Bazzini",
+        "pct": 0.875,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Bazzini",
+        "pct": 0.117,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Encapsulated Salt",
+        "loc": "Bazzini",
+        "pct": 0.008,
+        "scrap": 0.1
+      }
+    ],
+    "BPB3003": [
+      {
+        "ingredient": "Camogie Compound",
+        "loc": "Elmers",
+        "pct": 0.85,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Elmers",
+        "pct": 0.092,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Cocoa Whey Crisp",
+        "loc": "Elmers",
+        "pct": 0.05,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Encapsulated Salt",
+        "loc": "Elmers",
+        "pct": 0.008,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Camogie Compound",
+        "loc": "Bazzini",
+        "pct": 0.85,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Bazzini",
+        "pct": 0.092,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Cocoa Whey Crisp",
+        "loc": "Bazzini",
+        "pct": 0.05,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Encapsulated Salt",
+        "loc": "Bazzini",
+        "pct": 0.008,
+        "scrap": 0.1
+      }
+    ],
+    "BCM5001": [
+      {
+        "ingredient": "Stockton Compound",
+        "loc": "Elmers",
+        "pct": 0.88,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Elmers",
+        "pct": 0.12,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Stockton Compound",
+        "loc": "Bazzini",
+        "pct": 0.88,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Bazzini",
+        "pct": 0.12,
+        "scrap": 0.1
+      }
+    ],
+    "BSF5002": [
+      {
+        "ingredient": "Idaho Compound",
+        "loc": "Elmers",
+        "pct": 0.875,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Elmers",
+        "pct": 0.117,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Encapsulated Salt",
+        "loc": "Elmers",
+        "pct": 0.008,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Idaho Compound",
+        "loc": "Bazzini",
+        "pct": 0.875,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Bazzini",
+        "pct": 0.117,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Encapsulated Salt",
+        "loc": "Bazzini",
+        "pct": 0.008,
+        "scrap": 0.1
+      }
+    ],
+    "BPB5003": [
+      {
+        "ingredient": "Camogie Compound",
+        "loc": "Elmers",
+        "pct": 0.85,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Elmers",
+        "pct": 0.092,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Cocoa Whey Crisp",
+        "loc": "Elmers",
+        "pct": 0.05,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Encapsulated Salt",
+        "loc": "Elmers",
+        "pct": 0.008,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Camogie Compound",
+        "loc": "Bazzini",
+        "pct": 0.85,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Bazzini",
+        "pct": 0.092,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Cocoa Whey Crisp",
+        "loc": "Bazzini",
+        "pct": 0.05,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Encapsulated Salt",
+        "loc": "Bazzini",
+        "pct": 0.008,
+        "scrap": 0.1
+      }
+    ],
+    "MCM1001-WIP": [
+      {
+        "ingredient": "Stockton Compound",
+        "loc": "Elmers",
+        "pct": 0.9,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Elmers",
+        "pct": 0.1,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Stockton Compound",
+        "loc": "Palmer",
+        "pct": 0.9,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Palmer",
+        "pct": 0.1,
+        "scrap": 0.1
+      }
+    ],
+    "MSF1002-WIP": [
+      {
+        "ingredient": "Idaho Compound",
+        "loc": "Elmers",
+        "pct": 0.875,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Elmers",
+        "pct": 0.117,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Encapsulated Salt",
+        "loc": "Elmers",
+        "pct": 0.008,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Idaho Compound",
+        "loc": "Palmer",
+        "pct": 0.875,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Palmer",
+        "pct": 0.117,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Encapsulated Salt",
+        "loc": "Palmer",
+        "pct": 0.008,
+        "scrap": 0.1
+      }
+    ],
+    "MPB1003-WIP": [
+      {
+        "ingredient": "Camogie Compound",
+        "loc": "Elmers",
+        "pct": 0.85,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Elmers",
+        "pct": 0.092,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Cocoa Whey Crisp",
+        "loc": "Elmers",
+        "pct": 0.05,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Encapsulated Salt",
+        "loc": "Elmers",
+        "pct": 0.008,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Camogie Compound",
+        "loc": "Palmer",
+        "pct": 0.85,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Plain Milk Crisp",
+        "loc": "Palmer",
+        "pct": 0.092,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Cocoa Whey Crisp",
+        "loc": "Palmer",
+        "pct": 0.05,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Encapsulated Salt",
+        "loc": "Palmer",
+        "pct": 0.008,
+        "scrap": 0.1
+      }
+    ],
+    "LSN1001-WIP": [
+      {
+        "ingredient": "Stockton Compound",
+        "loc": "Bazzini",
+        "pct": 0.4,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Polydextrose- Liquid",
+        "loc": "Bazzini",
+        "pct": 0.0416,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Milk Protein Isolate",
+        "loc": "Bazzini",
+        "pct": 0.05268,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Soluble Corn Fiber- Liquid",
+        "loc": "Bazzini",
+        "pct": 0.07798,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Allulose",
+        "loc": "Bazzini",
+        "pct": 0.1335,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Glycerin",
+        "loc": "Bazzini",
+        "pct": 0.02627,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Sodium Caseinate",
+        "loc": "Bazzini",
+        "pct": 0.02089,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Palm Oil",
+        "loc": "Bazzini",
+        "pct": 0.02473,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Egg White Powder",
+        "loc": "Bazzini",
+        "pct": 0.00851,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Peanut Flour",
+        "loc": "Bazzini",
+        "pct": 0.00854,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Salt",
+        "loc": "Bazzini",
+        "pct": 0.00585,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Nat Flavor Peanut OS",
+        "loc": "Bazzini",
+        "pct": 0.00372,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "TastePrint",
+        "loc": "Bazzini",
+        "pct": 0.00101,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Peanut Oil w/Extract",
+        "loc": "Bazzini",
+        "pct": 0.0007,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Allulose",
+        "loc": "Bazzini",
+        "pct": 0,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Soluble Corn Fiber- Liquid",
+        "loc": "Bazzini",
+        "pct": 0,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Anhydrous Milkfat",
+        "loc": "Bazzini",
+        "pct": 0.02121,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Milk Protein Isolate",
+        "loc": "Bazzini",
+        "pct": 0,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Salt",
+        "loc": "Bazzini",
+        "pct": 0,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Dehydrated Sweet Cream Powder",
+        "loc": "Bazzini",
+        "pct": 0.0226,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Vanilla Extract",
+        "loc": "Bazzini",
+        "pct": 0.00015,
+        "scrap": 0.1
+      },
+      {
+        "ingredient": "Roasted Peanut Splits",
+        "loc": "Bazzini",
+        "pct": 0.15,
+        "scrap": 0.1
+      }
+    ]
+  },
+  "refprod": {
+    "BCM2001": {
+      "size": "33g",
+      "per_case": 72,
+      "cases_pallet": 168,
+      "minis_pallet": 12096
+    },
+    "BSF2002": {
+      "size": "33g",
+      "per_case": 72,
+      "cases_pallet": 168,
+      "minis_pallet": 12096
+    },
+    "BPB2003": {
+      "size": "33g",
+      "per_case": 72,
+      "cases_pallet": 168,
+      "minis_pallet": 12096
+    },
+    "BCC2004": {
+      "size": "33g",
+      "per_case": 72,
+      "cases_pallet": 168,
+      "minis_pallet": 12096
+    },
+    "BCM3001": {
+      "size": "33g",
+      "per_case": 72,
+      "cases_pallet": 224,
+      "minis_pallet": 16128
+    },
+    "BSF3002": {
+      "size": "33g",
+      "per_case": 72,
+      "cases_pallet": 224,
+      "minis_pallet": 16128
+    },
+    "BPB3003": {
+      "size": "33g",
+      "per_case": 72,
+      "cases_pallet": 224,
+      "minis_pallet": 16128
+    },
+    "MBMC4001": {
+      "size": "3.3oz",
+      "per_case": 6,
+      "cases_pallet": 100,
+      "minis_pallet": 600
+    },
+    "MBSF4002": {
+      "size": "3.3oz",
+      "per_case": 6,
+      "cases_pallet": 100,
+      "minis_pallet": 600
+    },
+    "MBPB4003": {
+      "size": "3.3oz",
+      "per_case": 6,
+      "cases_pallet": 100,
+      "minis_pallet": 600
+    },
+    "MBPN4000": {
+      "size": "3.1oz",
+      "per_case": 6,
+      "cases_pallet": 100,
+      "minis_pallet": 600
+    },
+    "MBFC4004": {
+      "size": "10.15oz",
+      "per_case": 18,
+      "cases_pallet": 360,
+      "minis_pallet": 6480
+    },
+    "MBMC4001-WIP": {
+      "size": "8g",
+      "per_case": 850,
+      "cases_pallet": 36,
+      "minis_pallet": 30600
+    },
+    "MBSF4002-WIP": {
+      "size": "8g",
+      "per_case": 850,
+      "cases_pallet": 36,
+      "minis_pallet": 30600
+    },
+    "MBPB4003-WIP": {
+      "size": "7.5g",
+      "per_case": 900,
+      "cases_pallet": 36,
+      "minis_pallet": 32400
+    },
+    "MBPN4000-WIP": {
+      "size": "15g",
+      "per_case": 400,
+      "cases_pallet": 36,
+      "minis_pallet": 14400
+    },
+    "BMC5001": {
+      "size": "33g",
+      "per_case": 72,
+      "cases_pallet": 224,
+      "minis_pallet": 16128
+    },
+    "BSF5002": {
+      "size": "33g",
+      "per_case": 72,
+      "cases_pallet": 224,
+      "minis_pallet": 16128
+    },
+    "BPB5003": {
+      "size": "33g",
+      "per_case": 72,
+      "cases_pallet": 224,
+      "minis_pallet": 16128
+    },
+    "BVAR3000": {
+      "size": "33g",
+      "per_case": 9,
+      "cases_pallet": 224,
+      "minis_pallet": 16128
+    },
+    "MBVAR4006-MC3": {
+      "size": null,
+      "per_case": null,
+      "cases_pallet": null,
+      "minis_pallet": null
+    },
+    "MBVAR4004-MC5": {
+      "size": null,
+      "per_case": null,
+      "cases_pallet": null,
+      "minis_pallet": null
+    }
+  },
+  "bom": [
+    {
+      "finished": "MBMC4001",
+      "wip": "MBMC4001-WIP",
+      "minis": 11
+    },
+    {
+      "finished": "MBSF4002",
+      "wip": "MBSF4002-WIP",
+      "minis": 11
+    },
+    {
+      "finished": "MBPB4003",
+      "wip": "MBPB4003-WIP",
+      "minis": 12
+    },
+    {
+      "finished": "MBPN4000",
+      "wip": "MBPN4000-WIP",
+      "minis": 6
+    },
+    {
+      "finished": "MBFC4004",
+      "wip": "MBMC4001-WIP",
+      "minis": 18
+    },
+    {
+      "finished": "MBFC4004",
+      "wip": "MBSF4002-WIP",
+      "minis": 18
+    },
+    {
+      "finished": "MBVAR4006-MC3",
+      "wip": "MBMC4001-WIP",
+      "minis": 1
+    },
+    {
+      "finished": "MBVAR4006-MC3",
+      "wip": "MBSF4002-WIP",
+      "minis": 1
+    },
+    {
+      "finished": "MBVAR4006-MC3",
+      "wip": "MBPB4003-WIP",
+      "minis": 1
+    },
+    {
+      "finished": "MBVAR4004-MC5",
+      "wip": "MBMC4001-WIP",
+      "minis": 1
+    },
+    {
+      "finished": "MBVAR4004-MC5",
+      "wip": "MBSF4002-WIP",
+      "minis": 1
+    },
+    {
+      "finished": "MBVAR4004-MC5",
+      "wip": "MBPB4003-WIP",
+      "minis": 1
+    },
+    {
+      "finished": "MBVAR4004-MC5",
+      "wip": "MBPN4000-WIP",
+      "minis": 2
+    },
+    {
+      "finished": "MBVAR4005-MC4",
+      "wip": "MBMC4001-WIP",
+      "minis": 1
+    },
+    {
+      "finished": "MBVAR4005-MC4",
+      "wip": "MBSF4002-WIP",
+      "minis": 1
+    },
+    {
+      "finished": "MBVAR4005-MC4",
+      "wip": "MBPB4003-WIP",
+      "minis": 1
+    },
+    {
+      "finished": "MBVAR4005-MC4",
+      "wip": "MBPN4000-WIP",
+      "minis": 1
+    }
+  ],
+  "opening_inv": [
+    {
+      "sku": "BCM2001",
+      "desc": "Milk Crunch Bar",
+      "qty": 144
+    },
+    {
+      "sku": "BSF2002",
+      "desc": "Salted Fudge Crunch Bar",
+      "qty": 936
+    },
+    {
+      "sku": "BPB2003",
+      "desc": "Peanut Butter Crunch Bar",
+      "qty": 19704
+    },
+    {
+      "sku": "BCC2004",
+      "desc": "Cookies & Creme Bar",
+      "qty": 0
+    },
+    {
+      "sku": "BCM3001",
+      "desc": "Milk Chocolate Crunch Bar",
+      "qty": 271596
+    },
+    {
+      "sku": "BSF3002",
+      "desc": "Salted Fudge Crunch Bar",
+      "qty": 237996
+    },
+    {
+      "sku": "BPB3003",
+      "desc": "Peanut Butter Crunch Bar",
+      "qty": 58188
+    },
+    {
+      "sku": "BVAR3000",
+      "desc": "Variety 9-Pack Sampler - Bar (CM,PB,SF)",
+      "qty": 3944
+    },
+    {
+      "sku": "BMC5001",
+      "desc": "Milk Chocolate Crunch  - Bar",
+      "qty": 221400
+    },
+    {
+      "sku": "BSF5002",
+      "desc": "Salted Fudge Crunch - Bar",
+      "qty": 445176
+    },
+    {
+      "sku": "BPB5003",
+      "desc": "Peanut Butter Crunch - Bar",
+      "qty": 62064
+    },
+    {
+      "sku": "MBPN4000",
+      "desc": "Peanut Caramel Nougat Mini, Bag",
+      "qty": 6996
+    },
+    {
+      "sku": "MBMC4001",
+      "desc": "Milk Chocolate - Mini Bar",
+      "qty": 24627
+    },
+    {
+      "sku": "MBSF4002",
+      "desc": "Salted Fudge - Mini Bar ",
+      "qty": 36842
+    },
+    {
+      "sku": "MBPB4003",
+      "desc": "Peanut Butter - Mini Bar ",
+      "qty": 3988
+    },
+    {
+      "sku": "MBFC4004",
+      "desc": "SF and MC Mini bars - 10oz/ 18ct tray",
+      "qty": 227
+    },
+    {
+      "sku": "MBMC4001-WIP",
+      "desc": "WIP - Milk Chocolate Mini Bar, 15lb box",
+      "qty": 214200
+    },
+    {
+      "sku": "MBSF4002-WIP",
+      "desc": "WIP - Salted Fudge Mini Bar, 15lb box",
+      "qty": 5950
+    },
+    {
+      "sku": "MBPB4003-WIP",
+      "desc": "WIP - Peanut Butter Mini Bar, 15lb box",
+      "qty": 0
+    }
+  ],
+  "raw_samples": {
+    "elmers": [
+      [
+        "Salted Fudge",
+        null,
+        null,
+        null,
+        null,
+        null,
+        "Classic Milk",
+        null,
+        null,
+        null,
+        null,
+        null,
+        "Item",
+        "HC SKU",
+        "RSC Cases",
+        "Units",
+        "Bars",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        10010,
+        "PK-MC",
+        "Horizontal ",
+        8597,
+        618984,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "Item",
+        "HC SKU",
+        "Horizontal",
+        "Units",
+        "Bars",
+        null,
+        "Item",
+        "HC SKU",
+        "Horizontal",
+        "Units",
+        "Bars",
+        null,
+        10019,
+        "PK-MC03",
+        "Vertical",
+        12943,
+        931896,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "50029B",
+        "PK-WPSF04",
+        "Film",
+        110000,
+        110000,
+        null,
+        "50032B",
+        "PK-WPMC04",
+        "Film",
+        192600,
+        192600,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        20470,
+        "PK-CTSFV2",
+        "Folding Carton",
+        18161,
+        217932,
+        null,
+        "20473B",
+        "PK-CTMCV2",
+        "Folding Carton",
+        2829,
+        33948,
+        null,
+        10022,
+        "PK-MC04-WIP",
+        "Mini Bulk Gen",
+        9044,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "Item",
+        "HC SKU",
+        "Vertical",
+        "Units",
+        "Bars",
+        null,
+        "Item",
+        "HC SKU",
+        "Vertical",
+        "Units",
+        "Bars",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        50033,
+        "PK-WPSF05",
+        "Film",
+        497350,
+        497350,
+        null,
+        50034,
+        "PK-WPMC05",
+        "Film",
+        798200,
+        798200,
+        null,
+        "Item",
+        null,
+        "Salt",
+        "lbs",
+        "Bars",
+        null,
+        null,
+        null,
+        null,
+        32,
+        null,
+        "G",
+        "Per Case",
+        "lb per case",
+        null,
+        null
+      ],
+      [
+        20474,
+        "PK-VCDSF03",
+        "Folding Carton",
+        76301,
+        915612,
+        null,
+        20475,
+        "PK-VCDMC03",
+        "Folding Carton",
+        58872,
+        706464,
+        null,
+        90824,
+        "RM0137",
+        null,
+        1189,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "crisp",
+        0.117,
+        3.744,
+        269.568,
+        0.5950728477,
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "com",
+        0.874,
+        27.968,
+        2013.696,
+        4.445245033,
+        0.008890490066,
+        null
+      ],
+      [
+        "Item",
+        "HC SKU",
+        "SF Mini Film  8 g ",
+        "Units",
+        "Bars",
+        null,
+        "Item",
+        "HC SKU",
+        "Milk Mini Film  8 g ",
+        "Units",
+        "Bars",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        50026,
+        "PK-WPMSF",
+        "Film",
+        1795400,
+        1795400,
+        null,
+        50021,
+        "PK-WPMMC",
+        "Film",
+        929000,
+        929000,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        "lbs",
+        null,
+        null,
+        null,
+        null,
+        null,
+        "lbs",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "90249B",
+        "IN-CH302v2",
+        "Dark Choc Comp",
+        90669,
+        1173515.914,
+        null,
+        "90248B",
+        "IN-MC301v2",
+        "Milk Choc Comp",
+        75920,
+        982621.7143,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "salt",
+        0.009,
+        0.288,
+        20.736,
+        0.04577483444,
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        32,
+        2304,
+        5.086092715,
+        null,
+        null
+      ],
+      [
+        "Peanut Butter",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "Milk Crisps",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        0.002,
+        0.064,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "Item",
+        "HC SKU",
+        "Horizontal",
+        "Units",
+        "Bars",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "Item",
+        "HC SKU",
+        "Crisps",
+        "lbs",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        50036,
+        "PK-WPPB04",
+        "Film",
+        310300,
+        310300,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        90672,
+        "RM0130",
+        null,
+        14704,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        20476,
+        "PK-CTPBV2",
+        "Folding Carton",
+        36677,
+        440124,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "Item",
+        "HC SKU",
+        "Vertical",
+        "Units",
+        "Bars",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "Coco Crisps",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        50035,
+        "PK-WPPB05",
+        "Film",
+        118500,
+        118500,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "Item",
+        "HC SKU",
+        "Crisps",
+        "lbs",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        20471,
+        "PK-VCDPB03",
+        "Folding Carton",
+        21028,
+        252336,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        90671,
+        "RM0131",
+        null,
+        728,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "Vanilla Flavor",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "Item",
+        "HC SKU",
+        "Pnt But Mini 7.5g",
+        "Units",
+        "Bars",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "Item",
+        "HC SKU",
+        null,
+        "lbs",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        50031,
+        "PK-WPMPB01",
+        "Film",
+        505000,
+        505000,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        90588,
+        "RM0163",
+        null,
+        261,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "Pnt Butter Com",
+        null,
+        null,
+        "lbs",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        90251,
+        "IN-PB303v2",
+        "PNT But Com",
+        16600,
+        0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    ],
+    "bazzini": [
+      [
+        "Item Number",
+        "Hormbles #",
+        "Item Description",
+        "Location Code",
+        "Bin",
+        "Lot Number",
+        "Qty",
+        "UOM"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "SD-WH-MAIN",
+        "49-09",
+        "55448-1",
+        375,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "SD-WH-MAIN",
+        "49-09",
+        "58548-1-1",
+        8640,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "SD-WH-MAIN",
+        "49-09",
+        "59019-1-1",
+        4800,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "SD-WH-MAIN",
+        "49-09",
+        "58845-1-1",
+        9600,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "SD-WH-MAIN",
+        "49-10",
+        "55448-1",
+        45,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "SD-WH-MAIN",
+        "49-10",
+        "55448-1",
+        802,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "SD-WH-MAIN",
+        "49-10",
+        "55448-1",
+        4800,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "SD-WH-MAIN",
+        "49-10",
+        "55448-1",
+        1200,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "SD-WH-MAIN",
+        "49-10",
+        "58548-1-1",
+        4800,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "SD-WH-MAIN",
+        "49-10",
+        "59019-1-1",
+        3360,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "SD-WH-MAIN",
+        "49-10",
+        "56295-1",
+        220,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "SD-WH-MAIN",
+        "49-10",
+        "56295-1",
+        7160,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "AT-WH-MAIN",
+        "90 FLOOR",
+        "58548-1-1",
+        300,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "AT-WH-MAIN",
+        "90 FLOOR",
+        "58548-1-1",
+        960,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "AT-WH-MAIN",
+        "92-00-05",
+        "58548-1-1",
+        960,
+        "EA"
+      ],
+      [
+        "A92006",
+        "PK-MC02",
+        "HOCR GENERIC MSTR CTN 6PK #PK-MC02 (5.375 W X 15.125 D X 8.125 H)",
+        "AT-WH-MAIN",
+        "92-00-05",
+        "58548-1-1",
+        960,
+        "EA"
+      ],
+      [
+        "A92018",
+        "PK-MC",
+        "HOCR W/LOGO MSTR CTN 6PK #PK-MC (11.75 W X 5.625 D X 7.25 H)",
+        "SD-WH-MAIN",
+        "31-09-01",
+        "13759-1 PO. POHOCR10",
+        1035,
+        "EA"
+      ],
+      [
+        "A92018",
+        "PK-MC",
+        "HOCR W/LOGO MSTR CTN 6PK #PK-MC (11.75 W X 5.625 D X 7.25 H)",
+        "SD-WH-MAIN",
+        "49-09",
+        10225,
+        1100,
+        "EA"
+      ],
+      [
+        "A92018",
+        "PK-MC",
+        "HOCR W/LOGO MSTR CTN 6PK #PK-MC (11.75 W X 5.625 D X 7.25 H)",
+        "SD-WH-MAIN",
+        "49-09",
+        10225,
+        1100,
+        "EA"
+      ],
+      [
+        "A92018",
+        "PK-MC",
+        "HOCR W/LOGO MSTR CTN 6PK #PK-MC (11.75 W X 5.625 D X 7.25 H)",
+        "SD-WH-MAIN",
+        "49-10",
+        13759,
+        1000,
+        "EA"
+      ],
+      [
+        "A92018",
+        "PK-MC",
+        "HOCR W/LOGO MSTR CTN 6PK #PK-MC (11.75 W X 5.625 D X 7.25 H)",
+        "SD-WH-MAIN",
+        "49-10",
+        13759,
+        1200,
+        "EA"
+      ],
+      [
+        "A92018",
+        "PK-MC",
+        "HOCR W/LOGO MSTR CTN 6PK #PK-MC (11.75 W X 5.625 D X 7.25 H)",
+        "AT-WH-MAIN",
+        "92-13-03",
+        10194,
+        950,
+        "EA"
+      ],
+      [
+        "B92001-BOX",
+        "PK-CTSF",
+        "HOCR SLT'D FUDGE 12PK BX (#PK-CTSF)",
+        "SD-WH-MAIN",
+        "32-11-03",
+        10050,
+        4640,
+        "EA"
+      ],
+      [
+        "B92003-BOX",
+        "PK-CTCC",
+        "HOCR COOKIE & CREME 12PK BX (#PK-CTCC)",
+        "SD-WH-MAIN",
+        "32-11-03",
+        10050,
+        1600,
+        "EA"
+      ],
+      [
+        "B92004-BOX",
+        "PK-CTPBV2",
+        "HOCR PB CRUNCH 12PK BX (#PK-CTPBV2)",
+        "SD-WH-MAIN",
+        "31-06-01",
+        10128,
+        9600,
+        "EA"
+      ],
+      [
+        "B92004-BOX",
+        "PK-CTPBV2",
+        "HOCR PB CRUNCH 12PK BX (#PK-CTPBV2)",
+        "SD-WH-MAIN",
+        "31-11-01",
+        "10078  PO.0037476",
+        979,
+        "EA"
+      ],
+      [
+        "B92004-BOX",
+        "PK-CTPBV2",
+        "HOCR PB CRUNCH 12PK BX (#PK-CTPBV2)",
+        "SD-WH-MAIN",
+        "62-08-03",
+        10128,
+        500,
+        "EA"
+      ],
+      [
+        "B92004-BOX",
+        "PK-CTPBV2",
+        "HOCR PB CRUNCH 12PK BX (#PK-CTPBV2)",
+        "SD-WH-MAIN",
+        "62-08-03",
+        10128,
+        4600,
+        "EA"
+      ],
+      [
+        "B92004-BOX",
+        "PK-CTPBV2",
+        "HOCR PB CRUNCH 12PK BX (#PK-CTPBV2)",
+        "SD-WH-MAIN",
+        "62-13-01",
+        10128,
+        500,
+        "EA"
+      ],
+      [
+        "B92008-BOX",
+        "PK-VCDPBV2",
+        "HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPBV2)",
+        "AT-WH-MAIN",
+        "96-13-03",
+        10195,
+        10800,
+        "EA"
+      ],
+      [
+        "B92008-BOX",
+        "PK-VCDPBV2",
+        "HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPBV2)",
+        "AT-WH-MAIN",
+        "96-18-03",
+        10195,
+        5700,
+        "EA"
+      ],
+      [
+        "B92018-BOX",
+        "PK-CTPBV2",
+        "HOCR PB CRUNCH 12PK HORIZONTAL BX (#PK-CTPBV3)",
+        "SD-WH-MAIN",
+        "62-39-01",
+        10128,
+        9600,
+        "EA"
+      ],
+      [
+        "B92018-BOX",
+        "PK-CTPBV2",
+        "HOCR PB CRUNCH 12PK HORIZONTAL BX (#PK-CTPBV3)",
+        "AT-WH-MAIN",
+        "91-12-03",
+        10128,
+        3350,
+        "EA"
+      ],
+      [
+        "B92019-BOX",
+        "PK-VCDPB",
+        "HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPB)",
+        "SD-WH-MAIN",
+        "32-28-01",
+        10139,
+        3531,
+        "EA"
+      ],
+      [
+        "B92019-BOX",
+        "PK-VCDPB",
+        "HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPB)",
+        "SD-WH-MAIN",
+        "32-28-01",
+        10139,
+        3069,
+        "EA"
+      ],
+      [
+        "B92019-BOX",
+        "PK-VCDPB",
+        "HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPB)",
+        "SD-WH-MAIN",
+        "32-28-01",
+        10223,
+        4420,
+        "EA"
+      ],
+      [
+        "B92019-BOX",
+        "PK-VCDPB",
+        "HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPB)",
+        "AT-WH-MAIN",
+        "91-01-02",
+        10139,
+        30,
+        "EA"
+      ],
+      [
+        "B92022-BOX",
+        "PK-VCDPBV3",
+        "HOCR PB CRUNCH 12PK VERTICAL BX (#PK-VCDPBV3)",
+        "SD-WH-MAIN",
+        "49-09",
+        "10195V3",
+        7850,
+        "EA"
+      ],
+      [
+        "D92006-BAG",
+        "PK-SPMPCN",
+        "HOCR PNUT CRML NOUGAT POUCH 3.39OZ (#PK-SPMPCN) (1000/CS)",
+        "SD-WH-MAIN",
+        "49-09",
+        10181,
+        13000,
+        "EA"
+      ],
+      [
+        "D92006-BAG",
+        "PK-SPMPCN",
+        "HOCR PNUT CRML NOUGAT POUCH 3.39OZ (#PK-SPMPCN) (1000/CS)",
+        "SD-WH-MAIN",
+        "49-09",
+        10209,
+        96000,
+        "EA"
+      ],
+      [
+        "D92006-BAG",
+        "PK-SPMPCN",
+        "HOCR PNUT CRML NOUGAT POUCH 3.39OZ (#PK-SPMPCN) (1000/CS)",
+        "AT-WH-MAIN",
+        "96-10-02",
+        10209,
+        39150,
+        "EA"
+      ],
+      [
+        "D92006-BAG",
+        "PK-SPMPCN",
+        "HOCR PNUT CRML NOUGAT POUCH 3.39OZ (#PK-SPMPCN) (1000/CS)",
+        "AT-WH-MAIN",
+        "96-11-01",
+        10209,
+        48000,
+        "EA"
+      ],
+      [
+        "D92006-BAG",
+        "PK-SPMPCN",
+        "HOCR PNUT CRML NOUGAT POUCH 3.39OZ (#PK-SPMPCN) (1000/CS)",
+        "AT-WH-MAIN",
+        "96-11-03",
+        10209,
+        34075,
+        "EA"
+      ],
+      [
+        "D92006-BAG",
+        "PK-SPMPCN",
+        "HOCR PNUT CRML NOUGAT POUCH 3.39OZ (#PK-SPMPCN) (1000/CS)",
+        "AT-WH-MAIN",
+        "96-25-03",
+        10209,
+        42000,
+        "EA"
+      ],
+      [
+        "G92001-UPC",
+        "PK-CTSF",
+        "HOCR SLT'D FUDGE UPC COVER UP LBL (PK-CTSF)",
+        "AT-WH-MAIN",
+        "79-25-01",
+        10044,
+        17450,
+        "EA"
+      ],
+      [
+        "G92002-UPC",
+        "PK-CTMC",
+        "HOCR MC CRUNCH UPC COVER UP LBL (PK-CTMC)",
+        "AT-WH-MAIN",
+        "79-25-01",
+        10044,
+        21000,
+        "EA"
+      ],
+      [
+        "G92003-UPC",
+        "PK-CTCC",
+        "HOCR COOKIE & CREME UPC COVER UP LBL (PK-CTCC)",
+        "AT-WH-MAIN",
+        "79-25-01",
+        10044,
+        16300,
+        "EA"
+      ],
+      [
+        "H92004-CFW",
+        "PK-WPPB02",
+        "HOCR PB CRUNCH 30G FLM (#PK-WPPB02)",
+        "AT-WH-MAIN",
+        "95-02-03",
+        "491533 PO. POHOCR101",
+        17000,
+        "IMP"
+      ],
+      [
+        "H92004-CFW",
+        "PK-WPPB02",
+        "HOCR PB CRUNCH 30G FLM (#PK-WPPB02)",
+        "AT-WH-MAIN",
+        "95-02-03",
+        "PO-10101",
+        34000,
+        "IMP"
+      ],
+      [
+        "H92004-CFW",
+        "PK-WPPB02",
+        "HOCR PB CRUNCH 30G FLM (#PK-WPPB02)",
+        "AT-WH-MAIN",
+        "95-02-03",
+        "491533 PO. POHOCR101",
+        8500,
+        "IMP"
+      ],
+      [
+        "H92004-CFW",
+        "PK-WPPB02",
+        "HOCR PB CRUNCH 30G FLM (#PK-WPPB02)",
+        "AT-WH-MAIN",
+        "95-02-03",
+        "491533 PO. POHOCR101",
+        108500,
+        "IMP"
+      ],
+      [
+        "H92004-CFW",
+        "PK-WPPB02",
+        "HOCR PB CRUNCH 30G FLM (#PK-WPPB02)",
+        "AT-WH-MAIN",
+        "95-02-03",
+        "491533 PO. POHOCR101",
+        6000,
+        "IMP"
+      ],
+      [
+        "H92006-CFW",
+        "PK-WPMN01",
+        "HOCR PNUT CRML NOUGAT 16G FLM (#PK-WPMN01)",
+        "SD-WH-MAIN",
+        "49-09",
+        497810,
+        1932500,
+        "IMP"
+      ],
+      [
+        "H92006-CFW",
+        "PK-WPMN01",
+        "HOCR PNUT CRML NOUGAT 16G FLM (#PK-WPMN01)",
+        "SD-WH-MAIN",
+        "49-10",
+        496510,
+        424000,
+        "IMP"
+      ],
+      [
+        "H92006-CFW",
+        "PK-WPMN01",
+        "HOCR PNUT CRML NOUGAT 16G FLM (#PK-WPMN01)",
+        "AT-WH-MAIN",
+        "95-09-02",
+        10175,
+        185000,
+        "IMP"
+      ],
+      [
+        "H92006-CFW",
+        "PK-WPMN01",
+        "HOCR PNUT CRML NOUGAT 16G FLM (#PK-WPMN01)",
+        "AT-WH-MAIN",
+        "96-01-02",
+        10136,
+        156000,
+        "IMP"
+      ],
+      [
+        "H92018-CFW",
+        "PK-WPPB04",
+        "HOCR PB CRUNCH HORIZONTAL 30G FLM (#PK-WPPB04)",
+        "AT-WH-MAIN",
+        "95-18-04",
+        494497,
+        374000,
+        "IMP"
+      ],
+      [
+        "H92019-CFW",
+        "PK-WPPB05",
+        "HOCR PB CRUNCH VETICAL 30G FLM (#PK-WPPB05)",
+        "AT-WH-MAIN",
+        "95-00-03",
+        496037,
+        193000,
+        "IMP"
+      ],
+      [
+        "I82001-CER",
+        "RM0130",
+        "HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)",
+        "AT-WH-MAIN",
+        "91-20-03",
+        534641,
+        240,
+        "Lbs"
+      ],
+      [
+        "I82001-CER",
+        "RM0130",
+        "HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)",
+        "AT-WH-MAIN",
+        "91-20-03",
+        528851,
+        70,
+        "Lbs"
+      ],
+      [
+        "I82001-CER",
+        "RM0130",
+        "HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)",
+        "AT-WH-MAIN",
+        "STAGING",
+        528851,
+        10,
+        "Lbs"
+      ],
+      [
+        "I82001-CER",
+        "RM0130",
+        "HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)",
+        "AT-WH-MAIN",
+        "STAGING",
+        528851,
+        640,
+        "Lbs"
+      ],
+      [
+        "I82001-CER",
+        "RM0130",
+        "HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)",
+        "AT-WH-MAIN",
+        "STAGING",
+        528851,
+        160,
+        "Lbs"
+      ],
+      [
+        "I82001-CER",
+        "RM0130",
+        "HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)",
+        "NW-WH-MAIN",
+        "ZONE 5",
+        532952,
+        520,
+        "Lbs"
+      ],
+      [
+        "I82001-CER",
+        "RM0130",
+        "HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)",
+        "NW-WH-MAIN",
+        "ZONE 5",
+        528851,
+        10,
+        "Lbs"
+      ],
+      [
+        "I82001-CER",
+        "RM0130",
+        "HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)",
+        "NW-WH-MAIN",
+        "ZONE 5",
+        528851,
+        40,
+        "Lbs"
+      ],
+      [
+        "I82001-CER",
+        "RM0130",
+        "HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)",
+        "NW-WH-MAIN",
+        "ZONE 5",
+        528851,
+        290,
+        "Lbs"
+      ],
+      [
+        "I82001-CER",
+        "RM0130",
+        "HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)",
+        "NW-WH-MAIN",
+        "ZONE 5",
+        528851,
+        40,
+        "Lbs"
+      ],
+      [
+        "I82001-CER",
+        "RM0130",
+        "HOCR ECCO MILK PROTEIN CRISPS 90 (RM0130)",
+        "NW-WH-MAIN",
+        "ZONE 5",
+        528851,
+        420,
+        "Lbs"
+      ],
+      [
+        "I82002-CBK",
+        "IN-MC301v2",
+        "HOCR NSA HIGH PROTEIN MC CONF COATING (25-025A/IN-MC301v2)",
+        "NW-WH-MAIN",
+        "113-112-03",
+        "260379-D",
+        1800,
+        "Lbs"
+      ],
+      [
+        "I82002-CBK",
+        "IN-MC301v2",
+        "HOCR NSA HIGH PROTEIN MC CONF COATING (25-025A/IN-MC301v2)",
+        "NW-WH-MAIN",
+        "113-112-03",
+        "260379-D",
+        300,
+        "Lbs"
+      ],
+      [
+        "I82002-CBK",
+        "IN-MC301v2",
+        "HOCR NSA HIGH PROTEIN MC CONF COATING (25-025A/IN-MC301v2)",
+        "NW-WH-MAIN",
+        "113-114-03",
+        "260379-D",
+        900,
+        "Lbs"
+      ],
+      [
+        "I82002-CBK",
+        "IN-MC301v2",
+        "HOCR NSA HIGH PROTEIN MC CONF COATING (25-025A/IN-MC301v2)",
+        "AT-WH-MAIN",
+        "75-45-01",
+        "26008-D",
+        2000,
+        "Lbs"
+      ],
+      [
+        "I82003-CBK",
+        null,
+        "HOCR HIGH PROTEIN DC CONF COATING (25-025B)",
+        "AT-WH-MAIN",
+        "75-25-01",
+        96,
+        840,
+        "Lbs"
+      ],
+      [
+        "I82004-SLT",
+        "RM0137",
+        "HOCR FLVSHURE 630 ENCAPSULATED PRETZ SEA SLT 80% (F4630013-K50/RM0137)",
+        "AT-WH-MAIN",
+        "73-08-01",
+        "BN20000010229",
+        65,
+        "Lbs"
+      ],
+      [
+        "I82004-SLT",
+        "RM0137",
+        "HOCR FLVSHURE 630 ENCAPSULATED PRETZ SEA SLT 80% (F4630013-K50/RM0137)",
+        "AT-WH-MAIN",
+        "73-08-01",
+        "BN20000010229",
+        50,
+        "Lbs"
+      ],
+      [
+        "I82004-SLT",
+        "RM0137",
+        "HOCR FLVSHURE 630 ENCAPSULATED PRETZ SEA SLT 80% (F4630013-K50/RM0137)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "BN20000010229",
+        14.66,
+        "Lbs"
+      ],
+      [
+        "I82006-CBK",
+        "IN-WC304",
+        "HOCR ROSALIE HIGH PROTEIN WHT CONF COATING 25# (IN-WC304)",
+        "NW-WH-MAIN",
+        "113-112-04",
+        "250130-D",
+        775,
+        "Lbs"
+      ],
+      [
+        "I82006-CBK",
+        "IN-WC304",
+        "HOCR ROSALIE HIGH PROTEIN WHT CONF COATING 25# (IN-WC304)",
+        "AT-WH-MAIN",
+        "77-35-04",
+        "250147-D",
+        750,
+        "Lbs"
+      ],
+      [
+        "I82008-CBK",
+        "IN-MC301v2",
+        "HOCR STOCKTON NSA HP MC COATING (GRAC25020901NWFC25/IN-MC301v2)",
+        "AT-WH-MAIN",
+        "DROP ZONE",
+        "260008-D",
+        50,
+        "Lbs"
+      ],
+      [
+        "I82010-PWD",
+        "RM0167",
+        "HOCR DEHYDRATED SWT CRM PWD 50# (BDF0011B/RM0167)",
+        "NW-WH-MAIN",
+        "113-098-03",
+        6012,
+        1700,
+        "Lbs"
+      ],
+      [
+        "I82010-PWD",
+        "RM0167",
+        "HOCR DEHYDRATED SWT CRM PWD 50# (BDF0011B/RM0167)",
+        "NW-WH-MAIN",
+        "DOCK",
+        "6005-17",
+        500,
+        "Lbs"
+      ],
+      [
+        "I82010-PWD",
+        "RM0167",
+        "HOCR DEHYDRATED SWT CRM PWD 50# (BDF0011B/RM0167)",
+        "AT-WH-MAIN",
+        "STAGING",
+        6033,
+        0.1,
+        "Lbs"
+      ],
+      [
+        "I82010-PWD",
+        "RM0167",
+        "HOCR DEHYDRATED SWT CRM PWD 50# (BDF0011B/RM0167)",
+        "AT-WH-MAIN",
+        "STAGING",
+        6033,
+        487.1,
+        "Lbs"
+      ],
+      [
+        "I82011-DAI",
+        "RM0158",
+        "HOCR DFA ANHYROUS MILK FAT 55.115# (107732/RM0158)",
+        "NW-WH-MAIN",
+        "113-070-03",
+        "WT10761756",
+        1653.45,
+        "Lbs"
+      ],
+      [
+        "I82011-DAI",
+        "RM0158",
+        "HOCR DFA ANHYROUS MILK FAT 55.115# (107732/RM0158)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "WT10733619",
+        226.72,
+        "Lbs"
+      ],
+      [
+        "I82011-DAI",
+        "RM0158",
+        "HOCR DFA ANHYROUS MILK FAT 55.115# (107732/RM0158)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "WT10733619",
+        159.08,
+        "Lbs"
+      ],
+      [
+        "I82011-DAI",
+        "RM0158",
+        "HOCR DFA ANHYROUS MILK FAT 55.115# (107732/RM0158)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "WT10733619",
+        502.47,
+        "Lbs"
+      ],
+      [
+        "I82011-DAI",
+        "RM0158",
+        "HOCR DFA ANHYROUS MILK FAT 55.115# (107732/RM0158)",
+        "NW-WH-MAIN",
+        "ZONE 5",
+        "WT10716559",
+        55.12,
+        "Lbs"
+      ],
+      [
+        "I82012",
+        "RM0154",
+        "HOCR ADM GLYCERIN 50# (RM0154)",
+        "NW-WH-MAIN",
+        "114-033-03",
+        2608310,
+        1200,
+        "Lbs"
+      ],
+      [
+        "I82012",
+        "RM0154",
+        "HOCR ADM GLYCERIN 50# (RM0154)",
+        "NW-WH-MAIN",
+        "114-057-01",
+        2608310,
+        1200,
+        "Lbs"
+      ],
+      [
+        "I82012",
+        "RM0154",
+        "HOCR ADM GLYCERIN 50# (RM0154)",
+        "AT-WH-MAIN",
+        "STAGING",
+        2600710,
+        70,
+        "Lbs"
+      ],
+      [
+        "I82012",
+        "RM0154",
+        "HOCR ADM GLYCERIN 50# (RM0154)",
+        "AT-WH-MAIN",
+        "STAGING",
+        2600710,
+        70,
+        "Lbs"
+      ],
+      [
+        "I82013-PWD",
+        "RM0151",
+        "HOCR EGG WHT PWD 50# (RM0151)",
+        "AT-WH-MAIN",
+        "DROP ZONE",
+        "WD0206-001",
+        60,
+        "Lbs"
+      ],
+      [
+        "I82013-PWD",
+        "RM0151",
+        "HOCR EGG WHT PWD 50# (RM0151)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "WD0213-001",
+        110,
+        "Lbs"
+      ],
+      [
+        "I82013-PWD",
+        "RM0151",
+        "HOCR EGG WHT PWD 50# (RM0151)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "WD0225-001",
+        10,
+        "Lbs"
+      ],
+      [
+        "I82013-PWD",
+        "RM0151",
+        "HOCR EGG WHT PWD 50# (RM0151)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "WD0225-001",
+        60,
+        "Lbs"
+      ],
+      [
+        "I82013-PWD",
+        "RM0151",
+        "HOCR EGG WHT PWD 50# (RM0151)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "WD0225-001",
+        5,
+        "Lbs"
+      ],
+      [
+        "I82014-DAI",
+        "RM0125",
+        "HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)",
+        "NW-WH-MAIN",
+        "113-100-03",
+        "07263G1",
+        1763.6,
+        "Lbs"
+      ],
+      [
+        "I82014-DAI",
+        "RM0125",
+        "HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)",
+        "NW-WH-MAIN",
+        "113-102-03",
+        "07263G1",
+        1763.6,
+        "Lbs"
+      ],
+      [
+        "I82014-DAI",
+        "RM0125",
+        "HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)",
+        "NW-WH-MAIN",
+        "113-104-03",
+        "07263G1",
+        1763.6,
+        "Lbs"
+      ],
+      [
+        "I82014-DAI",
+        "RM0125",
+        "HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)",
+        "NW-WH-MAIN",
+        "113-106-03",
+        "07263G1",
+        1763.6,
+        "Lbs"
+      ],
+      [
+        "I82014-DAI",
+        "RM0125",
+        "HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)",
+        "NW-WH-MAIN",
+        "113-108-03",
+        "07263G1",
+        1190.43,
+        "Lbs"
+      ],
+      [
+        "I82014-DAI",
+        "RM0125",
+        "HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)",
+        "NW-WH-HOLD",
+        "113-114-02",
+        "MS6425315",
+        768,
+        "Lbs"
+      ],
+      [
+        "I82014-DAI",
+        "RM0125",
+        "HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)",
+        "AT-WH-MAIN",
+        "74-21-02",
+        "18853G1",
+        950,
+        "Lbs"
+      ],
+      [
+        "I82014-DAI",
+        "RM0125",
+        "HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)",
+        "AT-WH-MAIN",
+        "75-02-03",
+        "07263G1",
+        1012,
+        "Lbs"
+      ],
+      [
+        "I82014-DAI",
+        "RM0125",
+        "HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "30443G1",
+        600,
+        "Lbs"
+      ],
+      [
+        "I82014-DAI",
+        "RM0125",
+        "HOCR BARSOFT 5001 MILK PROTEIN ISOLATE (1005181/RM0125)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "MS6425315",
+        35,
+        "Lbs"
+      ],
+      [
+        "I82015-FTOL",
+        "RM0168",
+        "HOCR CONFAO PALM VEG OIL 400#/DR (8333-D400-PN/RM0168)",
+        "NW-WH-MAIN",
+        "ZONE 10",
+        "26D30820",
+        2000,
+        "Lbs"
+      ],
+      [
+        "I82016-SLT",
+        "RM0136",
+        "HOCR MORTON SALT (TOP FLO) 50# (RM0136)",
+        "NW-WH-MAIN",
+        "111-025-02",
+        60520020,
+        400,
+        "Lbs"
+      ],
+      [
+        "I82016-SLT",
+        "RM0136",
+        "HOCR MORTON SALT (TOP FLO) 50# (RM0136)",
+        "AT-WH-MAIN",
+        "74-01-03",
+        53919459,
+        91,
+        "Lbs"
+      ],
+      [
+        "I82016-SLT",
+        "RM0136",
+        "HOCR MORTON SALT (TOP FLO) 50# (RM0136)",
+        "AT-WH-MAIN",
+        "74-01-03",
+        53919459,
+        9,
+        "Lbs"
+      ],
+      [
+        "I82016-SLT",
+        "RM0136",
+        "HOCR MORTON SALT (TOP FLO) 50# (RM0136)",
+        "AT-WH-MAIN",
+        "74-01-03",
+        53919459,
+        2150,
+        "Lbs"
+      ],
+      [
+        "I82016-SLT",
+        "RM0136",
+        "HOCR MORTON SALT (TOP FLO) 50# (RM0136)",
+        "NW-WH-MAIN",
+        "ZONE 5",
+        60141980,
+        300,
+        "Lbs"
+      ],
+      [
+        "I82016-SLT",
+        "RM0136",
+        "HOCR MORTON SALT (TOP FLO) 50# (RM0136)",
+        "NW-WH-MAIN",
+        "ZONE 5",
+        59808749,
+        50,
+        "Lbs"
+      ],
+      [
+        "I82017-ADD",
+        "RM0152",
+        "HOCR SF POLYDEXTROSE SYRUP 55.115# (RM0152)",
+        "AT-WH-MAIN",
+        "73-12-01",
+        "AIOSBD31301-3",
+        15,
+        "Lbs"
+      ],
+      [
+        "I82017-ADD",
+        "RM0152",
+        "HOCR SF POLYDEXTROSE SYRUP 55.115# (RM0152)",
+        "AT-WH-MAIN",
+        "92-16-02",
+        "AIOSBE17601-3",
+        275,
+        "Lbs"
+      ],
+      [
+        "I82017-ADD",
+        "RM0152",
+        "HOCR SF POLYDEXTROSE SYRUP 55.115# (RM0152)",
+        "AT-WH-MAIN",
+        "92-16-02",
+        "AIOSBE17601-3",
+        440,
+        "Lbs"
+      ],
+      [
+        "I82017-ADD",
+        "RM0152",
+        "HOCR SF POLYDEXTROSE SYRUP 55.115# (RM0152)",
+        "NW-WH-MAIN",
+        "ZONE 6",
+        "AIOSBE33101-3",
+        3000,
+        "Lbs"
+      ],
+      [
+        "I82018-PWD",
+        "RM0123",
+        "HOCR ALLULOSE CRYSTALINE PWD 55.115# (RM0123)",
+        "NW-WH-MAIN",
+        "114-069-01",
+        "AIASBE07502-J",
+        330.69,
+        "Lbs"
+      ],
+      [
+        "I82018-PWD",
+        "RM0123",
+        "HOCR ALLULOSE CRYSTALINE PWD 55.115# (RM0123)",
+        "AT-WH-MAIN",
+        "75-02-02",
+        "AIASBE28502-J",
+        990,
+        "Lbs"
+      ],
+      [
+        "I82018-PWD",
+        "RM0123",
+        "HOCR ALLULOSE CRYSTALINE PWD 55.115# (RM0123)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "AIASBE28502-J",
+        195.43,
+        "Lbs"
+      ],
+      [
+        "I82019-LIQ",
+        "RM0153",
+        "HOCR FIBERSMART CS90 LIQUID 70% 55.115# (RM0153)",
+        "AT-WH-MAIN",
+        "77 FLOOR",
+        "AIFSBE021801-9",
+        493.02,
+        "Lbs"
+      ],
+      [
+        "I82019-LIQ",
+        "RM0153",
+        "HOCR FIBERSMART CS90 LIQUID 70% 55.115# (RM0153)",
+        "AT-WH-MAIN",
+        "92-07-03",
+        "AIFSBE21801-9",
+        880,
+        "Lbs"
+      ],
+      [
+        "I82019-LIQ",
+        "RM0153",
+        "HOCR FIBERSMART CS90 LIQUID 70% 55.115# (RM0153)",
+        "NW-WH-MAIN",
+        "ZONE 6",
+        "AIFSBE22001-9",
+        3200,
+        "Lbs"
+      ],
+      [
+        "I82019-LIQ",
+        "RM0153",
+        "HOCR FIBERSMART CS90 LIQUID 70% 55.115# (RM0153)",
+        "NW-WH-MAIN",
+        "ZONE 6",
+        "AIFSBE22001-9",
+        3200,
+        "Lbs"
+      ],
+      [
+        "I82020-FTOL",
+        "RM0133",
+        "HOCR PREMIUN OIL W/NAT PNUT FLV 38# (504508/RM0133)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "1260A35124",
+        37,
+        "Lbs"
+      ],
+      [
+        "I82020-FTOL",
+        "RM0133",
+        "HOCR PREMIUN OIL W/NAT PNUT FLV 38# (504508/RM0133)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "125OA18224",
+        2,
+        "Lbs"
+      ],
+      [
+        "I82020-FTOL",
+        "RM0133",
+        "HOCR PREMIUN OIL W/NAT PNUT FLV 38# (504508/RM0133)",
+        "NW-WH-MAIN",
+        "ZONE 7",
+        "1250A35124",
+        80.6,
+        "Lbs"
+      ],
+      [
+        "I82021-FLR",
+        "RM0169",
+        "HOCR PNUT FLR MED RST 12% FAT 50# (521264/RM0169)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "126FA03324",
+        152,
+        "Lbs"
+      ],
+      [
+        "I82021-FLR",
+        "RM0169",
+        "HOCR PNUT FLR MED RST 12% FAT 50# (521264/RM0169)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "126FA03324",
+        30,
+        "Lbs"
+      ],
+      [
+        "I82021-FLR",
+        "RM0169",
+        "HOCR PNUT FLR MED RST 12% FAT 50# (521264/RM0169)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "12SFA23424",
+        12,
+        "Lbs"
+      ],
+      [
+        "I82021-FLR",
+        "RM0169",
+        "HOCR PNUT FLR MED RST 12% FAT 50# (521264/RM0169)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "12SFA23424",
+        118,
+        "Lbs"
+      ],
+      [
+        "I82021-FLR",
+        "RM0169",
+        "HOCR PNUT FLR MED RST 12% FAT 50# (521264/RM0169)",
+        "NW-WH-MAIN",
+        "ZONE 7",
+        "126FA03324",
+        450,
+        "Lbs"
+      ],
+      [
+        "I82021-FLR",
+        "RM0169",
+        "HOCR PNUT FLR MED RST 12% FAT 50# (521264/RM0169)",
+        "NW-WH-MAIN",
+        "ZONE 7",
+        "126FB05924",
+        150,
+        "Lbs"
+      ],
+      [
+        "I82022-FLV",
+        "RM0160",
+        "HOCR NAT PNUT FLV OS 37.9# (RM0160)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "2025-65543",
+        11.1,
+        "Lbs"
+      ],
+      [
+        "I82022-FLV",
+        "RM0160",
+        "HOCR NAT PNUT FLV OS 37.9# (RM0160)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "2025-65543",
+        14,
+        "Lbs"
+      ],
+      [
+        "I82022-FLV",
+        "RM0160",
+        "HOCR NAT PNUT FLV OS 37.9# (RM0160)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "2026-71115",
+        37.9,
+        "Lbs"
+      ],
+      [
+        "I82022-FLV",
+        "RM0160",
+        "HOCR NAT PNUT FLV OS 37.9# (RM0160)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "2026-71115",
+        0.1,
+        "Lbs"
+      ],
+      [
+        "I82022-FLV",
+        "RM0160",
+        "HOCR NAT PNUT FLV OS 37.9# (RM0160)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "2026-71115",
+        37.9,
+        "Lbs"
+      ],
+      [
+        "I82022-FLV",
+        "RM0160",
+        "HOCR NAT PNUT FLV OS 37.9# (RM0160)",
+        "NW-WH-MAIN",
+        "ZONE 7",
+        "2026-73111",
+        303.2,
+        "Lbs"
+      ],
+      [
+        "I82023-FLV",
+        "RM0163",
+        "HOCR CONCENTRATED VANILLA EXTRACT (RM0163)",
+        "AT-WH-MAIN",
+        "73-18-01",
+        250942555,
+        4.6,
+        "Lbs"
+      ],
+      [
+        "I82023-FLV",
+        "RM0163",
+        "HOCR CONCENTRATED VANILLA EXTRACT (RM0163)",
+        "AT-WH-MAIN",
+        "73-18-01",
+        250942555,
+        30.4,
+        "Lbs"
+      ],
+      [
+        "I82023-FLV",
+        "RM0163",
+        "HOCR CONCENTRATED VANILLA EXTRACT (RM0163)",
+        "AT-WH-MAIN",
+        "STAGING",
+        250942555,
+        39.6,
+        "Lbs"
+      ],
+      [
+        "I82023-FLV",
+        "RM0163",
+        "HOCR CONCENTRATED VANILLA EXTRACT (RM0163)",
+        "AT-WH-MAIN",
+        "STAGING",
+        250942555,
+        12.4,
+        "Lbs"
+      ],
+      [
+        "I82023-FLV",
+        "RM0163",
+        "HOCR CONCENTRATED VANILLA EXTRACT (RM0163)",
+        "NW-WH-MAIN",
+        "ZONE 10",
+        1009199845,
+        88.04,
+        "Lbs"
+      ],
+      [
+        "I82024-PWDFLV",
+        "RM0129",
+        "HOCR TASTE PRINT FLV PWD 50# (10592961/RM0129)",
+        "AT-WH-MAIN",
+        "STAGING",
+        1009221697,
+        355,
+        "Lbs"
+      ],
+      [
+        "I82025-DAI",
+        "RM0165",
+        "HOCR SODIUM CASEINATE 44.0925# (1004880/RM0165)",
+        "NW-WH-MAIN",
+        "113-096-03",
+        "NF26055B1",
+        1499.12,
+        "Lbs"
+      ],
+      [
+        "I82025-DAI",
+        "RM0165",
+        "HOCR SODIUM CASEINATE 44.0925# (1004880/RM0165)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "NF26044B2-012",
+        44.4,
+        "Lbs"
+      ],
+      [
+        "I82025-DAI",
+        "RM0165",
+        "HOCR SODIUM CASEINATE 44.0925# (1004880/RM0165)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "NF26044B2-012",
+        44.09,
+        "Lbs"
+      ],
+      [
+        "I82025-DAI",
+        "RM0165",
+        "HOCR SODIUM CASEINATE 44.0925# (1004880/RM0165)",
+        "AT-WH-MAIN",
+        "STAGING",
+        "NF26044B2-012",
+        397.5,
+        "Lbs"
+      ],
+      [
+        "I82026-PWD",
+        null,
+        "HOCR CREAM OF TARTAR 24OZ",
+        "AT-WH-MAIN",
+        "STAGING",
+        420407,
+        1.5,
+        "Lbs"
+      ],
+      [
+        "I82026-PWD",
+        null,
+        "HOCR CREAM OF TARTAR 24OZ",
+        "AT-WH-MAIN",
+        "STAGING",
+        1125120,
+        4.5,
+        "Lbs"
+      ]
+    ],
+    "palmer": [
+      [
+        null,
+        "RMP item #",
+        "Hormbles item #",
+        "Description",
+        "On Hand "
+      ],
+      [
+        "Pouch",
+        9062505,
+        "PK-WPMMC",
+        "MCF Mini pouch ",
+        "226 lbs"
+      ],
+      [
+        null,
+        9062605,
+        "PK-WPMPB",
+        "PB Mini pouch ",
+        0
+      ],
+      [
+        null,
+        9063005,
+        "PK-WPMSF",
+        "Salted Fudge Mini pouch ",
+        "291 lbs"
+      ],
+      [
+        "Pre-made bags ",
+        9062705,
+        "SPMMC",
+        "MCF pre-made bags ",
+        "24,000 ea"
+      ],
+      [
+        null,
+        9062805,
+        "SPMPB",
+        "PB pre-made bags ",
+        "35,000 ea"
+      ],
+      [
+        null,
+        9062905,
+        "SPMSF",
+        "Salted Fudge pre-made bags ",
+        "43,700 ea"
+      ],
+      [
+        "Cartons",
+        9062701,
+        "MC02",
+        "Unprinted RSC 6pk ",
+        "42,418 ea"
+      ],
+      [
+        null,
+        9062501,
+        "Bulk Carton",
+        "Unprinted Bulk carton",
+        "1,455 ea"
+      ],
+      [
+        "Ingredient",
+        "942107/ 9848",
+        "RM0130",
+        "Milke Protein Crisp 40# case",
+        "19,200 lbs"
+      ],
+      [
+        null,
+        "942207/ 9849",
+        "RM0131",
+        "Cocoa Protein Crisp 40# case",
+        "314 lbs"
+      ],
+      [
+        null,
+        "942307/ 9847",
+        "RM0137",
+        "Pretzel Salt 50# case",
+        "500 lbs"
+      ],
+      [
+        "As of 5/8",
+        null,
+        null,
+        null,
+        null
+      ]
+    ],
+    "spg": [
+      [
+        "Item code",
+        "Item description",
+        "Item type",
+        "Expiry date",
+        "Lot code",
+        "Default quantity",
+        "Default unit of measure",
+        "Full Pallet quantity",
+        "Inventory status"
+      ],
+      [
+        "PK-TRC01",
+        "10g PROTEIN CANDY COSTCO TRAY",
+        "Secondary Packaging",
+        null,
+        null,
+        867,
+        "ea",
+        2.312,
+        "Good"
+      ],
+      [
+        "PK-SUPC01",
+        "10.15oz. (288g) Milk Choco./Salted Fudge PREMADE STAND UP BAG",
+        "Primary Packaging",
+        null,
+        "10131",
+        84000,
+        "ea",
+        2.9166666666666665,
+        "Good"
+      ],
+      [
+        "PK-SUPC01",
+        "10.15oz. (288g) Milk Choco./Salted Fudge PREMADE STAND UP BAG",
+        "Primary Packaging",
+        null,
+        "10180",
+        21400,
+        "ea",
+        0.7430555555555556,
+        "Good"
+      ],
+      [
+        "PK-SS10",
+        "PALLET TOP COVER - LID FOR HORMBLES CHROMBLES MBFC4004",
+        "Secondary Packaging",
+        null,
+        null,
+        206,
+        "ea",
+        0.824,
+        "Good"
+      ],
+      [
+        "MBFC4004",
+        "Milk Chocolate & Salted Fudge Mini Tablet SUP/10oz, Costco 18ct. Tray",
+        "Finished Good",
+        "01/21/2027",
+        "FFB26084 J",
+        11,
+        "tr",
+        0.55,
+        "Good"
+      ],
+      [
+        "CHEP-HORM",
+        "BLUE BLOCK CHEP PALLETS for Hormbles Chormbles",
+        "Consumable Inv",
+        null,
+        null,
+        0.45,
+        "ea",
+        0.45,
+        "Good"
+      ],
+      [
+        "90630",
+        "PK-WPMSF / HC Salted Fudge Mini Bar 8g Bulk",
+        "Raw Material",
+        "02/04/2027",
+        "ECC26035",
+        7,
+        "cs",
+        0.19444444444444445,
+        "Good"
+      ]
+    ]
+  },
+  "bazzini_map": [
+    {
+      "hcode": "IN-MC301v2",
+      "desc": "Stockton Compound (Milk Choc)"
+    },
+    {
+      "hcode": "IN-CH302v2",
+      "desc": "Idaho Compound (Dark Choc)"
+    },
+    {
+      "hcode": "IN-PB303v2",
+      "desc": "Camogie Compound (PB)"
+    },
+    {
+      "hcode": "RM0130",
+      "desc": "Plain Milk Crisp"
+    },
+    {
+      "hcode": "RM0131",
+      "desc": "Cocoa Whey Crisp"
+    },
+    {
+      "hcode": "RM0137",
+      "desc": "Encapsulated Salt"
+    },
+    {
+      "hcode": "RM0152",
+      "desc": "Polydextrose- Liquid"
+    },
+    {
+      "hcode": "RM0125",
+      "desc": "Milk Protein Isolate"
+    },
+    {
+      "hcode": "RM0153",
+      "desc": "Soluble Corn Fiber- Liquid"
+    },
+    {
+      "hcode": "RM0123",
+      "desc": "Allulose"
+    },
+    {
+      "hcode": "RM0154",
+      "desc": "Glycerin"
+    },
+    {
+      "hcode": "RM0165",
+      "desc": "Sodium Caseinate"
+    },
+    {
+      "hcode": "RM0168",
+      "desc": "Palm Oil"
+    },
+    {
+      "hcode": "RM0151",
+      "desc": "Egg White Powder"
+    },
+    {
+      "hcode": "RM0134",
+      "desc": "Peanut Flour"
+    },
+    {
+      "hcode": "RM0136",
+      "desc": "Salt"
+    },
+    {
+      "hcode": "RM0160",
+      "desc": "Nat Flavor Peanut OS"
+    }
+  ],
+  "ingredient_map": {
+    "IN-MC301v2": "Stockton Compound",
+    "IN-CH302v2": "Idaho Compound",
+    "IN-PB303v2": "Camogie Compound",
+    "RM0130": "Plain Milk Crisp",
+    "RM0131": "Cocoa Whey Crisp",
+    "RM0137": "Encapsulated Salt",
+    "RM0163": "Vanilla Extract",
+    "RM0125": "Milk Protein Isolate",
+    "RM0152": "Polydextrose- Liquid",
+    "RM0153": "Soluble Corn Fiber- Liquid",
+    "RM0123": "Allulose",
+    "RM0154": "Glycerin",
+    "RM0165": "Sodium Caseinate",
+    "RM0168": "Palm Oil",
+    "RM0151": "Egg White Powder",
+    "RM0134": "Peanut Flour",
+    "RM0136": "Salt",
+    "RM0160": "Nat Flavor Peanut OS"
+  }
+}

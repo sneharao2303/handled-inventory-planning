@@ -1,0 +1,16 @@
+{
+  "name": "handled-planning-tool",
+  "version": "0.1.0",
+  "description": "Handled — ops planning tool for consumer brands. Upload raw co-man inventory, demand, and 3PL files; normalize, run the supply + MRP engine, get a production plan and ingredient buy-list. Verified against Hormbles' real May 2026 data.",
+  "type": "module",
+  "scripts": {
+    "start": "npx serve public -l 3000",
+    "dev": "npx serve public -l 3000",
+    "test": "node scripts/verify.mjs"
+  },
+  "keywords": ["ops", "planning", "mrp", "supply-chain", "handled"],
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
