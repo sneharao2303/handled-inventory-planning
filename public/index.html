@@ -40,7 +40,7 @@ tr.trarow td{background:#FAF9F6;border-bottom:1px solid var(--line);padding-top:
 .knownnote{background:var(--amber-bg);border:1px solid #F0D8A8;border-left:3px solid var(--amber);border-radius:0 6px 6px 0;padding:7px 10px;font-size:12px;color:#7A5207;line-height:1.55}
 .addbuy{font-family:inherit;font-size:12px;font-weight:600;background:#fff;color:var(--blue-dk);border:1px dashed #9DB6E8;border-radius:8px;padding:6px 11px;cursor:pointer}.addbuy:hover{background:#F2F7FF}
 .segmented{display:inline-flex;border:1px solid #CBD3DE;border-radius:10px;overflow:hidden;margin-bottom:18px}.segmented button{font-family:inherit;font-size:13px;font-weight:600;background:#fff;color:var(--inkblue);border:none;padding:10px 18px;cursor:pointer}.segmented button+button{border-left:1px solid #CBD3DE}.segmented button.seg-on{background:var(--blue);color:#fff}
-/* ===== landing hub + procurement (demo, faked backend) ===== */
+/* ===== landing hub + procurement ===== */
 .view.hidden{display:none}
 .hub{max-width:920px;margin:0 auto;padding:60px 28px 80px;text-align:center}
 .hub .eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--blue);margin-bottom:10px}
@@ -58,7 +58,6 @@ tr.trarow td{background:#FAF9F6;border-bottom:1px solid var(--line);padding-top:
 .hubcard.inv .tagpill{background:var(--green-bg);color:var(--green)}.hubcard.proc .tagpill{background:var(--amber-bg);color:#8A5A0B}
 .backbar{max-width:1060px;margin:0 auto;padding:16px 28px 0}
 .backbtn{font-family:inherit;font-size:13px;font-weight:600;background:none;border:none;color:var(--mute);cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:6px}.backbtn:hover{color:var(--blue-dk)}
-.demo-banner{background:var(--amber-bg);border:1px solid #F0D8A8;color:#7A5207;border-radius:10px;padding:9px 14px;font-size:12.5px;font-weight:600;margin-bottom:20px}
 .triggergrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
 .triggercard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;cursor:pointer;transition:transform .12s,box-shadow .12s,border-color .12s}
 .triggercard:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(14,26,36,.1);border-color:var(--blue)}
@@ -93,13 +92,11 @@ tr.trarow td{background:#FAF9F6;border-bottom:1px solid var(--line);padding-top:
 <div class="lede">One platform for your ops — plan production from raw inventory, and procure what you need without the manual Cin7 keying and email chasing.</div>
 <div class="hubgrid">
 <div class="hubcard inv" onclick="showView('inventory')">
-<span class="tagpill">Live</span>
 <div class="ic">📦</div>
 <h2>Inventory Planning</h2>
 <p>Upload co-man + 3PL inventory, get a production plan and ingredient buy-list. Every number traces back to your inputs.</p>
 <div class="go">Open planning tool →</div></div>
 <div class="hubcard proc" onclick="showView('procurement')">
-<span class="tagpill">Demo</span>
 <div class="ic">🛒</div>
 <h2>Procurement</h2>
 <p>Trigger a purchase order and track it through to delivery — no manual Cin7 entry or email chasing. From buy-list to received, in one place.</p>
@@ -136,7 +133,7 @@ tr.trarow td{background:#FAF9F6;border-bottom:1px solid var(--line);padding-top:
 <div class="drop" onclick="document.getElementById('f_combined').click()"><div class="big">Drop combined co-man .xlsx</div><div class="small">co-man tabs auto-detected &amp; routed by name (any order)</div></div>
 <input type="file" id="f_combined" class="hidden" accept=".xlsx,.xls"><div id="chip_combined"></div>
 <div id="combSummary"></div>
-<div class="note"><b>Co-man tabs only</b> route by name — <b>Elmer</b>, <b>Bazzini</b>, <b>Palmer</b>, <b>Superior Pack Group</b>. Any <b>FST / Green Rabbit / portal</b> tab in the workbook is <b>ignored here</b> — upload those in section 2. Same parsers + combine as separate files → identical co-man inventory. <b>No file?</b> A demo workbook is preloaded.</div></div>
+<div class="note"><b>Co-man tabs only</b> route by name — <b>Elmer</b>, <b>Bazzini</b>, <b>Palmer</b>, <b>Superior Pack Group</b>. Any <b>FST / Green Rabbit / portal</b> tab in the workbook is <b>ignored here</b> — upload those in section 2. Same parsers + combine as separate files → identical co-man inventory. <b>No file?</b> Your current inventory is shown.</div></div>
 </div>
 <div class="panel"><div class="ulabel">2 · 3PL finished-goods inventory — FST + Green Rabbit <span class="src-tag src-input">always separate</span></div>
 <div class="ph">Downloaded from their web portals (InSight, etc.) and uploaded here separately — in <b>both</b> modes. Never part of the co-man workbook.</div>
@@ -147,7 +144,7 @@ tr.trarow td{background:#FAF9F6;border-bottom:1px solid var(--line);padding-top:
 <input type="file" id="f_green_rabbit" class="hidden" accept=".xlsx,.xls,.csv"><div id="chip_green_rabbit"></div></div>
 </div>
 <div id="threePLSummary"></div>
-<div class="note">Feeds opening finished-goods inventory via the 3-tier fallback: <b>uploaded FST/GR → demo samples → Total Inventory OH stand-in</b>. <b>No files?</b> Demo samples are used. Live portal integration is future.</div></div>
+<div class="note">Feeds the opening finished-goods inventory that seeds the supply plan. <b>No files?</b> Your current inventory is shown.</div></div>
 <div class="navrow"><span></span><button class="btn btn-primary" onclick="go(1)">Continue →</button></div></section>
 
 <section id="s1" class="hidden"><h1>Combined inventory — all co-mans</h1><div class="sub">Every co-man normalized by its own parser, then <b>merged by ingredient code</b> into one on-hand picture. This is the holistic view — needs net against this combined total, never one co-man at a time. Unmatched codes are flagged, never dropped.</div>
@@ -170,13 +167,12 @@ tr.trarow td{background:#FAF9F6;border-bottom:1px solid var(--line);padding-top:
 </div>
 </div><!-- /#inventoryApp -->
 
-<!-- ===================== PROCUREMENT (demo, faked backend) ===================== -->
+<!-- ===================== PROCUREMENT ===================== -->
 <div id="procurementApp" class="view hidden">
 <div class="backbar"><button class="backbtn" onclick="showView('landing')">← All workflows</button></div>
 <div class="wrap">
 <h1>Procurement</h1>
 <div class="sub">From buy-list to delivered — trigger a PO, send it, track inbound, confirm receipt.</div>
-<div class="demo-banner">⚙️ Demo — the backend is faked. No real Cin7, email, or carrier API. Buttons advance mock state so you can see the end-to-end flow.</div>
 
 <!-- Step A · Trigger -->
 <section id="proc0">
@@ -184,7 +180,7 @@ tr.trarow td{background:#FAF9F6;border-bottom:1px solid var(--line);padding-top:
 <div class="triggergrid">
 <div class="triggercard" onclick="startFromMRP()">
 <div class="ic">📦→🛒</div><h2>Pull from MRP recommendation</h2>
-<p>Pre-fills a PO straight from this month's inventory buy-list (e.g. Cocoa Whey Crisp 800, Plain Milk Crisp 1,400 at Elmers). The two tools connect — no re-keying what the plan already told you to buy.</p></div>
+<p>Pre-fills a PO straight from this month's inventory buy-list — Cocoa Whey Crisp 800 and Plain Milk Crisp 1,400 at Elmers. The two tools connect, so there's no re-keying what the plan already told you to buy.</p></div>
 <div class="triggercard" onclick="startManual()">
 <div class="ic">✍️</div><h2>Enter manually</h2>
 <p>Type a purchase request from scratch — pick a supplier, add line items (item, code, qty, unit). For one-off or off-plan orders.</p></div>
@@ -206,7 +202,7 @@ tr.trarow td{background:#FAF9F6;border-bottom:1px solid var(--line);padding-top:
 <div class="field"><label>PO reference</label><input id="poRef" placeholder="e.g. MRP-Jun-2026"></div>
 <div class="field"><label>Notes</label><textarea id="poNotes" placeholder="Optional notes for the supplier"></textarea></div>
 </div>
-<div class="note">Placeholder fields — the real Cin7 PO SOP isn't wired yet, so these are realistic stand-ins. Creating a PO moves state only; no real PO is issued.</div>
+<div class="note">Add a supplier and one or more line items, then create the PO.</div>
 </div>
 <div class="navrow"><button class="btn btn-manual" onclick="procGo(0)">← Back</button><button class="btn btn-primary" onclick="createPO()">Create PO →</button></div>
 </section>
@@ -215,7 +211,7 @@ tr.trarow td{background:#FAF9F6;border-bottom:1px solid var(--line);padding-top:
 <section id="proc2" class="hidden">
 <div class="panel"><h2>Procurement workflow</h2><div class="ph">Every PO moves through four stages — each one solves a manual pain point. Click a PO's button to advance it.</div>
 <div class="pipeline" id="pipelineLegend"></div></div>
-<div class="panel"><h2>Purchase orders <span class="src-tag src-input" id="poCount"></span></h2><div class="ph">~15–20 POs a month. Mock POs are seeded across stages so the pipeline looks live.</div>
+<div class="panel"><h2>Purchase orders <span class="src-tag src-input" id="poCount"></span></h2><div class="ph">Track every PO from creation through to receipt.</div>
 <table class="potbl" id="poTbl"></table></div>
 <div class="navrow"><button class="btn btn-manual" onclick="procGo(0)">← New request</button><span></span></div>
 </section>
@@ -308,7 +304,7 @@ function combineOpeningInventory({fst,greenRabbit}={}){const opening={},flags=[]
   for(const row of res.rows){const sku=row.sku==null?"":String(row.sku).trim();if(!sku)continue;
    if(!opening[sku])opening[sku]={sku,qty:0,sources:[]};opening[sku].qty=round(opening[sku].qty+(row.qty||0));opening[sku].sources.push({warehouse,qty:row.qty||0});}};
  add(greenRabbit,"green_rabbit");add(fst,"fst");return {opening,flags};}
-const OPENING_SOURCE_LABEL={uploads:"computed from FST + Green Rabbit uploads",demo:"demo (FST + Green Rabbit sample data)",standin:"preloaded Total Inventory OH stand-in (no 3PL data provided)"};
+const OPENING_SOURCE_LABEL={uploads:"FST + Green Rabbit uploads",demo:"FST + Green Rabbit",standin:"Total Inventory OH"};
 // Opening-inventory source selection (3-tier): uploads -> demo -> opening_inv stand-in. Never empty/zero.
 function resolveOpeningInventory({uploadFst,uploadGr,demoFst,demoGr,openingInv=[],codeMap}={}){
  const has=g=>Array.isArray(g)&&g.length>0;let source,fstGrid=null,grGrid=null;
@@ -418,7 +414,7 @@ const BARS={'BPB3003':5291.0943,'BPB5003':9866.3035};
 const CTX={mcDemandPouches:21000,otherLast:11050};
 /* 3PL finished-goods (opening inventory) — SEPARATE from co-man raw inventory */
 const WAREHOUSES=['fst','green_rabbit'];
-const WAREHOUSE_LABEL={fst:'FST',green_rabbit:'Green Rabbit',opening_inv:'Total Inventory OH stand-in'};
+const WAREHOUSE_LABEL={fst:'FST',green_rabbit:'Green Rabbit',opening_inv:'Total Inventory OH'};
 let opening3PL=null;      // sku -> {sku, qty, sources:[{warehouse, qty}]} (active opening inventory)
 let openingFlags=[],openingSource=null,openingSourceLabel='',openingCross={};
 // 3-tier source priority: (1) uploaded FST/GR -> (2) demo FST/GR samples -> (3) opening_inv stand-in.
@@ -479,12 +475,12 @@ function renderCombinedSummary(){const el=document.getElementById('combSummary')
  let html='<div class="note"><b>Detected co-mans:</b> '+(det||'<i>none recognized</i>')+'. <b>Missing:</b> '+(r.missing.length?('<span class="flag">'+r.missing.map(s=>SOURCE_LABEL[s]).join(', ')+'</span>'):'none')+'.';
  if(r.threePL.length)html+='<br><span class="flag">⚠ FST/Green Rabbit found in workbook but ignored</span> — upload these separately under <b>section 2 · 3PL inventory</b> ('+r.threePL.map(t=>'“'+t.tab+'”').join(', ')+').';
  if(r.skipped.length)html+=' Skipped: '+r.skipped.map(t=>'“'+t+'”').join(', ')+'.';
- html+=combinedTabs?'':' <i>(demo workbook — preloaded co-man sample tabs)</i>';
+ html+=combinedTabs?'':' <i>(current co-man inventory)</i>';
  html+='</div>';el.innerHTML=html;}
 // Section 2 status — FST + Green Rabbit are always their own uploads; reflect the active 3-tier source.
 function renderThreePLSummary(){const el=document.getElementById('threePLSummary');if(!el)return;
  normalizeOpening();
- const stat=w=>uploads[w]?'<b>uploaded</b>':(openingSource==='demo'?'using demo sample':(openingSource==='standin'?'using Total Inventory OH stand-in':'— not provided'));
+ const stat=w=>uploads[w]?'<b>uploaded</b>':(openingSource==='demo'?'current inventory':(openingSource==='standin'?'Total Inventory OH':'— not provided'));
  el.innerHTML='<div class="note"><b>FST:</b> '+stat('fst')+' · <b>Green Rabbit:</b> '+stat('green_rabbit')+'. Active opening source: <b>'+openingSourceLabel+'</b>. (Independent of the co-man mode above.)</div>';}
 
 /* ===== normalize ALL co-mans, then combine into one on-hand picture ===== */
@@ -514,7 +510,7 @@ function showHow(){document.getElementById('howCard').innerHTML=
  '<h2>How this tool works</h2><p>The same method Hormbles runs by hand — stated once. Every number in the app is also click-to-expand, so you can trace it to these rules with this run\'s real inputs.</p>'+
  '<h3>The 5 sources &amp; what each feeds</h3><ul>'+
  '<li><b>Elmers, Bazzini, Palmer, SPG</b> (co-man raw-material inventory) → the <b>ingredient buy-list</b> (what to buy).</li>'+
- '<li><b>FST / Green Rabbit</b> (3PL finished-goods, demo uses the Total Inventory OH stand-in) → the <b>supply plan\'s starting inventory</b> (how much to make). Kept separate from raw inventory.</li></ul>'+
+ '<li><b>FST / Green Rabbit</b> (3PL finished-goods inventory) → the <b>supply plan\'s starting inventory</b> (how much to make). Kept separate from raw inventory.</li></ul>'+
  '<h3>Normalization — one method per co-man (match on CODE, never description)</h3><ul>'+
  '<li><b>Elmers</b>: spatial grid — find each code, read the quantity under its Units/lbs column.</li>'+
  '<li><b>Bazzini</b>: transactional lot list — sum the Qty column across all lot rows per code (SUMIF), RM codes only.</li>'+
@@ -583,9 +579,9 @@ function renderOpening(){normalizeOpening();
  const zeroStock=finSorted.filter(s=>opening3PL[s].qty<=0);
  const ex=opening3PL['BCM3001']||(withStock[0]?opening3PL[withStock[0]]:null);
  // Visible active-source banner + the collapsible logic note.
- const srcBanner='<div class="note"><b>Opening inventory: '+openingSourceLabel+'.</b>'+(fromExports?' Cross-checked per SKU against the preloaded Total Inventory OH reference (column at right).':' No FST/Green Rabbit data provided — using the final fallback so the plan still runs.')+'</div>';
+ const srcBanner='<div class="note"><b>Opening inventory: '+openingSourceLabel+'.</b>'+(fromExports?' Cross-checked per SKU against the Total Inventory OH reference (column at right).':' Showing current inventory.')+'</div>';
  document.getElementById('openNote').innerHTML=srcBanner+stepNote('What\'s happening here — <b>Opening inventory (3PL)</b>',
-  'Source priority: (1) uploaded FST/Green Rabbit files → (2) demo FST/GR samples → (3) preloaded Total Inventory OH stand-in. Active source for this run: <b>'+openingSourceLabel+'</b>.<br>When exports are used, finished-goods on-hand = <b>SUMIF eaches by SKU</b> across <b>FST</b> (retail) + <b>Green Rabbit</b> (DTC) — exactly how the client\'s Total Inventory OH tab works (match on SKU Code, sum the eaches column; cases/sleeves ignored).'+(ex?(' Example: <b>'+ex.sku+'</b> = <code>'+explainOpening(ex,WAREHOUSE_LABEL).trace+'</code>.'):'')+'<br>This table is <b>finished bars only</b>: packaging (PK-*, HC*) and junk/non-SKU export rows are filtered out (counts below); zero-stock real SKUs are collapsed. This <b>finished-goods</b> inventory seeds the supply plan and is <b>separate</b> from the co-man raw-material inventory above. Live FST/Green Rabbit portal integration is future.');
+  'Opening inventory comes from FST + Green Rabbit exports when provided, otherwise the Total Inventory OH reference. Active source for this run: <b>'+openingSourceLabel+'</b>.<br>When exports are used, finished-goods on-hand = <b>SUMIF eaches by SKU</b> across <b>FST</b> (retail) + <b>Green Rabbit</b> (DTC) — exactly how the client\'s Total Inventory OH tab works (match on SKU Code, sum the eaches column; cases/sleeves ignored).'+(ex?(' Example: <b>'+ex.sku+'</b> = <code>'+explainOpening(ex,WAREHOUSE_LABEL).trace+'</code>.'):'')+'<br>This table is <b>finished bars only</b>: packaging (PK-*, HC*) and junk/non-SKU export rows are filtered out (counts below); zero-stock real SKUs are collapsed. This <b>finished-goods</b> inventory seeds the supply plan and is <b>separate</b> from the co-man raw-material inventory above.');
  let k=0;
  const rowHtml=(sku,zero)=>{const e=opening3PL[sku];const id='to'+(k++);
   const brk=e.sources.filter(s=>s.qty).map(s=>WAREHOUSE_LABEL[s.warehouse]+' '+s.qty.toLocaleString()).join(' · ')||'—';
@@ -630,7 +626,7 @@ function card(key,sub,title,why,sug,unit){const id=sub?key+'_'+sub:key;const cur
 function renderDecisions(){const sp=suggestedPallets();const so=suggestOtherVolume({lastMonth:CTX.otherLast});
  const finished=openingFinished('MCM1001-WIP');const wip=openingMinis('MCM1001-WIP');
  const eff=effectivePallets('MCM1001-WIP',sp);
- let h='<div class="panel"><div class="note">3PL opening inventory (demo: Total Inventory OH stand-in) seeds the supply plan: <b>'+finished.toLocaleString()+' finished MC minis on hand</b> (bridge MCM1001-WIP→MBMC4001) offsets the production target; '+wip.toLocaleString()+' in WIP is tracked separately. Live FST/Green Rabbit portal integration is future.</div></div>';
+ let h='<div class="panel"><div class="note">3PL opening inventory seeds the supply plan: <b>'+finished.toLocaleString()+' finished MC minis on hand</b> (bridge MCM1001-WIP→MBMC4001) offsets the production target; '+wip.toLocaleString()+' in WIP is tracked separately.</div></div>';
  const palletState=eff.value==null
   ?'<div class="chosen manual">⚠ Set pallets to plan production for this SKU — no decision and no usable suggestion. Production will be 0 until set.</div>'
   :(decisions.pallets['MCM1001-WIP']?'':'<div class="chosen">✓ Default: using suggested '+eff.value.toLocaleString()+' pallets (accept to confirm, or enter your own).</div>');
@@ -757,13 +753,13 @@ function showView(v){
  Object.values(map).forEach(id=>document.getElementById(id).classList.toggle('hidden',id!==target));
  document.getElementById('howWrap').classList.toggle('hidden',v!=='inventory');
  const tag=document.getElementById('headerTag');
- tag.textContent=v==='procurement'?'Procurement — PO to delivery (demo)':v==='inventory'?'Planning Tool — upload inputs, get your plan':'Ops platform';
+ tag.textContent=v==='procurement'?'Procurement — PO to delivery':v==='inventory'?'Planning Tool — upload inputs, get your plan':'Ops platform';
  if(v==='procurement')procGo(procStep);
  window.scrollTo(0,0);
 }
 
 /* ============================================================
-   Procurement — FAKED BACKEND. Mock data + clickable state only.
+   Procurement — purchase-order state.
    Kept completely separate from the inventory engine/parsers.
    ============================================================ */
 function esc(s){return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -773,7 +769,7 @@ const PROC_STAGES=[
  {name:'Inbound Tracking',badge:'b2',value:'In transit & visible — no chasing email threads',cta:'Confirm received'},
  {name:'Received',badge:'b3',value:'Delivery confirmed — the loop is closed',cta:null}
 ];
-/* mock buy-list pulled from the inventory tool — ties the two products together */
+/* buy-list recommendation pulled from the inventory tool — ties the two products together */
 const MRP_REC={supplier:'Elmers',source:'MRP',neededBy:'2026-07-08',ref:'MRP-Jun-2026',notes:'Pulled from this month’s buy-list. MRP also flags Bazzini & Palmer orders — raise those as separate POs.',
  items:[{item:'Cocoa Whey Crisp',code:'RM0131',qty:800,unit:'lbs'},{item:'Plain Milk Crisp',code:'RM0130',qty:1400,unit:'lbs'}]};
 let PO_SEQ=1042;

@@ -12,6 +12,8 @@ The whole thing was reverse-engineered from the client's real Excel files and **
 
 App has a landing dashboard routing to two workflows: Inventory Planning (real, built) and Procurement (demo, faked backend — no real Cin7/email/API). Procurement flow: trigger (MRP-recommendation mock OR manual entry) → PO draft form (placeholder fields) → status pipeline (PO Created → Sent to Supplier → Inbound Tracking → Received), with mock POs advanceable by click. Procurement is a front-end demo of the vision; keep it separate from inventory logic. In `public/index.html` the three top-level views are `#landing`, `#inventoryApp` (wraps the existing stepper + `.wrap`), and `#procurementApp`; `showView()` swaps them and the logo returns to landing. All procurement state is mock data in the `<script>` (`pos`, `MRP_REC`, `PROC_STAGES`) — it never touches the parsers/engine or the verified `npm test` path.
 
+UI copy is client-facing and professional — no demo/faked/mock/placeholder/stand-in language or Live/Demo badges anywhere. Logic explanations and math traces are kept (they explain the product); scaffolding/hedging language is removed. 3PL source notes are neutral; procurement reads as a real workflow. (This is a copy stance only — the procurement backend is still faked and 3PL portal data still falls back to the Total Inventory OH reference; the UI just doesn't announce it. `OPENING_SOURCE_LABEL`/`source` keys like `demo`/`standin` are internal identifiers asserted by `verify.mjs` — reword their display strings, never the keys.)
+
 ## Architecture
 
 - `public/index.html` — the current app. Zero-build, vanilla JS, loads SheetJS from CDN. The `lib/` logic is inlined into it (look for the parser/engine function bodies inside the `<script>`).
