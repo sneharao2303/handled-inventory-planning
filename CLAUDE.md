@@ -8,6 +8,10 @@ An ops-planning tool for consumer brands (think: a YC startup called "Handled" b
 
 The whole thing was reverse-engineered from the client's real Excel files and **verified to reproduce their numbers exactly**. `npm test` is the proof — keep it green.
 
+## App shell — landing dashboard routes to two workflows
+
+App has a landing dashboard routing to two workflows: Inventory Planning (real, built) and Procurement (demo, faked backend — no real Cin7/email/API). Procurement flow: trigger (MRP-recommendation mock OR manual entry) → PO draft form (placeholder fields) → status pipeline (PO Created → Sent to Supplier → Inbound Tracking → Received), with mock POs advanceable by click. Procurement is a front-end demo of the vision; keep it separate from inventory logic. In `public/index.html` the three top-level views are `#landing`, `#inventoryApp` (wraps the existing stepper + `.wrap`), and `#procurementApp`; `showView()` swaps them and the logo returns to landing. All procurement state is mock data in the `<script>` (`pos`, `MRP_REC`, `PROC_STAGES`) — it never touches the parsers/engine or the verified `npm test` path.
+
 ## Architecture
 
 - `public/index.html` — the current app. Zero-build, vanilla JS, loads SheetJS from CDN. The `lib/` logic is inlined into it (look for the parser/engine function bodies inside the `<script>`).
