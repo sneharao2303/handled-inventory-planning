@@ -1,9 +1,11 @@
 // scripts/verify.mjs — proves the canonical IP (lib/parsers.js + lib/engine.js) against real data.
 // (A) PARSER + COMBINE tests run the REAL parsers on the raw grids in seed.json (uploaded snapshot).
 // (B) ENGINE MATH tests run on FIXED production inputs (the verified May scenario).
-import { parseElmers, parseBazzini, parsePalmer, parseSPG, parse3PL, routeTabName, routeWorkbookTabs } from "../lib/parsers.js";
+import { parseElmers, parseBazzini, parsePalmer, parseSPG, parse3PL, parseModis, routeTabName, routeWorkbookTabs } from "../lib/parsers.js";
 import { productionLbs, ingredientNeeds, buyList, combineInventories, combinedOnhandByName, combineOpeningInventory, resolveOpeningInventory, classifyOpeningSku, finishedGoodsSkus } from "../lib/engine.js";
-import { suggestBuy, explainProduction, explainCombined, explainNeed, explainBuyRow, explainOpening } from "../lib/engine.js";
+import { suggestBuy, suggestPalletsFromDemand, explainProduction, explainCombined, explainNeed, explainBuyRow, explainOpening } from "../lib/engine.js";
+import { combineComan, openingFinishedGoods, rollMultiMonth } from "../lib/engine.js";
+import { parseSourceCsv, loadSource, captureOverride, stripBaseSku, skuLabel } from "../lib/source.js";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import path from "path";
@@ -368,5 +370,169 @@ console.log("\nA single workbook's tabs route to the right parser; skip unknown 
   const r2 = routeWorkbookTabs({ "Elmer": SEED.raw_samples.elmers, "Bazzini": SEED.raw_samples.bazzini, "SPG": SEED.raw_samples.spg });
   check("missing Palmer flagged", r2.missing.includes("palmer") ? 1 : 0, 1, 0);
 }
+console.log("\n=== (K) MODIS DEMAND FORECAST — upstream demand → derived production decision ===");
+console.log("\nparseModis aggregates Forecasted Delivery by SKU×Month; suggestPalletsFromDemand derives pallets");
+{
+  const m = parseModis(SEED.raw_samples.modis);
+  // Aggregation: sum across retailer rows by SKU × month (verified real May values).
+  check("MBMC4001 May demand (= old hand-entered constant)", m.demandBySkuMonth["MBMC4001"]["2026-05"], 13284, 0);
+  check("BCM3001 May demand (sum retailer rows)", m.demandBySkuMonth["BCM3001"]["2026-05"], 48650, 0);
+  check("BSF3002 May demand", m.demandBySkuMonth["BSF3002"]["2026-05"], 47375, 0);
+  check("BPB3003 May demand", m.demandBySkuMonth["BPB3003"]["2026-05"], 20202, 0);
+  // Rolling horizon: ALL months kept, never collapsed to one.
+  check("multi-month horizon parsed (>= 3 months)", m.months.length >= 3 ? 1 : 0, 1, 0);
+  check("May 2026 present", m.months.includes("2026-05") ? 1 : 0, 1, 0);
+  check("June 2026 present", m.months.includes("2026-06") ? 1 : 0, 1, 0);
+  // Confirmed vs total: MBMC4001 June = 13,000 total, of which 10,000 confirmed (3,000 Not Confirmed).
+  check("MBMC4001 June total (13,000)", m.demandBySkuMonth["MBMC4001"]["2026-06"], 13000, 0);
+  check("MBMC4001 June confirmed-only (10,000)", m.demandConfirmedBySkuMonth["MBMC4001"]["2026-06"], 10000, 0);
+  // A SKU with only unconfirmed demand is flagged (surfaced, not dropped).
+  check("entirely-unconfirmed SKU flagged (MBPB4003)", m.flags.some(f => /MBPB4003/.test(f) && /unconfirmed/i.test(f)) ? 1 : 0, 1, 0);
+  check("unconfirmed SKU still present in totals", m.demandBySkuMonth["MBPB4003"] ? 1 : 0, 1, 0);
+
+  // Derive pallets: demand 13,284 − on-hand 0 → ceil(13,284 / 30,600) = 1 pallet, with the right reasoning.
+  const sug = suggestPalletsFromDemand({ sku: "MBMC4001", month: "2026-05", demandBySkuMonth: m.demandBySkuMonth, openingInv: [], refprod: SEED.refprod, bom: SEED.bom });
+  check("derived pallets value (ceil 13,284 / 30,600)", sug.value, 1, 0);
+  check("reasoning cites demand 13,284", /13,284/.test(sug.why) ? 1 : 0, 1, 0);
+  check("reasoning cites 30,600 / pallet", /30,600/.test(sug.why) ? 1 : 0, 1, 0);
+  check("bridged finished MBMC4001 → WIP MBMC4001-WIP", sug.wip === "MBMC4001-WIP" ? 1 : 0, 1, 0);
+  // On-hand offset reduces production: 24,627 finished on hand ≥ May demand → 0 new pallets (overridable).
+  const covered = suggestPalletsFromDemand({ sku: "MBMC4001", month: "2026-05", demandBySkuMonth: m.demandBySkuMonth, openingInv: SEED.opening_inv, refprod: SEED.refprod, bom: SEED.bom });
+  check("on-hand ≥ demand → 0 new pallets", covered.value, 0, 0);
+  // Unbridgeable SKU surfaces a flag instead of silently producing 0.
+  const noBridge = suggestPalletsFromDemand({ sku: "ZZZ9999", month: "2026-05", demandBySkuMonth: { "ZZZ9999": { "2026-05": 5000 } }, openingInv: [], refprod: SEED.refprod, bom: SEED.bom });
+  check("unbridgeable SKU → value null + flag", (noBridge.value === null && noBridge.flags.length > 0) ? 1 : 0, 1, 0);
+
+  // Engine UNCHANGED: Modis feeds INTO production, doesn't alter the lbs/needs math. 11 pallets still → 336,600 / 5,936.61.
+  const refprod = { "MCM1001-WIP": { minis_pallet: 30600, grams: 8 } };
+  const prodLbs = productionLbs({ palletsByWip: { "MCM1001-WIP": 11 }, refprod });
+  check("engine intact: 11 pallets → 336,600 units", prodLbs["MCM1001-WIP__units"], 336600, 0);
+  check("engine intact: → 5,936.61 lbs", +prodLbs["MCM1001-WIP"].toFixed(2), 5936.61);
+}
+
+console.log("\n=== (L) SOURCE OF TRUTH — already-loaded consolidated sheet (co-man | FST: | GR:) ===");
+console.log("\nparseSourceCsv splits 3 sections; combineComan + openingFinishedGoods drive the planning");
+{
+  const csv = fs.readFileSync(path.join(__dir, "../data/inventory_source_final.csv"), "utf8");
+  const src = parseSourceCsv(csv);
+  // Three sections parsed, never blank.
+  check("co-man rows parsed", src.coman.length > 0 ? 1 : 0, 1, 0);
+  check("FST rows parsed", src.fst.length, 3, 0);
+  check("GR rows parsed", src.gr.length, 3, 0);
+  check("stats: 6 sources (4 co-man + FST + GR)", src.stats.sources, 6, 0);
+  check("stats: #SKUs > 0", src.stats.skus > 0 ? 1 : 0, 1, 0);
+  check("lastUpdated present (per-source)", src.lastUpdated && Object.keys(src.perSourceUpdated).length >= 5 ? 1 : 0, 1, 0);
+
+  // Bazzini SUMIF: many lot rows per code collapse to one on-hand (RM0130 = 1200 + 800 + 440 = 2,440).
+  const bzRM0130 = src.coman.filter(r => r.source === "Bazzini" && r.sku === "RM0130").reduce((a, r) => a + r.qty, 0);
+  check("Bazzini SUMIF RM0130 (1200+800+440)", bzRM0130, 2440, 0);
+
+  // combineComan: sum by code across co-mans; ingredient vs packaging split.
+  const { combined, flags } = combineComan(src.coman, { ingredientMap: SEED.ingredient_map });
+  check("combined RM0130 = Elmer 14704 + Bazzini 2440 + Palmer 19200", combined["RM0130"].qty, 36344, 0);
+  check("RM0130 classified ingredient", combined["RM0130"].category === "ingredient" ? 1 : 0, 1, 0);
+  check("PK-MC02 present in inventory (kept)", combined["PK-MC02"] ? 1 : 0, 1, 0);
+  check("PK-MC02 classified packaging", combined["PK-MC02"].category === "packaging" ? 1 : 0, 1, 0);
+  // Ingredient feeds needs (re-keyed by name); packaging is EXCLUDED from the needs map.
+  const onhand = combinedOnhandByName(combined, SEED.ingredient_map);
+  check("ingredient RM0130 → 'Plain Milk Crisp' on-hand 36,344", onhand["Plain Milk Crisp"] || 0, 36344, 0);
+  check("packaging PK-MC02 excluded from needs map", onhand["PK-MC02"] === undefined ? 1 : 0, 1, 0);
+
+  // Unmatched code ALWAYS flagged (inject a fake ingredient-pattern code → must appear in flags, not dropped).
+  const injected = combineComan([...src.coman, { source: "Bazzini", sku: "RM9999", qty: 50, unit: "lbs" }], { ingredientMap: SEED.ingredient_map });
+  check("injected fake RM9999 is flagged", injected.flags.some(f => f.includes("RM9999")) ? 1 : 0, 1, 0);
+  check("injected fake RM9999 NOT dropped (still in inventory)", injected.combined["RM9999"] ? 1 : 0, 1, 0);
+
+  // Finished goods: base SKU On Hand = FST Inventory_QTY + GR summed locations; Available computed too.
+  const { bySku } = openingFinishedGoods(src.fst, src.gr);
+  check("base SKU stripped (BCM3001-12 → BCM3001)", stripBaseSku("BCM3001-12") === "BCM3001" ? 1 : 0, 1, 0);
+  check("BCM3001 On Hand = FST 247,608 + GR 23,988", bySku["BCM3001"].onHand, 271596, 0);
+  check("BCM3001 Available = FST 240,000 + GR 14,000", bySku["BCM3001"].available, 254000, 0);
+  check("BSF3002 On Hand reconciles (Total Inv OH)", bySku["BSF3002"].onHand, 237996, 0);
+  check("BPB3003 On Hand reconciles (Total Inv OH)", bySku["BPB3003"].onHand, 58188, 0);
+  // GR summed across location columns for BCM3001: 12,000 + 8,000 + 3,988 = 23,988.
+  const grBCM = src.gr.find(r => r.base === "BCM3001");
+  check("GR BCM3001 On Hand summed across locations", grBCM.onHand, 23988, 0);
+  // Finished-goods (bar SKUs) hold NO raw-material codes — co-man raw kept SEPARATE.
+  check("opening FG holds no RM/IN codes (kept separate)", Object.keys(bySku).some(s => /^(RM|IN-)/i.test(s)) ? 1 : 0, 0, 0);
+
+  // Verified engine math UNCHANGED: 11 × 30,600 = 336,600 → ×8 ÷ 453.59237 = 5,936.61 lbs.
+  const prodLbs = productionLbs({ palletsByWip: { "MCM1001-WIP": 11 }, refprod: { "MCM1001-WIP": { minis_pallet: 30600, grams: 8 } } });
+  check("engine: 11 pallets → 336,600 units", prodLbs["MCM1001-WIP__units"], 336600, 0);
+  check("engine: → 5,936.61 lbs", +prodLbs["MCM1001-WIP"].toFixed(2), 5936.61);
+
+  // Never-blank fallback: a failing live URL falls through to the bundled CSV (still aggregated, never empty).
+  const fellBack = await loadSource({ url: "https://unreachable.example/x.csv", fetchImpl: async () => { throw new Error("network down"); }, csvText: csv });
+  check("never-blank: failed URL → bundled data", fellBack.stats.skus > 0 ? 1 : 0, 1, 0);
+  check("never-blank: origin reported as bundled", fellBack.origin === "bundled" ? 1 : 0, 1, 0);
+
+  // Override upload is CAPTURED ONLY — stored in state, marked unprocessed, loaded data UNCHANGED.
+  const before = JSON.stringify(src.coman);
+  const state = captureOverride({ loaded: src }, { name: "newer_inventory.xlsx", size: 12345 });
+  check("override captured in state", state.override && state.override.name === "newer_inventory.xlsx" ? 1 : 0, 1, 0);
+  check("override marked NOT processed (capture only)", state.override.processed === false ? 1 : 0, 1, 0);
+  check("loaded/aggregated data UNCHANGED by override", JSON.stringify(state.loaded.coman) === before ? 1 : 0, 1, 0);
+}
+
+console.log("\n=== (M) MULTI-MONTH ROLLING PLAN — ending → next opening; WoS/MoS; per-month + combined buy ===");
+console.log("\nrollMultiMonth chains months; raw on-hand carries forward; overriding re-rolls downstream");
+{
+  // Known demand horizon + opening; minis/pallet 50 keeps pallet counts clean for the asserts.
+  const demandByMonth = { "2026-05": 100, "2026-06": 200, "2026-07": 50, "2026-08": 80 };
+  const constants = { minisPerPallet: 50, grams: 8, minisPerPouch: 11 };
+  const needsForPallets = pallets => ({ Sugar: pallets * 10 }); // injected stand-in for the verified engine
+  const openingRaw = { Sugar: 25 };
+
+  const r = rollMultiMonth({ startMonth: "2026-05", numMonths: 3, demandByMonth, openingFinishedGoods: 120, openingRawMaterials: openingRaw, constants, needsForPallets });
+  const [m1, m2, m3] = r.months;
+  // Month 1: opening 120, demand 100, net 0 (covered) → 0 pallets, ending 120 + 0 − 100 = 20.
+  check("m1 opening = current on-hand (120)", m1.opening, 120, 0);
+  check("m1 net demand 0 (covered) → 0 pallets", m1.pallets, 0, 0);
+  check("m1 ending = 120 + 0 − 100", m1.ending, 20, 0);
+  // ROLL: month 2 opening == month 1 ending.
+  check("m2 opening == m1 ending (rolls)", m2.opening, m1.ending, 0);
+  // Month 2: opening 20, demand 200, net 180 → ceil(180/50) = 4 pallets, receipts 200, ending 20.
+  check("m2 net 180 → 4 pallets (ceil 180/50)", m2.pallets, 4, 0);
+  check("m2 ending = 20 + 200 − 200", m2.ending, 20, 0);
+  check("m3 opening == m2 ending (rolls)", m3.opening, m2.ending, 0);
+  // WoS / MoS for month 1: ending 20, forward demand = m2 (200). MoS = 20/200 = 0.1; WoS = 20 ÷ (200/4.33) ≈ 0.433.
+  check("m1 months-of-supply (20/200)", m1.monthsOfSupply, 0.1, 0.001);
+  check("m1 weeks-of-supply (20 ÷ 200/4.33)", m1.weeksOfSupply, 0.43, 0.01);
+
+  // Override re-rolls downstream: force m1 to 3 pallets → receipts 150, ending 170 → m2 opening shifts to 170.
+  const ro = rollMultiMonth({ startMonth: "2026-05", numMonths: 3, demandByMonth, openingFinishedGoods: 120, openingRawMaterials: openingRaw, constants, overrides: { "2026-05": 3 }, needsForPallets });
+  check("override m1 → 3 pallets honored", ro.months[0].pallets, 3, 0);
+  check("override m1 ending = 120 + 150 − 100", ro.months[0].ending, 170, 0);
+  check("override re-rolls: m2 opening now 170", ro.months[1].opening, 170, 0);
+
+  // Combined buy-list == sum of per-month needs (minus carried raw inventory).
+  // Needs: m1 0, m2 40, m3 10 → total 50; opening raw 25 → combined buy = max(0, 50 − 25) = 25.
+  check("combined need (Σ months) = 50", r.combinedNeeds.Sugar, 50, 0);
+  check("combined buy = Σ needs − opening raw (50 − 25)", r.combinedBuy.Sugar, 25, 0);
+  // Per-month buys (raw carries forward & depletes) sum to the combined buy.
+  const sumMonthBuys = r.months.reduce((a, m) => a + (m.buy.Sugar || 0), 0);
+  check("Σ per-month buys == combined buy (raw carried fwd)", sumMonthBuys, 25, 0);
+  check("m2 buy nets vs remaining raw (40 − 25 = 15)", m2.buy.Sugar, 15, 0);
+
+  // Single-month case (numMonths = 1) with the verified engine: 11 pallets × 30,600 = 336,600 receipts.
+  const one = rollMultiMonth({ startMonth: "2026-05", numMonths: 1, demandByMonth: { "2026-05": 10000 }, openingFinishedGoods: 0, constants: { minisPerPallet: 30600 }, overrides: { "2026-05": 11 }, needsForPallets: () => ({}) });
+  check("single-month numMonths=1 → 1 month", one.months.length, 1, 0);
+  check("single-month 11 pallets → 336,600 receipts", one.months[0].receipts, 336600, 0);
+  // Verified per-month engine math intact (the injected engine): 11 × 30,600 → ×8 ÷ 453.59237 = 5,936.61 lbs.
+  const pl = productionLbs({ palletsByWip: { "MCM1001-WIP": 11 }, refprod: { "MCM1001-WIP": { minis_pallet: 30600, grams: 8 } } });
+  check("per-month engine: → 5,936.61 lbs", +pl["MCM1001-WIP"].toFixed(2), 5936.61);
+
+  // Readable SKU names: "CODE — Name" (from description/ref), or just CODE when unknown.
+  check("skuLabel → 'CODE — Name'", skuLabel("MBMC4001", { MBMC4001: "Milk Crunch Mini Bar" }) === "MBMC4001 — Milk Crunch Mini Bar" ? 1 : 0, 1, 0);
+  check("skuLabel → CODE when no name", skuLabel("BCM3001", {}) === "BCM3001" ? 1 : 0, 1, 0);
+
+  // Small fix 1: the "unconf" badge + the Modis flag list are no longer RENDERED in the UI.
+  // (parseModis still PRODUCES the unconfirmed flag as data — we only drop it from display, so these
+  //  regexes target the render markup, never the parser's "unconfirmed" flag string.)
+  const html = fs.readFileSync(path.join(__dir, "../public/index.html"), "utf8");
+  check("UI no longer renders the 'unconf' badge", /unconf</.test(html) ? 1 : 0, 0, 0);
+  check("UI no longer renders the Modis flag list", /m\.flags\.join/.test(html) ? 1 : 0, 0, 0);
+}
+
 console.log(`\n${fail === 0 ? "✅ ALL CHECKS PASSED" : "❌ " + fail + " CHECK(S) FAILED"}  (${pass} passed, ${fail} failed)\n`);
 process.exit(fail === 0 ? 0 : 1);

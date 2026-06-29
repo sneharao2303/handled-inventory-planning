@@ -1,0 +1,24 @@
+Source,Last Updated At,Item Code,SKU,Lot Number,Expiry Date,Quantity On Hand,Unit of Measure,FST: SKU,FST: Inventory_QTY,FST: Available_Qty,FST: Allocated_QTY,FST: Nonsaleable_QTY,FST: Shipping_Lane_QTY,FST: SKU_Type,FST: SKU_Status,GR: MFG ID,GR: Whitestown On Hand,GR: Whitestown Available,GR: Whitestown Committed,GR: Whitestown-Manufacturing On Hand,GR: Retail West On Hand,GR: Retail West Available
+Elmer Candy Corporation,2026-06-24 06:00,90248B,IN-MC301v2,,,75920,lbs,,,,,,,,,,,,,,,
+Elmer Candy Corporation,2026-06-24 06:00,90249B,IN-CH302v2,,,90669,lbs,,,,,,,,,,,,,,,
+Elmer Candy Corporation,2026-06-24 06:00,90251,IN-PB303v2,,,16600,lbs,,,,,,,,,,,,,,,
+Elmer Candy Corporation,2026-06-24 06:00,90672,RM0130,,,14704,lbs,,,,,,,,,,,,,,,
+Elmer Candy Corporation,2026-06-24 06:00,A92006,PK-MC02,,,8597,EA,,,,,,,,,,,,,,,
+Bazzini,2026-06-24 05:30,I82001-CER,RM0130,55448-1,2027-02-04,1200,lbs,,,,,,,,,,,,,,,
+Bazzini,2026-06-24 05:30,I82001-CER,RM0130,58548-1,2027-02-04,800,lbs,,,,,,,,,,,,,,,
+Bazzini,2026-06-24 05:30,I82001-CER,RM0130,59019-1,2027-03-01,440,lbs,,,,,,,,,,,,,,,
+Bazzini,2026-06-24 05:30,I82014-DAI,RM0125,07263G1,2027-01-15,1763.6,lbs,,,,,,,,,,,,,,,
+Bazzini,2026-06-24 05:30,I82014-DAI,RM0125,18853G1,2027-01-20,1763.6,lbs,,,,,,,,,,,,,,,
+Bazzini,2026-06-24 05:30,I82004-SLT,RM0137,BN2029,2027-02-04,65,lbs,,,,,,,,,,,,,,,
+Bazzini,2026-06-24 05:30,I82004-SLT,RM0137,BN2030,2027-02-04,64.66,lbs,,,,,,,,,,,,,,,
+R.M. Palmer,2026-06-23 22:00,942107,RM0130,,,19200,lbs,,,,,,,,,,,,,,,
+R.M. Palmer,2026-06-23 22:00,942207,RM0131,,,314,lbs,,,,,,,,,,,,,,,
+R.M. Palmer,2026-06-23 22:00,942307,RM0137,,,500,lbs,,,,,,,,,,,,,,,
+SPG,2026-06-24 04:00,90630,RM0137,ECC26035,2027-02-04,200,lbs,,,,,,,,,,,,,,,
+SPG,2026-06-24 04:00,PK-WPMMC,PK-WPMMC,,,226,EA,,,,,,,,,,,,,,,
+FST Logistics,2026-06-25 03:00,,,,,,,BCM3001-12,247608,240000,5000,2608,0,FinishedGood,Active,,,,,,,
+FST Logistics,2026-06-25 03:00,,,,,,,BSF3002-12,148608,140000,6000,2608,0,FinishedGood,Active,,,,,,,
+FST Logistics,2026-06-25 03:00,,,,,,,BPB3003-12,33696,30000,3000,696,0,FinishedGood,Active,,,,,,,
+Green Rabbit,2026-06-25 02:30,,,,,,,,,,,,,,,BCM3001-MC6,12000,11000,1000,8000,3988,3000
+Green Rabbit,2026-06-25 02:30,,,,,,,,,,,,,,,BSF3002-MC6,50000,45000,5000,30000,9388,9000
+Green Rabbit,2026-06-25 02:30,,,,,,,,,,,,,,,BPB3003-MC6,15000,14000,1000,8000,1492,1000

@@ -3831,6 +3831,152 @@
         0,
         null
       ]
+    ],
+    "modis": [
+      [
+        "Modis Demand Forecast — rolling horizon export",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      [
+        "Retailer",
+        "Region",
+        "Product Group",
+        "SKU Code",
+        "Month",
+        "Forecasted Delivery",
+        "Status"
+      ],
+      [
+        "Costco",
+        "West",
+        "Mini Bars",
+        "MBMC4001",
+        "2026-05",
+        8000,
+        "Confirmed"
+      ],
+      [
+        "Target",
+        "Midwest",
+        "Mini Bars",
+        "MBMC4001",
+        "2026-05",
+        5284,
+        "Confirmed"
+      ],
+      [
+        "Costco",
+        "West",
+        "Bars",
+        "BCM3001",
+        "2026-05",
+        30000,
+        "Confirmed"
+      ],
+      [
+        "Target",
+        "Midwest",
+        "Bars",
+        "BCM3001",
+        "2026-05",
+        18650,
+        "Confirmed"
+      ],
+      [
+        "Costco",
+        "West",
+        "Bars",
+        "BSF3002",
+        "2026-05",
+        30000,
+        "Confirmed"
+      ],
+      [
+        "Target",
+        "Midwest",
+        "Bars",
+        "BSF3002",
+        "2026-05",
+        17375,
+        "Confirmed"
+      ],
+      [
+        "Costco",
+        "West",
+        "Bars",
+        "BPB3003",
+        "2026-05",
+        12000,
+        "Confirmed"
+      ],
+      [
+        "Amazon",
+        "East",
+        "Bars",
+        "BPB3003",
+        "2026-05",
+        8202,
+        "Confirmed"
+      ],
+      [
+        "Costco",
+        "West",
+        "Mini Bars",
+        "MBMC4001",
+        "2026-06",
+        10000,
+        "Confirmed"
+      ],
+      [
+        "Target",
+        "Midwest",
+        "Mini Bars",
+        "MBMC4001",
+        "2026-06",
+        3000,
+        "Not Confirmed"
+      ],
+      [
+        "Costco",
+        "West",
+        "Bars",
+        "BCM3001",
+        "2026-06",
+        40000,
+        "Confirmed"
+      ],
+      [
+        "Whole Foods",
+        "East",
+        "Bars",
+        "BSF3002",
+        "2026-06",
+        22000,
+        "Confirmed"
+      ],
+      [
+        "Amazon",
+        "East",
+        "Mini Bars",
+        "MBPB4003",
+        "2026-07",
+        5000,
+        "Not Confirmed"
+      ],
+      [
+        "Costco",
+        "West",
+        "Mini Bars",
+        "MBMC4001",
+        "2026-07",
+        14000,
+        "Confirmed"
+      ]
     ]
   },
   "bazzini_map": [
